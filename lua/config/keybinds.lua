@@ -3,7 +3,8 @@
 -- Clear highlights on search when pressing <Esc> in normal mode
 --  See `:help hlsearch`
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>', { desc = 'Clear search highlight' })
-
+vim.keymap.set('n', '<C-j>', '<C-d>zz', { desc = 'Page Down' })
+vim.keymap.set('n', '<C-k>', '<C-u>zz', { desc = 'Page Up' })
 -- NOTE: Easy way to close terminal
 vim.keymap.set('t', '<esc><esc>', '<c-\\><c-n>')
 

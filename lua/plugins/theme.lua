@@ -28,13 +28,13 @@ return {
       end,
     })
     -- optional: update when leaving a window
-    -- vim.api.nvim_create_autocmd('WinLeave', {
-    --   callback = function()
-    --     vim.cmd [[
-    --       hi NormalNC guibg=#1c1c1c
-    --     ]]
-    --   end,
-    -- })
+    vim.api.nvim_create_autocmd('WinLeave', {
+      callback = function()
+        vim.cmd [[
+        	hi NormalNC guibg=#1c1c1c " inactive window background
+        ]]
+      end,
+    })
   end,
 }
 

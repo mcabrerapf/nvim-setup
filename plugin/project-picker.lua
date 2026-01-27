@@ -9,10 +9,25 @@ local state = {
     win = -1,
   },
 }
-local function normalize_path(path)
-  path = path:gsub('\\', '/') -- backslashes → forward
-  path = path:gsub('//+', '/') -- collapse //
-  return path
+
+local function start_godot_server()
+  local target = '127.0.0.1:6004'
+  local servers = vim.fn.serverlist()
+  -- NOTE: In Godot add this to the Editor Settings > External > Exec flags > --server 127.0.0.1:6004 --remote-send "<C-\><C-N>:wincmd l | edit {file}<CR>{line}G{col}"
+  if not vim.tbl_contains(servers, target) then
+    vim.fn.serverstart(target)
+  end
+end
+
+local function open_godot(project_path)
+  vim.fn.jobstart({
+    'cmd.exe',
+    '/c',
+    GODOT_PATH,
+    '--editor',
+    '--path',
+    project_path,
+  }, { detach = true })
 end
 
 local function populate_buffer(buf, root)
@@ -27,68 +42,50 @@ local function populate_buffer(buf, root)
   vim.bo[buf].filetype = 'project_picker'
 end
 
-local function open_project(root)
+local function get_selected_project_path()
   local line = vim.api.nvim_get_current_line()
   if line == '' then
-    return
+    return ''
   end
+  return PROJECTS_ROOT .. '/' .. line
+end
 
-  local path = root .. '/' .. line
-
-  -- Close floating window
+local function open_project(project_path)
   if vim.api.nvim_win_is_valid(state.floating.win) then
     vim.api.nvim_win_close(state.floating.win, true)
   end
-  -- vim.g.netrw_liststyle = 3
-  -- Open Lexplore in a new tab
-  vim.cmd 'tabnew'
-  vim.cmd('NvimTreeOpen ' .. vim.fn.fnameescape(path))
-  -- vim.cmd 'vertical resize 35'
-  -- vim.cmd ':normal iii'
-  vim.cmd('cd ' .. path) -- vim.cmd ':normal cd'
-  local target = '127.0.0.1:6004'
-  local servers = vim.fn.serverlist()
-
-  vim.fn.jobstart({
-    'cmd.exe',
-    '/c',
-    GODOT_PATH,
-    '--editor',
-    '--path',
-    path,
-  }, { detach = true })
-  -- NOTE: In Godot add this to the Editor Settings > External > Exec flags > --server 127.0.0.1:6004 --remote-send "<C-\><C-N>:wincmd l | edit {file}<CR>{line}G{col}"
-  if not vim.tbl_contains(servers, target) then
-    vim.fn.serverstart(target)
-    -- print('Started Vim/Godot server at ' .. target)
-  else
-    -- print('Vim/Godot server already running at ' .. target)
+  if project_path == '' then
+    return
   end
+  vim.cmd 'tabnew'
+  vim.cmd('NvimTreeOpen ' .. vim.fn.fnameescape(project_path))
+  vim.cmd('cd ' .. project_path)
 end
 
 local toggle_project_picker = function()
   if not vim.api.nvim_win_is_valid(state.floating.win) then
     state.floating = create_floating_window { buf = state.floating.buf }
-
     populate_buffer(state.floating.buf, PROJECTS_ROOT)
 
-    -- Buffer-local mappings
     vim.keymap.set('n', '<esc>', function()
       vim.api.nvim_win_hide(state.floating.win)
     end, { buffer = state.floating.buf, nowait = true })
+    vim.keymap.set('n', '<C-e>', function()
+      local project_path = get_selected_project_path()
+      open_project(project_path)
+      open_godot(project_path)
+      start_godot_server()
+    end, { buffer = state.floating.buf, nowait = true })
     vim.keymap.set('n', '<CR>', function()
-      open_project(PROJECTS_ROOT)
+      local project_path = get_selected_project_path()
+      open_project(project_path)
     end, { buffer = state.floating.buf, nowait = true })
   else
     vim.api.nvim_win_hide(state.floating.win)
   end
 end
 
--- Example usage:
--- Create a floating window with default dimensions
--- vim.api.nvim_create_user_command('GodotProjectsWindow', get_directories, {})
 vim.keymap.set('n', '<leader>gl', function()
-  -- vim.cmd 'GodotProjectsWindow'
   toggle_project_picker()
 end, {
   desc = 'Open godot projects picker',
