@@ -1,4 +1,6 @@
-local PROJECTS_ROOT = 'F:/Godot Games/'
+-- WARN: Make sure both godot.exe AND the projects folder are in the same drive
+local PROJECTS_ROOT = 'F:/godot/projects/'
+local GODOT_PATH = 'F:/godot/Godot.exe'
 local create_floating_window = require 'utils.create-floating-window'
 local get_directories = require 'utils.get-directories'
 local state = {
@@ -7,6 +9,11 @@ local state = {
     win = -1,
   },
 }
+local function normalize_path(path)
+  path = path:gsub('\\', '/') -- backslashes → forward
+  path = path:gsub('//+', '/') -- collapse //
+  return path
+end
 
 local function populate_buffer(buf, root)
   local dirs = get_directories(root)
@@ -38,15 +45,24 @@ local function open_project(root)
   vim.cmd('NvimTreeOpen ' .. vim.fn.fnameescape(path))
   -- vim.cmd 'vertical resize 35'
   -- vim.cmd ':normal iii'
-  -- vim.cmd ':normal cd'
+  vim.cmd('cd ' .. path) -- vim.cmd ':normal cd'
   local target = '127.0.0.1:6004'
   local servers = vim.fn.serverlist()
-  -- In Godot add this to the Editor Settings > External > Exec flags > --server 127.0.0.1:6004 --remote-send "<C-\><C-N>:wincmd l | edit {file}<CR>{line}G{col}"
+
+  vim.fn.jobstart({
+    'cmd.exe',
+    '/c',
+    GODOT_PATH,
+    '--editor',
+    '--path',
+    path,
+  }, { detach = true })
+  -- NOTE: In Godot add this to the Editor Settings > External > Exec flags > --server 127.0.0.1:6004 --remote-send "<C-\><C-N>:wincmd l | edit {file}<CR>{line}G{col}"
   if not vim.tbl_contains(servers, target) then
     vim.fn.serverstart(target)
-    print('Started Vim/Godot server at ' .. target)
+    -- print('Started Vim/Godot server at ' .. target)
   else
-    print('Vim/Godot server already running at ' .. target)
+    -- print('Vim/Godot server already running at ' .. target)
   end
 end
 

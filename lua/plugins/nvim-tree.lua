@@ -7,7 +7,13 @@ return {
   },
   config = function()
     require('nvim-tree').setup {
-      filters = { custom = { '^.git$', '.uid$', '.tmp$' } },
+      filters = { custom = { '^.git$', '.uid$', '.tmp$', '.import$' } },
+      update_focused_file = {
+        -- enable = true, -- updates NvimTree to focus the current file
+        update_cwd = true, -- update Neovim's cwd when file changes
+      },
+      -- sync_root_with_cwd = true, -- sync NvimTree root with cwd
+      -- respect_buf_cwd = true,
     }
     vim.keymap.set('n', '<leader>cd', function()
       vim.cmd ':NvimTreeOpen'

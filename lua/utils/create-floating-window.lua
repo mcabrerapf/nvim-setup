@@ -15,7 +15,6 @@ local create_floating_window = function(opts)
     buf = vim.api.nvim_create_buf(false, true) -- No file, scratch buffer
   end
 
-  -- Define window configuration
   local win_config = {
     relative = 'editor',
     width = width,
@@ -26,9 +25,7 @@ local create_floating_window = function(opts)
     border = 'rounded',
   }
 
-  -- Create the floating window
   local win = vim.api.nvim_open_win(buf, true, win_config)
-
   return { buf = buf, win = win }
 end
 

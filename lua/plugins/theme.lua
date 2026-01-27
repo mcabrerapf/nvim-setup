@@ -1,9 +1,3 @@
--- return {
---   'scottmckendry/cyberdream.nvim',
---   lazy = false,
---   priority = 1000,
--- }
-
 return {
   'navarasu/onedark.nvim',
   priority = 1000, -- make sure to load this before all the other start plugins
@@ -17,14 +11,38 @@ return {
         strings = 'none',
         variables = 'bold',
       },
-      -- transparent = true,
+      transparent = true,
+      term_colors = true,
       -- style = 'darker',
     }
     require('onedark').load()
     -- vim.api.nvim_set_hl(0, 'Normal', { bg = 'none' })
     -- vim.api.nvim_set_hl(0, 'NormalFloat', { bg = 'none' })
+    vim.api.nvim_create_autocmd({ 'WinEnter', 'BufWinEnter' }, {
+      callback = function()
+        vim.cmd [[
+        	"hi Normal guibg=#282c34   " active window background
+        	hi NormalNC guibg=#1c1c1c " inactive window background
+		"hi WinSeparator guifg=#ff8800
+        ]]
+      end,
+    })
+    -- optional: update when leaving a window
+    -- vim.api.nvim_create_autocmd('WinLeave', {
+    --   callback = function()
+    --     vim.cmd [[
+    --       hi NormalNC guibg=#1c1c1c
+    --     ]]
+    --   end,
+    -- })
   end,
 }
+
+-- return {
+--   'scottmckendry/cyberdream.nvim',
+--   lazy = false,
+--   priority = 1000,
+-- }
 
 -- return {
 --   -- You can easily change to a different colorscheme.

@@ -5,7 +5,7 @@
 [%]         ----- go to matching pair
 ['']        ----- go to previous jump location 
 [']         ----- go to mark 
-[*]         ----- show all matches at current cursor position
+[*]         ----- show all matches at current cursor position (with a word selected after * do :%s//test/g the // is the searched value)
 [+]         ----- next line first character
 [,]         ----- repeats last find command backwards
 [,]         ----- repeats last find command backwards
