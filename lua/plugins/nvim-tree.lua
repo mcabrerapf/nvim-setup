@@ -7,7 +7,7 @@ return {
   },
   config = function()
     require('nvim-tree').setup {
-      filters = { custom = { '^.git$', '.uid$', '.tmp$', '.import$' } },
+      filters = { custom = { '^.git$', '.uid$', '.tmp$', '.import$', '.tscn', '.DS_Store' } },
       update_focused_file = {
         -- enable = true, -- updates NvimTree to focus the current file
         update_cwd = true, -- update Neovim's cwd when file changes
