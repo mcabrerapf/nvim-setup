@@ -27,30 +27,30 @@ return {
     -- annotations
     map('n', prefix .. 'a', function()
       haunt.annotate()
-    end, { desc = 'Annotate' })
+    end, { desc = '[a]nnotate' })
 
     map('n', prefix .. 't', function()
       haunt.toggle_annotation()
-    end, { desc = 'Toggle annotation' })
+    end, { desc = '[t]oggle annotation' })
 
     map('n', prefix .. 'T', function()
       haunt.toggle_all_lines()
-    end, { desc = 'Toggle all annotations' })
+    end, { desc = '[T]oggle all annotations' })
 
     map('n', prefix .. 'd', function()
       haunt.delete()
-    end, { desc = 'Delete annotation' })
+    end, { desc = '[d]elete annotation' })
 
-    map('n', prefix .. 'C', function()
+    map('n', prefix .. 'D', function()
       haunt.clear_all()
-    end, { desc = 'Delete all annotations' })
+    end, { desc = '[D]elete all annotations' })
 
     -- move
-    map('n', prefix .. 'p', function()
+    map('n', prefix .. 'k', function()
       haunt.prev()
     end, { desc = 'Previous annotation' })
 
-    map('n', prefix .. 'n', function()
+    map('n', prefix .. 'j', function()
       haunt.next()
     end, { desc = 'Next annotation' })
 

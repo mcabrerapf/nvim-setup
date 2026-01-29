@@ -44,10 +44,13 @@ return { -- Useful plugin to show you pending keybinds.
 
     -- Document existing key chains
     spec = {
-      { '<leader>s', group = '[S]earch' },
-      { '<leader>t', group = '[T]oggle' },
-      -- { '<leader>h', group = 'Git [H]unk', mode = { 'n', 'v' } },
+      { '<leader>a', group = '[a]nnotations' },
+      { '<leader>t', group = '[t]oggle' },
+      { '<leader>f', group = '[f]olders & [f]iles' },
+      { '<leader>s', group = '[s]earch' },
+      { '<leader>o', group = '[o]pen' },
+      { '<leader>w', group = 'LSP' },
+      { '<leader>fn', group = '[n]eovim' },
     },
   },
 }
-

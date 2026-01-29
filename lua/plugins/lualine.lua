@@ -22,7 +22,18 @@ return {
         sections = {
           lualine_a = { 'mode' },
           lualine_b = { 'branch', 'diff' },
-          lualine_c = { { 'filename', path = 1 } },
+          lualine_c = {
+            function()
+              local file = vim.fn.expand '%:t'
+              if file == '' then
+                return vim.uv.cwd()
+                -- return vim.fn.fnamemodify(vim.fn.getcwd(), ':t')
+              else
+                return file
+              end
+            end,
+          },
+          -- lualine_c = { { 'filename', path = 1 } },
           lualine_x = { 'encoding', 'filetype' },
           lualine_y = { 'progress' },
           lualine_z = { 'location' },

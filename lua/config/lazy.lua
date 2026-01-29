@@ -17,22 +17,6 @@ vim.opt.rtp:prepend(lazypath)
 
 require('lazy').setup({
   { import = 'plugins' },
-  -- require 'plugins.theme',
-  -- require 'plugins.lualine',
-  -- require 'plugins.guess-indent',
-  -- require 'plugins.gitsigns',
-  -- require 'plugins.which-key',
-  -- require 'plugins.telescope',
-  -- require 'plugins.harpoon',
-  -- require 'plugins.lazydev',
-  -- require 'plugins.lsp-config',
-  -- require 'plugins.conform',
-  -- require 'plugins.lua-snip',
-  -- require 'plugins.blink',
-  -- require 'plugins.todo-comments',
-  -- require 'plugins.treesitter',
-  -- require 'plugins.haunt',
-  -- require 'plugins.nvim-tree',
 
   -- NOTE: The import below can automatically add your own plugins, configuration, etc from `lua/custom/plugins/*.lua`
   --    This is the easiest way to modularize your config.
@@ -60,9 +44,3 @@ require('lazy').setup({
     },
   },
 })
-
--- require('luasnip.loaders.from_lua').lazy_load {
---   paths = vim.fn.stdpath 'config' .. '/lua/snippets',
--- }
--- The line beneath this is called `modeline`. See `:help modeline`
--- vim: ts=2 sts=2 sw=2 et

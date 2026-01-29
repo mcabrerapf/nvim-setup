@@ -40,14 +40,12 @@ return {
 
     -- NOTE: KEYMAPS
     vim.keymap.set({ 'i', 's' }, '<C-A>', function()
-      print(ls.expand_or_jumpable)
       if ls.expand_or_jumpable then
         ls.expand_or_jump()
       end
     end, { silent = true })
     vim.keymap.set({ 'i', 's' }, '<C-L>', function()
       ls.jump(1)
-      print 'LLLL'
     end, { silent = true })
     vim.keymap.set({ 'i', 's' }, '<C-J>', function()
       ls.jump(-1)
@@ -59,9 +57,8 @@ return {
     end, { silent = true })
 
     require('luasnip.loaders.from_lua').load {
-      paths = os.getenv 'LOCALAPPDATA' .. '/nvim/lua/snippets',
-      -- paths = '%localappdata%/nvim/lua/snippets',
-      -- paths = vim.fn.stdpath 'config' .. '/lua/snippets',
+      -- paths = os.getenv 'LOCALAPPDATA' .. '/nvim/lua/snippets',
+      paths = vim.fn.stdpath 'config' .. '/lua/snippets',
     }
   end,
 }

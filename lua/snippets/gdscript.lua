@@ -36,7 +36,7 @@ return {
   -- NOTE: AUTOLOADS
   -- Basic function
   s(
-    { trig = 'func', snippetType = 'autosnippet' },
+    { trig = 'funcd', snippetType = 'autosnippet' },
     fmta(
       [[
 	func <>(<>) ->> <>:
@@ -45,8 +45,8 @@ return {
 
 	]],
       {
-        i(1, 'name'),
-        i(2, 'param'),
+        i(1),
+        i(2),
         i(3, 'void'),
         i(4, 'return'),
       }

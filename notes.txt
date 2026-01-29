@@ -7,15 +7,13 @@
 [']         ----- go to mark 
 [*]         ----- show all matches at current cursor position (with a word selected after * do :%s//test/g the // is the searched value)
 [+]         ----- next line first character
-[,]         ----- repeats last find command backwards
-[,]         ----- repeats last find command backwards
+[,]         ----- repeats last find command backwards ([;] for forwards)
 [-]         ----- previous line first character
 [.]         ----- repeats las command 
-[.]         ----- repeats the last action
 [/]         ----- start search (n and N to scroll forwards and back)
 [0]         ----- start of line
 [;]         ----- repeats last find command forward
-[==]        ----- fix indentation
+[==]        ----- fix indentation in line ([gg=G] indent whole file)
 [@]         ----- play macro ([@@] redo last macro)
 [A]         ----- insert after line
 [C-a]       ----- increment number at cursor
@@ -30,13 +28,12 @@
 [L]         ----- move to bottom of the screen
 [M]         ----- move to middle of the screen
 [R]         ----- enter REPLACE mode
-[V]         ----- selected line
 [ZQ]        ----- quit no save 
 [ZZ]        ----- save and quit
 [^]         ----- move to first non blank character in line
 [a]         ----- insert after ([A] line)
 [b]         ----- move to prev word (B includes punctuation)
-[c]	    ----- replace ([cc] or [C] replace entire line)
+[c]         ----- replace ([cc] or [C] replace entire line)
 [d]         ----- delete (works like cutting)
 [e]         ----- move to end of word (E includes punctuation)
 [f]         ----- jump to next ocurrance of character (F for previous
@@ -64,6 +61,7 @@
 [t]         ----- jump to before next ocurrance of character(T for previous)
 [u]         ----- undo ([U] line)
 [v]         ----- visual mode([V] line, [C-V] block mode)
+[vab]       ----- select block within {} or [] or ()
 [w]         ----- move to next word (W includes punctuation)
 [x]         ----- delete at cursor
 [y]         ----- yanking
@@ -112,7 +110,7 @@
 [:3,5d]     ----- delete lines starting from 3 to 5
 [:s]        ----- search and replace in current line (start with % to apply to entire document) followed by regular expression, (ie :%s/word/new_word/g changes all word to new_word, add c to confirm on each) (ie :#,#s/old/new/g chantes old to new from line # to #
 )
-[:noh]      ----- clear search results
+[:noh]      ----- clear aaaa results
 [:w]        ----- write (save) the file, but don't exit
 [:w]        ----- write out the current file using sudo
 [:wq]       ----- write (save) and quit(or [:x] or [ZZ])
@@ -121,6 +119,7 @@
 [:wqa]      ----- write save and quit all
 [:g/{pattern}/d]  - delete all lines containing pattern
 [:g!/{pattern}/d] - delete all lines not containing pattern
+[:find {file_name}] - go to file
 
 ### EXTRAS
 - register [=] is an expression register (command line)
@@ -129,6 +128,47 @@
 - in insert mode [C-j] works as Enter
 - in insert mode [C-w] deletes the previous word
 - in insert mode [C-o] puts you in normal mode and goes back to insert after a single command 
+
+
+## FIX FOR TREESITER ON WINDOWS
+Download MSYS2 from
+https://www.msys2.org
+
+Inside the MSYS2 MSYS terminal, run:
+pacman -Syu
+
+Run again:
+
+pacman -Syu
+
+
+Repeat until there are no more updates.
+
+
+pacman -S --needed mingw-w64-x86_64-gcc
+
+Press Win + R, type:
+
+sysdm.cpl
+
+Go to Advanced → Environment Variables
+
+Under User variables, select Path → Edit
+
+Add this new entry:
+
+C:\msys64\mingw64\bin
+
+gcc --version
+
+Under User variables, click New
+
+Set:
+
+Name: CC
+
+Value: gcc
+
 
 ####
 Inspired by https://vim.rtorr.com/
