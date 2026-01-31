@@ -1,45 +1,38 @@
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
-vim.opt.shell = 'cmd'
--- NOTE: Set to true if you have a Nerd Font installed and selected in the terminal
-vim.g.have_nerd_font = true
-vim.opt.termguicolors = true
--- NOTE: Disable netrw
-vim.g.loaded_netrw = 1
+vim.g.loaded_netrw = 1 -- Disable netrw if any other explorer is loaded
 vim.g.loaded_netrwPlugin = 1
--- NOTE: Make line numbers default
-vim.o.number = true
+vim.g.have_nerd_font = true --Set to true if you have a Nerd Font installed and selected in the terminal
+vim.o.shell = 'cmd'
+vim.o.autoread = true
+vim.o.termguicolors = true
+vim.o.winborder = 'rounded'
+vim.o.number = true -- Show line numbers
 vim.o.relativenumber = true
--- NOTE: Enable mouse mode, can be useful for resizing splits for example!
-vim.o.mouse = 'a'
--- NOTE: Don't show the mode, since it's already in the status line
-vim.o.showmode = false
-vim.o.breakindent = true
--- NOTE: Keep undo history even after vim closes
-vim.o.undofile = true
--- NOTE: Case-insensitive searching UNLESS \C or one or more capital letters in the search term
-vim.o.ignorecase = true
+vim.o.mouse = 'a' -- enable mouse
+vim.o.showmode = false -- dont show mode if using lualine or something else
+-- vim.o.wrap = false -- disable wrapping
+vim.o.breakindent = true -- text breaks up if reaches end of screen
+vim.o.undofile = true -- undo history remains after closing
+vim.o.ignorecase = true -- ignore case unless forced with command or upper case in text
 vim.o.smartcase = true
--- NOTE: Keep signcolumn on by default
-vim.o.signcolumn = 'yes'
--- NOTE: Decrease update time
-vim.o.updatetime = 250
--- NOTE:Decrease mapped sequence wait time
--- vim.o.timeoutlen = 300
--- NOTE:Configure how new splits should be opened
+vim.o.signcolumn = 'yes' -- When and how to draw the signcolumn
+vim.o.updatetime = 250 -- Decrease update time
+-- vim.o.timeoutlen = 300 -- Decrease mapped sequence wait time
 vim.o.splitright = true
 vim.o.splitbelow = true
-vim.o.eadirection = 'ver'
--- NOTE: Sets how neovim will display certain whitespace characters in the editor.
-vim.o.list = true
+vim.o.eadirection = 'ver' -- Tells when the 'equalalways' option applies
+vim.o.list = true -- Sets how neovim will display certain whitespace characters in the editor.
+vim.o.inccommand = 'split' -- Preview substitutions live, as you type
+vim.o.cursorline = true -- Show which line your cursor is on
+vim.o.scrolloff = 10 -- Minimal number of screen lines to keep above and below the cursor.
+vim.o.confirm = true -- Raise a dialog asking if you wish to save the current file(s)
+vim.opt.foldenable = false -- set folds to open when opening file
 vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
--- NOTE: Preview substitutions live, as you type!
-vim.o.inccommand = 'split'
--- NOTE: Show which line your cursor is on
-vim.o.cursorline = true
--- NOTE: Minimal number of screen lines to keep above and below the cursor.
-vim.o.scrolloff = 10
--- NOTE: if performing an operation that would fail due to unsaved changes in the buffer (like `:q`),
--- instead raise a dialog asking if you wish to save the current file(s)
--- See `:help 'confirm'`
-vim.o.confirm = true
+vim.opt.guicursor = { -- cursor blink if using wezterm need to set its default blink rate as well
+  'n-v-c:block',
+  'i-ci-ve:ver25',
+  'r-cr:hor20',
+  'o:hor50',
+  'a:blinkon400-blinkoff400-blinkwait400',
+}

@@ -1,36 +1,30 @@
 return {
-  -- Highlight, edit, and navigate code
   'nvim-treesitter/nvim-treesitter',
-  branch = 'master',
   lazy = false,
   build = ':TSUpdate',
-  opts = {
-    highlight = {
-      enable = true,
-      indent = {
-        enable = true,
+  config = function()
+    local treesitter = require 'nvim-treesitter'
+    treesitter.setup {
+      -- Directory to install parsers and queries to (prepended to `runtimepath` to have priority)
+      install_dir = vim.fn.stdpath 'data' .. '/site',
+      treesitter.install { 'gdscript', 'gdshader', 'godot_resource', 'rust', 'javascript', 'zig' },
+      highlight = {
+        enable = true, -- enable Treesitter syntax highlighting
+        additional_vim_regex_highlighting = false,
       },
-    },
-  },
-  -- main = 'nvim-treesitter.config', -- Sets main module to use for opts
-  -- config = function()
-  --   require('nvim-treesitter').setup {
-  --     -- Directory to install parsers and queries to (prepended to `runtimepath` to have priority)
-  --     install_dir = vim.fn.stdpath 'data' .. '/site',
-  --   }
-  --   require('nvim-treesitter').install {
-  --     -- 'javascript',
-  --     -- 'html',
-  --     'gdscript',
-  --     -- 'gdshader',
-  --     -- 'godot_resource',
-  --     -- 'bash',
-  --     -- 'lua',
-  --     -- 'luadoc',
-  --     -- 'markdown',
-  --     -- 'markdown_inline',
-  --     -- 'vim',
-  --     -- 'vimdoc',
-  --   }
-  -- end,
+      indent = {
+        enable = true, -- optional: better indentation
+      },
+    }
+
+    vim.api.nvim_create_autocmd('FileType', {
+      pattern = { 'gdscript', 'gdshader', 'godot_resource' },
+      callback = function()
+        vim.treesitter.start()
+        vim.wo[0][0].foldexpr = 'v:lua.vim.treesitter.foldexpr()'
+        vim.wo[0][0].foldmethod = 'expr'
+        vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+      end,
+    })
+  end,
 }

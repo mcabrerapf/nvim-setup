@@ -5,11 +5,23 @@ return {
   version = '1.*',
   dependencies = {
     'L3MON4D3/LuaSnip',
-    'folke/lazydev.nvim',
   },
   --- @module 'blink.cmp'
   --- @type blink.cmp.Config
   opts = {
+    cmdline = {
+      keymap = {
+
+        -- preset = 'cmdline',
+        ['<C-h>'] = { 'cancel' },
+        ['<C-j>'] = { 'select_next', 'fallback' },
+        ['<C-k>'] = { 'select_prev', 'fallback' },
+        ['<C-n>'] = { 'show_documentation', 'hide_documentation' },
+        ['<C-m>'] = { 'show_signature', 'hide_signature' },
+        ['<C-n>'] = false,
+        ['<C-p>'] = false,
+      },
+    },
     keymap = {
       -- 'default' (recommended) for mappings similar to built-in completions
       --   <c-y> to accept ([y]es) the completion.
@@ -30,35 +42,34 @@ return {
       -- <c-n>/<c-p> or <up>/<down>: Select next/previous item
       -- <c-e>: Hide menu
       -- <c-k>: Toggle signature help
-      --
-      -- See :h blink-cmp-config-keymap for defining your own keymap
-      preset = 'default',
+      --cancel
 
+      ['<C-h>'] = { 'cancel' },
+      ['<C-l>'] = { 'select_and_accept' },
+      ['<C-j>'] = { 'select_next', 'fallback' },
+      ['<C-k>'] = { 'select_prev', 'fallback' },
+      ['<C-n>'] = { 'show_documentation', 'hide_documentation' },
+      -- ['<C-m>'] = { 'show_signature', 'hide_signature' },
+      -- ['<C-n>'] = false,
+      -- ['<C-p>'] = false,
+      preset = 'default',
       -- For more advanced Luasnip keymaps (e.g. selecting choice nodes, expansion) see:
       --    https://github.com/L3MON4D3/LuaSnip?tab=readme-ov-file#keymaps
     },
-
     appearance = {
       -- 'mono' (default) for 'Nerd Font Mono' or 'normal' for 'Nerd Font'
       -- Adjusts spacing to ensure icons are aligned
       nerd_font_variant = 'mono',
     },
-
     completion = {
       -- By default, you may press `<c-space>` to show the documentation.
       -- Optionally, set `auto_show = true` to show the documentation after a delay.
-      documentation = { auto_show = false, auto_show_delay_ms = 500 },
+      documentation = { auto_show = true, auto_show_delay_ms = 500 },
     },
-
     sources = {
-      default = { 'lsp', 'path', 'snippets', 'lazydev' },
-      providers = {
-        lazydev = { module = 'lazydev.integrations.blink', score_offset = 100 },
-      },
+      default = { 'lsp', 'path', 'snippets' },
     },
-
     snippets = { preset = 'luasnip' },
-
     -- Blink.cmp includes an optional, recommended rust fuzzy matcher,
     -- which automatically downloads a prebuilt binary when enabled.
     --
@@ -67,7 +78,6 @@ return {
     --
     -- See :h blink-cmp-config-fuzzy for more information
     fuzzy = { implementation = 'lua' },
-
     -- Shows a signature help window while you type arguments for a function
     signature = { enabled = true },
   },

@@ -2,12 +2,11 @@ local create_floating_window = function(opts)
   opts = opts or {}
   local width = opts.width or math.floor(vim.o.columns * 0.6)
   local height = opts.height or math.floor(vim.o.lines * 0.6)
-
-  -- Calculate the position to center the window
+  local title = opts.title or 'center'
+  local title_pos = opts.title_pos or ''
   local col = math.floor((vim.o.columns - width) / 2)
   local row = math.floor((vim.o.lines - height) / 2)
 
-  -- Create a buffer
   local buf = nil
   if vim.api.nvim_buf_is_valid(opts.buf) then
     buf = opts.buf
@@ -23,6 +22,8 @@ local create_floating_window = function(opts)
     row = row,
     style = 'minimal', -- No borders or extra UI elements
     border = 'rounded',
+    title = title,
+    title_pos = title_pos,
   }
 
   local win = vim.api.nvim_open_win(buf, true, win_config)

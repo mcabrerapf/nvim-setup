@@ -2,9 +2,19 @@ return { -- Useful plugin to show you pending keybinds.
   'folke/which-key.nvim',
   event = 'VimEnter', -- Sets the loading event to 'VimEnter'
   opts = {
+    layout = {
+      width = { min = 20 }, -- min and max width of the columns
+      spacing = 2, -- spacing between columns
+    },
     -- delay between pressing a key and opening which-key (milliseconds)
     -- this setting is independent of vim.o.timeoutlen
-    delay = 0,
+    delay = 100,
+    win = {
+      title = false,
+      wo = {
+        -- winblend = 100,
+      },
+    },
     icons = {
       -- set icon mappings to true if you have a Nerd Font
       mappings = vim.g.have_nerd_font,
@@ -41,16 +51,15 @@ return { -- Useful plugin to show you pending keybinds.
         F12 = '<F12>',
       },
     },
-
-    -- Document existing key chains
     spec = {
       { '<leader>a', group = '[a]nnotations' },
-      { '<leader>t', group = '[t]oggle' },
       { '<leader>f', group = '[f]olders & [f]iles' },
-      { '<leader>s', group = '[s]earch' },
-      { '<leader>o', group = '[o]pen' },
-      { '<leader>w', group = 'LSP' },
       { '<leader>fn', group = '[n]eovim' },
+      { '<leader>n', group = '[n]otes' },
+      { '<leader>o', group = '[o]pen' },
+      { '<leader>s', group = '[s]earch' },
+      { '<leader>t', group = '[t]oggle' },
+      { '<leader>w', group = 'LSP' },
     },
   },
 }

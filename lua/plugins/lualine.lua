@@ -23,15 +23,23 @@ return {
           lualine_a = { 'mode' },
           lualine_b = { 'branch', 'diff' },
           lualine_c = {
-            function()
-              local file = vim.fn.expand '%:t'
-              if file == '' then
-                return vim.uv.cwd()
-                -- return vim.fn.fnamemodify(vim.fn.getcwd(), ':t')
-              else
-                return file
-              end
-            end,
+            {
+              function()
+                -- TODO: only aply highlight for files
+                return vim.fn.expand '%:t'
+              end,
+              color = { fg = '#f01df7', gui = 'bold' },
+            },
+            {
+              function()
+                local file = vim.fn.expand '%:t'
+                if file == '' then
+                  return vim.fn.fnamemodify(vim.uv.cwd(), ':t')
+                end
+                return vim.fn.fnamemodify(vim.uv.cwd(), ':t')
+              end,
+              color = { fg = '#a9b1d6' },
+            },
           },
           -- lualine_c = { { 'filename', path = 1 } },
           lualine_x = { 'encoding', 'filetype' },

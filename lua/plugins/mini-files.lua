@@ -241,7 +241,7 @@ return {
       mappings = {
         close = 'q',
         go_in = 'l',
-        go_in_plus = '',
+        go_in_plus = 'L',
         go_out = 'h',
         go_out_plus = 'H',
         mark_goto = "'",
@@ -249,7 +249,7 @@ return {
         reset = '<BS>',
         reveal_cwd = '.',
         show_help = 'g?',
-        synchronize = 's',
+        synchronize = '=',
         trim_left = '<',
         trim_right = '>',
       },
@@ -276,25 +276,22 @@ return {
       group = group,
       pattern = 'MiniFilesExplorerOpen',
       callback = function()
-        vim.keymap.set('n', 'L', function()
+        vim.keymap.set('n', '<C-e>', function()
           local fs = require 'mini.files'
           local entry = fs.get_fs_entry()
           if not entry then
             return
           end
           if entry.fs_type == 'file' then
-            fs.go_in { close_on_file = true }
             return
           end
           local path = entry.path
-          fs.close()
-          print(path)
+          -- fs.close()
           vim.cmd('tcd ' .. path)
-        end, { desc = 'go in pluse' })
+        end, { desc = 'Set dir as pwd' })
         --
         vim.keymap.set('n', 's', function()
           local fs = require 'mini.files'
-          local pick = require 'mini.pick'
           local entry = fs.get_fs_entry()
           if not entry then
             return
@@ -302,14 +299,14 @@ return {
           if entry.fs_type == 'file' then
             return
           end
-          local path = entry.path
           fs.close()
+          local pick = require 'mini.pick'
+          local path = entry.path
           pick.builtin.files(nil, { source = { cwd = path } })
         end, { desc = '[s]earch in folder' })
 
         vim.keymap.set('n', 'S', function()
           local fs = require 'mini.files'
-          local pick = require 'mini.pick'
           local entry = fs.get_fs_entry()
           if not entry then
             return
@@ -317,8 +314,9 @@ return {
           if entry.fs_type == 'file' then
             return
           end
-          local path = entry.path
           fs.close()
+          local pick = require 'mini.pick'
+          local path = entry.path
           pick.builtin.grep_live(nil, { source = { cwd = path } })
         end, { desc = 'Grep [S]earch in folder' })
       end,
@@ -328,7 +326,7 @@ return {
       group = group,
       pattern = 'MiniFilesExplorerClose',
       callback = function()
-        vim.keymap.del('n', 'L', {})
+        vim.keymap.del('n', '<C-e>', {})
         vim.keymap.del('n', 's', {})
         vim.keymap.del('n', 'S', {})
       end,
@@ -337,6 +335,10 @@ return {
     vim.keymap.set('n', '<leader>fF', function()
       files.open(vim.uv.cwd(), true)
     end, { desc = '[F]ile [e]xplorer' })
+    --
+    vim.keymap.set('n', '<leader>nf', function()
+      files.open(vim.env.NOTES_DIR_PATH, false)
+    end, { desc = 'open notes [f]iles explorer' })
     --
     vim.keymap.set('n', '<leader>ff', function()
       files.open(vim.api.nvim_buf_get_name(0), false)

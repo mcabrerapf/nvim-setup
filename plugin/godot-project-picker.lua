@@ -24,9 +24,10 @@ local function start_godot_server()
   local servers = vim.fn.serverlist()
   -- NOTE: In Godot add this to in
   -- Editor Settings > External > Exec flags > --server {godo_port} --remote-send "<C-\><C-N>:wincmd l | edit {file}<CR>{line}G{col}"
-  if not vim.tbl_contains(servers, target) then
-    vim.fn.serverstart(target)
+  if vim.tbl_contains(servers, target) then
+    return
   end
+  vim.fn.serverstart(target)
 end
 
 local function open_godot(project_path)
@@ -74,14 +75,14 @@ local toggle_project_picker = function()
   if not vim.api.nvim_win_is_valid(state.floating.win) then
     local dirs = get_directories(vim.env.GODOT_PROJECTS_PATH)
     local longest_dir_name = get_longest_dir_name(dirs)
-    state.floating = create_floating_window { buf = state.floating.buf, width = longest_dir_name, height = 10 }
+    state.floating = create_floating_window { buf = state.floating.buf, width = longest_dir_name, height = 10, title = 'Godot Projects' }
     populate_buffer(state.floating.buf, dirs)
 
     vim.keymap.set('n', 'q', function()
       vim.api.nvim_win_hide(state.floating.win)
     end, { buffer = state.floating.buf, nowait = true })
     --
-    vim.keymap.set('n', 'L', function()
+    vim.keymap.set('n', '<C-e>', function()
       local project_path = get_selected_project_path()
       open_project(project_path)
       open_godot(project_path)
