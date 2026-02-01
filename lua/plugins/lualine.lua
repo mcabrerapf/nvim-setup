@@ -21,25 +21,33 @@ return {
         },
         sections = {
           lualine_a = { 'mode' },
-          lualine_b = { 'branch', 'diff' },
+          lualine_b = {
+            'branch',
+            'diff',
+            {
+              function()
+                return vim.fs.basename(vim.fn.getcwd())
+              end,
+              color = { gui = 'bold' },
+            },
+          },
           lualine_c = {
             {
               function()
-                -- TODO: only aply highlight for files
                 return vim.fn.expand '%:t'
               end,
-              color = { fg = '#f01df7', gui = 'bold' },
+              color = { fg = '#04f49c', gui = 'bold' },
             },
-            {
-              function()
-                local file = vim.fn.expand '%:t'
-                if file == '' then
-                  return vim.fn.fnamemodify(vim.uv.cwd(), ':t')
-                end
-                return vim.fn.fnamemodify(vim.uv.cwd(), ':t')
-              end,
-              color = { fg = '#a9b1d6' },
-            },
+            -- {
+            --   function()
+            --     local file = vim.fn.expand '%:t'
+            --     if file == '' then
+            --       return vim.fn.fnamemodify(vim.uv.cwd(), ':t')
+            --     end
+            --     return vim.fn.fnamemodify(vim.uv.cwd(), ':t')
+            --   end,
+            --   color = { fg = '#a9b1d6' },
+            -- },
           },
           -- lualine_c = { { 'filename', path = 1 } },
           lualine_x = { 'encoding', 'filetype' },

@@ -4,16 +4,19 @@
 --  See `:help hlsearch`
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>', { desc = 'Clear search highlight' })
 -- NOTE: For faster navigation
-vim.keymap.set('n', '<C-j>', '<C-d>zz', { desc = 'Page Down' })
-vim.keymap.set('n', '<C-k>', '<C-u>zz', { desc = 'Page Up' })
+-- vim.keymap.set('n', '<M-j>', '<C-d>zz', { desc = 'Page Down' })
+-- vim.keymap.set('n', '<M-k>', '<C-u>zz', { desc = 'Page Up' })
+vim.keymap.set('n', '<M-j>', '<C-d>zz', { desc = 'Scroll half screen Down' })
+vim.keymap.set('n', '<M-k>', '<C-u>zz', { desc = 'Scroll half screen Up' })
+vim.keymap.set('n', '<M-J>', '<C-f>zz', { desc = 'Page Down' })
+vim.keymap.set('n', '<M-K>', '<C-b>zz', { desc = 'Page Up' })
 -- NOTE: Easy way to close terminal
 vim.keymap.set('t', '<esc><esc>', '<c-\\><c-n>')
 
 -- NOTE: Diagnostic keymaps
 -- vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
-vim.keymap.set('n', '<leader>q', function()
+vim.keymap.set('n', '<leader>tq', function()
   local qf_open = false
-
   for _, win in ipairs(vim.fn.getwininfo()) do
     if win.quickfix == 1 then
       qf_open = true
@@ -26,17 +29,23 @@ vim.keymap.set('n', '<leader>q', function()
   else
     vim.cmd 'copen'
   end
-end, { desc = 'Open diagnostic [Q]uickfix list' })
+end, { desc = 'Toggle [Q]uickfix list' })
+
+vim.keymap.set('n', '<leader>b', function()
+  vim.cmd 'bp'
+end, { desc = 'previous buffer' })
 
 vim.keymap.set('v', '<leader>w', function()
   vim.cmd('vimgrep /' .. vim.fn.expand '<cword>' .. '/ ./**')
   vim.cmd 'copen'
 end, { desc = 'vim[g]rep highlighted word' })
 
-vim.keymap.set({ 'n', 'i' }, '<C-s>', function()
+vim.keymap.set({ 'n', 'i' }, '<M-s>', function()
   vim.cmd 'w'
-end, { desc = 'Save window' })
--- vim.keymap.set('n', '<C-c>', '<C-w>c', { desc = 'Close window' })
+end, { desc = 'Save file' })
+vim.keymap.set('n', '<M-q>', function()
+  vim.cmd 'bdelete'
+end, { desc = 'Close buffer' })
 
 vim.keymap.set('n', '<leader>nn', function()
   local name = vim.fn.input 'New note name: '
