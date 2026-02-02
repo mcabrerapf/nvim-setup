@@ -51,14 +51,16 @@ local function start_godot_server()
 end
 
 local function open_godot(project_path)
-  vim.fn.jobstart({
-    'cmd.exe',
-    '/c',
-    vim.env.GODOT_EXE_PATH,
-    '--editor',
-    '--path',
-    project_path,
-  }, { detach = true })
+  if vim.fn.filereadable(vim.env.GODOT_EXE_PATH) == 1 then
+    vim.fn.jobstart({
+      'cmd.exe',
+      '/c',
+      vim.env.GODOT_EXE_PATH,
+      '--editor',
+      '--path',
+      project_path,
+    }, { detach = true })
+  end
 end
 
 local function populate_buffer(buf, dirs)
@@ -86,9 +88,9 @@ local function open_project(project_path)
   if project_path == '' then
     return
   end
-  vim.cmd 'tabnew'
+  -- vim.cmd 'tabnew'
   vim.cmd('tcd ' .. project_path)
-  require('mini.files').open(vim.uv.cwd(), true)
+  -- require('mini.files').open(vim.uv.cwd(), true)
 end
 
 local toggle_project_picker = function()
@@ -105,15 +107,15 @@ local toggle_project_picker = function()
     vim.keymap.set('n', '<M-l>', function()
       local project_path = get_selected_project_path()
       open_project(project_path)
-      open_godot(project_path)
       start_godot_server()
+      open_godot(project_path)
       load_godot_session(project_path)
     end, { buffer = state.floating.buf, nowait = true })
     --
     vim.keymap.set('n', 'l', function()
       local project_path = get_selected_project_path()
-      open_project(project_path)
       start_godot_server()
+      open_project(project_path)
       load_godot_session(project_path)
     end, { buffer = state.floating.buf, nowait = true })
   else

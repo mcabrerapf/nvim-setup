@@ -63,7 +63,7 @@ local toggle_session_picker = function()
       current_sesion = get_selected_session_path()
       vim.api.nvim_win_hide(state.floating.win)
       vim.cmd '%bd'
-      vim.cmd(':source ' .. current_sesion)
+      vim.cmd('source ' .. current_sesion)
     end, { buffer = state.floating.buf, nowait = true })
     --
   else
@@ -81,14 +81,14 @@ vim.keymap.set('n', '<leader>en', function()
   end
   local sessions_dir = vim.env.SESSIONS_DIR_PATH
   local file_path = sessions_dir .. '/' .. name
-  vim.cmd(':mksession ' .. file_path)
+  vim.cmd('mksession ' .. file_path)
   current_sesion = file_path
 end, { desc = 'create session' })
 --
 vim.keymap.set('n', '<leader>eN', function()
   local sessions_dir = vim.env.SESSIONS_DIR_PATH
   local file_path = vim.fn.getcwd() .. '/' .. 'session.vim'
-  vim.cmd(':mksession ' .. file_path)
+  vim.cmd('mksession ' .. file_path)
   current_sesion = file_path
 end, { desc = 'create session in current pwd' })
 --
@@ -100,5 +100,5 @@ vim.keymap.set('n', '<leader>es', function()
   if not current_sesion or current_sesion == '' then
     return
   end
-  vim.cmd(':mksession! ' .. current_sesion)
+  vim.cmd('mksession! ' .. current_sesion)
 end, { desc = 'update current session' })

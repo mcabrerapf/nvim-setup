@@ -118,7 +118,7 @@ return {
     --
     vim.keymap.set('n', '<leader>nf', function()
       files.open(vim.env.NOTES_DIR_PATH, false)
-    end, { desc = 'open notes [f]iles explorer' })
+    end, { desc = 'browse notes' })
     --
     vim.keymap.set('n', '<leader>ff', function()
       files.open(vim.api.nvim_buf_get_name(0), false)

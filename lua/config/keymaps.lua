@@ -5,15 +5,17 @@ vim.keymap.set('n', '<M-k>', '<C-u>zz', { desc = 'Scroll half screen Up' })
 -- vim.keymap.set('n', '<C-M-k>', '<C-b>zz', { desc = 'Page Up' })
 -- NOTE: Easy way to close terminal
 vim.keymap.set('t', '<esc><esc>', '<c-\\><c-n>', { desc = 'Close terminal' })
-vim.keymap.set('i', 'jkl', '<esc>', { desc = 'Quit insert mode' })
+vim.keymap.set('i', 'lkj', '<esc>', { desc = 'Quit insert mode' })
 vim.keymap.set('n', '<S-l>', 'g_', { desc = 'Move to last character in line' })
 vim.keymap.set('n', '<S-h>', '^', { desc = 'Move to first character in line' })
 -- move around windows
 vim.keymap.set('n', '<leader>j', '<C-w>j', { desc = 'move to bottom window' })
 vim.keymap.set('n', '<leader>k', '<C-w>k', { desc = 'move to top window' })
+vim.keymap.set('n', '<leader>h', '<C-w>h', { desc = 'move to left window' })
+vim.keymap.set('n', '<leader>l', '<C-w>l', { desc = 'move to right window' })
 -- NOTE: Diagnostic keymaps
 -- vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
-vim.keymap.set('n', '<leader>tq', function()
+vim.keymap.set('n', '<leader>qq', function()
   local qf_open = false
   for _, win in ipairs(vim.fn.getwininfo()) do
     if win.quickfix == 1 then
@@ -29,6 +31,14 @@ vim.keymap.set('n', '<leader>tq', function()
   end
 end, { desc = 'Toggle [Q]uickfix list' })
 
+vim.keymap.set('n', '<leader>qk', function()
+  vim.cmd 'cp'
+end, { desc = 'Go to prev quickfix item' })
+
+vim.keymap.set('n', '<leader>qj', function()
+  vim.cmd 'cn'
+end, { desc = 'Go to next quickfix item' })
+
 vim.keymap.set('n', '<leader>b', function()
   vim.cmd 'bp'
 end, { desc = 'previous buffer' })
@@ -39,8 +49,17 @@ vim.keymap.set('v', '<leader>w', function()
 end, { desc = 'vim[g]rep highlighted word' })
 
 vim.keymap.set({ 'n' }, '<leader><leader>s', function()
-  vim.cmd 'w'
+  local buf_name = vim.api.nvim_buf_get_name(0) -- get current buffer name
+  if buf_name == '' then
+    return
+  else
+    vim.cmd 'write'
+  end
 end, { desc = 'Save file' })
+
+vim.keymap.set({ 'n' }, '<leader><leader>S', function()
+  vim.cmd 'wa'
+end, { desc = 'Save all files' })
 
 vim.keymap.set('n', '<leader><leader>q', function()
   vim.cmd 'bdelete'
@@ -80,16 +99,3 @@ vim.keymap.set('n', '<leader>nn', function()
   vim.cmd 'normal G'
   vim.cmd 'startinsert'
 end, { desc = 'Create & open new markdown note in nvim config' })
-
-vim.keymap.set('n', '<leader>en', function()
-  local name = vim.fn.input 'Session name: '
-  if name == '' then
-    return
-  end
-  if not name:match '%.vim$' then
-    name = name .. '.vim'
-  end
-  local sessions_dir = vim.env.SESSIONS_DIR_PATH
-  local file_path = sessions_dir .. '/' .. name
-  vim.cmd(':mksession ' .. file_path)
-end, { desc = 'create session' })

@@ -12,6 +12,10 @@ return {
         enable = true, -- enable Treesitter syntax highlighting
         additional_vim_regex_highlighting = false,
       },
+      textobjects = {
+        select = { enable = true },
+        move = { enable = true },
+      },
       indent = {
         enable = true, -- optional: better indentation
       },

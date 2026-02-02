@@ -17,40 +17,37 @@ return {
             winbar = {},
           },
           always_divide_middle = true,
-          globalstatus = true, -- single statusline
+          globalstatus = false, -- single statusline
         },
         sections = {
-          lualine_a = { 'mode' },
-          lualine_b = {
-            'branch',
-            'diff',
+          lualine_a = {
             {
-              function()
+              'mode',
+              fmt = function()
                 return vim.fs.basename(vim.fn.getcwd())
               end,
               color = { gui = 'bold' },
             },
           },
+          lualine_b = {
+            'branch',
+            'diff',
+          },
           lualine_c = {
             {
-              function()
-                return vim.fn.expand '%:t'
-              end,
-              color = { fg = '#04f49c', gui = 'bold' },
+              'filename',
+              file_status = true,
+              newfile_status = false,
+              symbols = {
+                modified = '[+]',
+                readonly = '[-]',
+                unnamed = '[No Name]',
+                newfile = '[New]',
+              },
+              color = { fg = '#a9b1d6' },
             },
-            -- {
-            --   function()
-            --     local file = vim.fn.expand '%:t'
-            --     if file == '' then
-            --       return vim.fn.fnamemodify(vim.uv.cwd(), ':t')
-            --     end
-            --     return vim.fn.fnamemodify(vim.uv.cwd(), ':t')
-            --   end,
-            --   color = { fg = '#a9b1d6' },
-            -- },
           },
-          -- lualine_c = { { 'filename', path = 1 } },
-          lualine_x = { 'encoding', 'filetype' },
+          lualine_x = { 'encoding' },
           lualine_y = { 'progress' },
           lualine_z = { 'location' },
         },
