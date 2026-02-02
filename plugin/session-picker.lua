@@ -48,7 +48,7 @@ local function get_selected_session_path()
   return vim.env.SESSIONS_DIR_PATH .. '/' .. line
 end
 
-local toggle_project_picker = function()
+local toggle_session_picker = function()
   if not vim.api.nvim_win_is_valid(state.floating.win) then
     local sessions = get_sessions(vim.env.SESSIONS_DIR_PATH)
     local longest_session_name = get_longest_session_name(sessions)
@@ -71,9 +71,30 @@ local toggle_project_picker = function()
   end
 end
 
+vim.keymap.set('n', '<leader>en', function()
+  local name = vim.fn.input 'Session name: '
+  if name == '' then
+    return
+  end
+  if not name:match '%.vim$' then
+    name = name .. '.vim'
+  end
+  local sessions_dir = vim.env.SESSIONS_DIR_PATH
+  local file_path = sessions_dir .. '/' .. name
+  vim.cmd(':mksession ' .. file_path)
+  current_sesion = file_path
+end, { desc = 'create session' })
+--
+vim.keymap.set('n', '<leader>eN', function()
+  local sessions_dir = vim.env.SESSIONS_DIR_PATH
+  local file_path = vim.fn.getcwd() .. '/' .. 'session.vim'
+  vim.cmd(':mksession ' .. file_path)
+  current_sesion = file_path
+end, { desc = 'create session in current pwd' })
+--
 vim.keymap.set('n', '<leader>ef', function()
-  toggle_project_picker()
-end, { desc = 'open sessions [f]iles explorer' })
+  toggle_session_picker()
+end, { desc = 'browser sessions' })
 --
 vim.keymap.set('n', '<leader>es', function()
   if not current_sesion or current_sesion == '' then

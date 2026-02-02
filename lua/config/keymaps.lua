@@ -4,8 +4,13 @@ vim.keymap.set('n', '<M-k>', '<C-u>zz', { desc = 'Scroll half screen Up' })
 -- vim.keymap.set('n', '<C-M-j>', '<C-f>zz', { desc = 'Page Down' })
 -- vim.keymap.set('n', '<C-M-k>', '<C-b>zz', { desc = 'Page Up' })
 -- NOTE: Easy way to close terminal
-vim.keymap.set('t', '<esc><esc>', '<c-\\><c-n>')
-
+vim.keymap.set('t', '<esc><esc>', '<c-\\><c-n>', { desc = 'Close terminal' })
+vim.keymap.set('i', 'jkl', '<esc>', { desc = 'Quit insert mode' })
+vim.keymap.set('n', '<S-l>', 'g_', { desc = 'Move to last character in line' })
+vim.keymap.set('n', '<S-h>', '^', { desc = 'Move to first character in line' })
+-- move around windows
+vim.keymap.set('n', '<leader>j', '<C-w>j', { desc = 'move to bottom window' })
+vim.keymap.set('n', '<leader>k', '<C-w>k', { desc = 'move to top window' })
 -- NOTE: Diagnostic keymaps
 -- vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
 vim.keymap.set('n', '<leader>tq', function()
@@ -36,9 +41,14 @@ end, { desc = 'vim[g]rep highlighted word' })
 vim.keymap.set({ 'n' }, '<leader><leader>s', function()
   vim.cmd 'w'
 end, { desc = 'Save file' })
+
 vim.keymap.set('n', '<leader><leader>q', function()
   vim.cmd 'bdelete'
 end, { desc = 'Close buffer' })
+
+vim.keymap.set('n', '<leader><leader>Q', function()
+  vim.cmd 'qa'
+end, { desc = 'QUIT NVIM' })
 
 vim.keymap.set('n', '<leader>nn', function()
   local name = vim.fn.input 'New note name: '
@@ -82,4 +92,4 @@ vim.keymap.set('n', '<leader>en', function()
   local sessions_dir = vim.env.SESSIONS_DIR_PATH
   local file_path = sessions_dir .. '/' .. name
   vim.cmd(':mksession ' .. file_path)
-end, { desc = 'Save current session' })
+end, { desc = 'create session' })

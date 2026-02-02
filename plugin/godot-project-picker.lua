@@ -1,12 +1,32 @@
 -- WARN: Make sure both godot.exe AND the projects folder are in the same drive
 local create_floating_window = require 'utils.create-floating-window'
 local get_directories = require 'utils.get-directories'
+
 local state = {
   floating = {
     buf = -1,
     win = -1,
   },
 }
+local session_path = ''
+
+local function updated_godot_session()
+  if not session_path or session_path == '' then
+    return
+  end
+  vim.cmd('mksession! ' .. session_path)
+end
+
+local function load_godot_session(project_path)
+  session_path = project_path .. '/session.vim'
+  vim.cmd '%bd'
+  if vim.fn.filereadable(session_path) == 1 then
+    vim.cmd('source ' .. session_path)
+  else
+    vim.cmd('mksession ' .. session_path)
+    print 'creating sesh'
+  end
+end
 
 local function get_longest_dir_name(dirs)
   local max_len = 0
@@ -87,18 +107,24 @@ local toggle_project_picker = function()
       open_project(project_path)
       open_godot(project_path)
       start_godot_server()
+      load_godot_session(project_path)
     end, { buffer = state.floating.buf, nowait = true })
     --
     vim.keymap.set('n', 'l', function()
       local project_path = get_selected_project_path()
       open_project(project_path)
       start_godot_server()
+      load_godot_session(project_path)
     end, { buffer = state.floating.buf, nowait = true })
   else
     vim.api.nvim_win_hide(state.floating.win)
   end
 end
-
+--
+vim.api.nvim_create_autocmd('VimLeavePre', {
+  callback = updated_godot_session,
+})
+--
 vim.keymap.set('n', '<leader>fg', function()
   toggle_project_picker()
 end, {

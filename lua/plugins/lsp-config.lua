@@ -33,47 +33,47 @@ return {
 
         -- Rename the variable under your cursor.
         --  Most Language Servers support renaming across files, etc.
-        map('<leader>wn', vim.lsp.buf.rename, '[R]e[n]ame')
+        map('grn', vim.lsp.buf.rename, '[R]e[n]ame')
 
         -- Execute a code action, usually your cursor needs to be on top of an error
         -- or a suggestion from your LSP for this to activate.
-        map('<leader>wa', vim.lsp.buf.code_action, '[G]oto Code [A]ction', { 'n', 'x' })
+        map('gra', vim.lsp.buf.code_action, '[G]oto Code [A]ction', { 'n', 'x' })
 
         -- Find references for the word under your cursor.
         -- map('grr', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
         local extra = require 'mini.extra'
-        vim.keymap.set('n', '<leader>wd', function()
+        vim.keymap.set('n', 'grd', function()
           extra.pickers.lsp { scope = 'declaration' }
         end, { desc = 'Go to [d]eclaration' })
         -- map('grD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
         --
-        vim.keymap.set('n', '<leader>wD', function()
+        vim.keymap.set('n', 'grD', function()
           extra.pickers.lsp { scope = 'definition' }
         end, { desc = '[G]oto [D]efinition' })
         --
-        vim.keymap.set('n', '<leader>wr', function()
+        vim.keymap.set('n', 'grr', function()
           extra.pickers.lsp { scope = 'references' }
         end, { desc = '[G]oto [R]eferences' })
         --
-        vim.keymap.set('n', '<leader>wi', function()
+        vim.keymap.set('n', 'gri', function()
           extra.pickers.lsp { scope = 'implementation' }
         end, { desc = '[G]oto [I]mplementation' })
         --
-        vim.keymap.set('n', '<leader>wt', function()
+        vim.keymap.set('n', 'grt', function()
           extra.pickers.lsp { scope = 'type_definition' }
         end, { desc = '[G]oto [T]ype Definition' })
         --
-        vim.keymap.set('n', '<leader>ws', function()
+        vim.keymap.set('n', 'grs', function()
           extra.pickers.lsp { scope = 'document_symbol' }
         end, { desc = '[G]oto Document [S]ymbols' })
         --
-        vim.keymap.set('n', '<leader>wS', function()
+        vim.keymap.set('n', 'grS', function()
           extra.pickers.lsp { scope = 'workspace_symbol' }
         end, { desc = '[G]oto Workspace [S]ymbols' })
         --
-        -- vim.keymap.set('n', '<leader>grn', function()
-        --   extra.lsp.rename()
-        -- end, { desc = '[R]ename symbol' })
+        vim.keymap.set('n', 'grN', function()
+          extra.lsp.rename()
+        end, { desc = '[R]ename symbol' })
         -- This function resolves a difference between neovim nightly (version 0.11) and stable (version 0.10)
         ---@param client vim.lsp.Client
         ---@param method vim.lsp.protocol.Method

@@ -13,11 +13,11 @@ return {
       keymap = {
 
         -- preset = 'cmdline',
-        ['<C-h>'] = { 'cancel' },
-        ['<C-j>'] = { 'select_next', 'fallback' },
-        ['<C-k>'] = { 'select_prev', 'fallback' },
-        ['<C-n>'] = { 'show_documentation', 'hide_documentation' },
-        ['<C-m>'] = { 'show_signature', 'hide_signature' },
+        ['<M-h>'] = { 'cancel' },
+        ['<M-j>'] = { 'select_next', 'fallback' },
+        ['<M-k>'] = { 'select_prev', 'fallback' },
+        ['<M-n>'] = { 'show_documentation', 'hide_documentation' },
+        ['<M-m>'] = { 'show_signature', 'hide_signature' },
         ['<C-n>'] = false,
         ['<C-p>'] = false,
       },
@@ -44,15 +44,15 @@ return {
       -- <c-k>: Toggle signature help
       --cancel
 
-      ['<C-h>'] = { 'cancel' },
-      ['<C-l>'] = { 'select_and_accept' },
-      ['<C-j>'] = { 'select_next', 'fallback' },
-      ['<C-k>'] = { 'select_prev', 'fallback' },
-      ['<C-n>'] = { 'show_documentation', 'hide_documentation' },
+      ['<M-q>'] = { 'cancel' },
+      ['<M-l>'] = { 'select_and_accept' },
+      ['<M-j>'] = { 'select_next', 'fallback' },
+      ['<M-k>'] = { 'select_prev', 'fallback' },
+      ['<M-n>'] = { 'show_documentation', 'hide_documentation' },
       -- ['<C-m>'] = { 'show_signature', 'hide_signature' },
       -- ['<C-n>'] = false,
       -- ['<C-p>'] = false,
-      preset = 'default',
+      -- preset = 'default',
       -- For more advanced Luasnip keymaps (e.g. selecting choice nodes, expansion) see:
       --    https://github.com/L3MON4D3/LuaSnip?tab=readme-ov-file#keymaps
     },
@@ -64,7 +64,7 @@ return {
     completion = {
       -- By default, you may press `<c-space>` to show the documentation.
       -- Optionally, set `auto_show = true` to show the documentation after a delay.
-      documentation = { auto_show = true, auto_show_delay_ms = 500 },
+      documentation = { auto_show = false, auto_show_delay_ms = 500 },
     },
     sources = {
       default = { 'lsp', 'path', 'snippets' },
