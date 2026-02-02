@@ -29,7 +29,7 @@ return {
         -- stop = '<M-q>',
         stop = '<M-q>',
         choose = '<M-l>',
-        choose_in_vsplit = '<M-L>',
+        choose_in_vsplit = '<M-v>',
         move_down = '<M-j>',
         move_up = '<M-k>',
         mark = '<M-x>',

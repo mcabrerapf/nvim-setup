@@ -88,7 +88,7 @@ return {
           pick.builtin.files(nil, { source = { cwd = path } })
         end, { desc = '[s]earch files in folder' })
 
-        vim.keymap.set('n', '<M-S>', function()
+        vim.keymap.set('n', '<M-s><M-s>', function()
           local fs = require 'mini.files'
           local entry = fs.get_fs_entry()
           if not entry or entry.fs_type == 'file' then
@@ -108,7 +108,7 @@ return {
       callback = function()
         vim.keymap.del('n', '<M-e>', {})
         vim.keymap.del('n', '<M-s>', {})
-        vim.keymap.del('n', '<M-S>', {})
+        vim.keymap.del('n', '<M-s><M-s>', {})
       end,
     })
     --

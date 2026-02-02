@@ -82,7 +82,7 @@ local toggle_project_picker = function()
       vim.api.nvim_win_hide(state.floating.win)
     end, { buffer = state.floating.buf, nowait = true })
     --
-    vim.keymap.set('n', '<C-e>', function()
+    vim.keymap.set('n', '<M-l>', function()
       local project_path = get_selected_project_path()
       open_project(project_path)
       open_godot(project_path)
