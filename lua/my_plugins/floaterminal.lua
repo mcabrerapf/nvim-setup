@@ -37,10 +37,9 @@ local function set_commands()
 end
 
 local function set_keymaps()
-  vim.keymap.set('n', '<leader>tt', function()
-    toggle_terminal()
-  end, {
+  vim.keymap.set('n', '<leader>tt', ':FloTermToggle<CR>', {
     desc = 'Toggle floating terminal',
+    silent = true,
   })
 end
 

@@ -46,14 +46,9 @@ local function set_commands()
 end
 
 local function set_keymaps()
-  vim.keymap.set('n', '<leader>nn', function()
-    create_note()
-  end, { desc = 'Create & open new markdown note in nvim config' })
+  vim.keymap.set('n', '<leader>nn', ':NotesCreate<CR>', { desc = 'Create & open new markdown note in nvim config', silent = true })
   --
-
-  vim.keymap.set('n', '<leader>nf', function()
-    browse_notes()
-  end, { desc = 'browse notes' })
+  vim.keymap.set('n', '<leader>nf', ':NotesBrowse<CR>', { desc = 'browse notes', silent = true })
 end
 
 M.setup = function(opts)

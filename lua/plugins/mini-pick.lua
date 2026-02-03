@@ -47,19 +47,24 @@ return {
     vim.keymap.set('n', '<leader>ss', function()
       pick.builtin.files(nil, {
         source = {
-          -- name = 'Search files',
+          name = 'Search files',
           show = filename_first,
         },
       })
     end, { desc = 'Do [s]earch' })
     --
     vim.keymap.set('n', '<leader>sS', function()
-      pick.builtin.grep_live()
+      pick.builtin.grep_live(nil, {
+        source = {
+          name = 'Grep search',
+        },
+      })
     end, { desc = 'Do grep [S]earch' })
     --
     vim.keymap.set('n', '<leader>sv', function()
       pick.builtin.files(nil, {
         source = {
+          name = 'Search nvim files',
           cwd = vim.fn.stdpath 'config',
           show = filename_first,
         },
@@ -74,25 +79,5 @@ return {
       pick.builtin.help()
     end, { desc = 'Search [h]elp tags' })
     --
-    vim.keymap.set('n', '<leader>sg', function()
-      pick.builtin.files(nil, {
-        source = {
-          match = function(stritems, inds, query)
-            local prompt_pattern = vim.pesc(table.concat(query))
-            return vim.tbl_filter(function(i)
-              local item = stritems[i]
-              if item:find(prompt_pattern) == nil then
-                return false
-              end
-              if item:match '%.gd$' then
-                return true
-              end
-              return false
-            end, inds)
-          end,
-          show = filename_first,
-        },
-      })
-    end, { desc = '[s]earch [g]odot scripts' })
   end,
 }

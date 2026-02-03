@@ -85,7 +85,7 @@ return {
           fs.close()
           local pick = require 'mini.pick'
           local path = entry.path
-          pick.builtin.files(nil, { source = { cwd = path } })
+          pick.builtin.files(nil, { source = { cwd = path, name = 'Search files' } })
         end, { desc = '[s]earch files in folder' })
 
         vim.keymap.set('n', '<M-s><M-s>', function()
@@ -97,7 +97,7 @@ return {
           fs.close()
           local pick = require 'mini.pick'
           local path = entry.path
-          pick.builtin.grep_live(nil, { source = { cwd = path } })
+          pick.builtin.grep_live(nil, { source = { cwd = path, name = 'Grep search' } })
         end, { desc = 'Grep [S]earch in folder' })
       end,
     })
@@ -112,14 +112,13 @@ return {
       end,
     })
     --
-    vim.keymap.set('n', '<leader>fF', function()
-      files.open(vim.uv.cwd(), true)
-    end, { desc = '[F]ile [e]xplorer' })
-    --
-    --
     vim.keymap.set('n', '<leader>ff', function()
       files.open(vim.api.nvim_buf_get_name(0), false)
     end, { desc = '[f]ile explorer (current file)' })
+    --
+    vim.keymap.set('n', '<leader>fF', function()
+      files.open(vim.uv.cwd(), true)
+    end, { desc = '[F]ile [e]xplorer' })
     --
     vim.keymap.set('n', '<leader>fvc', function()
       files.open(vim.fn.stdpath 'config', false)

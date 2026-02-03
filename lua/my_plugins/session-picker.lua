@@ -54,6 +54,32 @@ local toggle_session_picker = function()
   end
 end
 
+local function create_session()
+  local name = vim.fn.input 'Session name: '
+  if name == '' then
+    return
+  end
+  if not name:match '%.vim$' then
+    name = name .. '.vim'
+  end
+  local file_path = vim.env.SESSIONS_DIR_PATH .. '/' .. name
+  vim.cmd(':mksession ' .. file_path)
+  M.current_session = file_path
+end
+
+local function create_session_in_current_pwd()
+  le_path = vim.fn.getcwd() .. '/' .. 'session.vim'
+  vim.cmd(':mksession ' .. file_path)
+  M.current_session = file_path
+end
+
+local function update_current_session()
+  if not M.current_session or M.current_session == '' then
+    return
+  end
+  vim.cmd(':mksession! ' .. M.current_session)
+end
+
 local function set_commands()
   vim.api.nvim_create_user_command('SeshPickCurrent', function()
     print(M.current_session)
@@ -62,38 +88,28 @@ local function set_commands()
   vim.api.nvim_create_user_command('SeshPickToggle', function()
     toggle_session_picker()
   end, {})
+  --
+  vim.api.nvim_create_user_command('SeshPickCreate', function()
+    create_session()
+  end, {})
+  --
+  vim.api.nvim_create_user_command('SeshPickCreatePwd', function()
+    create_session()
+  end, {})
+  --
+  vim.api.nvim_create_user_command('SeshPickUpdate', function()
+    update_current_session()
+  end, {})
 end
 
 local function set_keymaps()
-  vim.keymap.set('n', '<leader>en', function()
-    local name = vim.fn.input 'Session name: '
-    if name == '' then
-      return
-    end
-    if not name:match '%.vim$' then
-      name = name .. '.vim'
-    end
-    local file_path = vim.env.SESSIONS_DIR_PATH .. '/' .. name
-    vim.cmd(':mksession ' .. file_path)
-    M.current_session = file_path
-  end, { desc = 'create session' })
+  vim.keymap.set('n', '<leader>en', ':SeshPickCreate<CR>', { desc = 'create session', silent = true })
   --
-  vim.keymap.set('n', '<leader>eN', function()
-    local file_path = vim.fn.getcwd() .. '/' .. 'session.vim'
-    vim.cmd(':mksession ' .. file_path)
-    M.current_session = file_path
-  end, { desc = 'create session in current pwd' })
+  vim.keymap.set('n', '<leader>eN', ':SeshPickCreatePwd<CR>', { desc = 'create session in current pwd', silent = true })
   --
-  vim.keymap.set('n', '<leader>ef', function()
-    toggle_session_picker()
-  end, { desc = 'browser sessions' })
+  vim.keymap.set('n', '<leader>ef', ':SeshPickToggle<CR>', { desc = 'browse sessions', silent = true })
   --
-  vim.keymap.set('n', '<leader>es', function()
-    if not M.current_session or M.current_session == '' then
-      return
-    end
-    vim.cmd(':mksession! ' .. M.current_session)
-  end, { desc = 'update current session' })
+  vim.keymap.set('n', '<leader>es', ':SeshPickUpdate<CR>', { desc = 'update current session', silent = true })
 end
 
 M.setup = function(opts)

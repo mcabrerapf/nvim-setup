@@ -102,6 +102,30 @@ local toggle_project_picker = function()
   end
 end
 
+local function godot_script_search()
+  local pick = require 'mini.pick'
+  local filename_first = require 'utils.filename-first'
+  pick.builtin.files(nil, {
+    source = {
+      match = function(stritems, inds, query)
+        local prompt_pattern = vim.pesc(table.concat(query))
+        return vim.tbl_filter(function(i)
+          local item = stritems[i]
+          if item:find(prompt_pattern) == nil then
+            return false
+          end
+          if item:match '%.gd$' then
+            return true
+          end
+          return false
+        end, inds)
+      end,
+      name = 'Godot script search',
+      show = filename_first,
+    },
+  })
+end
+
 local function set_auto_commands()
   vim.api.nvim_create_autocmd('VimLeavePre', {
     callback = updated_godot_session,
@@ -110,20 +134,24 @@ end
 
 local function set_commands()
   vim.api.nvim_create_user_command('GodotPickerCurrent', function()
-    print(M.current_session)
+    print('Current Godot session -> ' .. M.current_session)
   end, {})
   --
   vim.api.nvim_create_user_command('GodotPickerToggle', function()
     toggle_project_picker()
   end, {})
+  --
+  vim.api.nvim_create_user_command('GodotScriptSearch', function()
+    godot_script_search()
+  end, {})
 end
 
 local function set_keymaps()
-  vim.keymap.set('n', '<leader>fg', function()
-    toggle_project_picker()
-  end, {
+  vim.keymap.set('n', '<leader>fg', ':GodotPickerToggle<CR>', {
     desc = '[g]odot',
+    silent = true,
   })
+  vim.keymap.set('n', '<leader>sg', ':GodotScriptSearch<CR>', { desc = '[s]earch [g]odot scripts', silent = true })
 end
 
 M.setup = function(opts)
