@@ -7,7 +7,7 @@ return {
     treesitter.setup {
       -- Directory to install parsers and queries to (prepended to `runtimepath` to have priority)
       install_dir = vim.fn.stdpath 'data' .. '/site',
-      treesitter.install { 'gdscript', 'gdshader', 'godot_resource', 'rust', 'javascript', 'zig' },
+      treesitter.install { 'gdscript', 'gdshader', 'godot_resource', 'rust', 'javascript', 'html', 'zig' },
       highlight = {
         enable = true, -- enable Treesitter syntax highlighting
         additional_vim_regex_highlighting = false,
@@ -22,7 +22,7 @@ return {
     }
 
     vim.api.nvim_create_autocmd('FileType', {
-      pattern = { 'gdscript', 'gdshader', 'godot_resource' },
+      pattern = { 'gdscript', 'gdshader', 'godot_resource', 'javascript', 'html' },
       callback = function()
         vim.treesitter.start()
         vim.wo[0][0].foldexpr = 'v:lua.vim.treesitter.foldexpr()'

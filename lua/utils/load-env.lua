@@ -4,7 +4,8 @@ local function load_env()
     GODOT_EXE_PATH = true,
     GODOT_SERVER_PORT = true,
   }
-
+  vim.fn.setenv('NOTES_DIR_PATH', vim.fn.stdpath 'config' .. '/notes')
+  vim.fn.setenv('SESSIONS_DIR_PATH', vim.fn.stdpath 'config' .. '/sessions')
   local env_path = vim.fn.stdpath 'config' .. '/.env'
   local file = io.open(env_path, 'r')
 
@@ -17,14 +18,9 @@ local function load_env()
     local key, value = line:match '^%s*([^=]+)%s*=%s*(.*)%s*$'
 
     if key and value and allowed_keys[key] then
-      print(key .. value)
       vim.env[key] = value
     end
   end
-
   file:close()
-
-  vim.fn.setenv('NOTES_DIR_PATH', vim.fn.stdpath 'config' .. '/notes')
-  vim.fn.setenv('SESSIONS_DIR_PATH', vim.fn.stdpath 'config' .. '/sessions')
 end
 return load_env
