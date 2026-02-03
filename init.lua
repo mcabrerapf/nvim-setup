@@ -1,9 +1,4 @@
--- vim.fn.setenv('GODOT_PROJECTS_PATH', 'F:/godot/projects/')
--- vim.fn.setenv('GODOT_EXE_PATH', 'F:/godot/Godot.exe')
--- vim.fn.setenv('GODOT_SERVER_PORT', '127.0.0.1:6004')
 require 'utils.load-env'()
-vim.fn.setenv('NOTES_DIR_PATH', vim.fn.stdpath 'config' .. '/notes')
-vim.fn.setenv('SESSIONS_DIR_PATH', vim.fn.stdpath 'config' .. '/sessions')
 
 if vim.fn.isdirectory(vim.env.NOTES_DIR_PATH) == 0 then
   vim.fn.mkdir(vim.env.NOTES_DIR_PATH, 'p')
