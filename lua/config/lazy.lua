@@ -17,6 +17,10 @@ vim.opt.rtp:prepend(lazypath)
 
 require('lazy').setup({
   { import = 'plugins' },
+  require('my_plugins.notes').setup {},
+  require('my_plugins.floaterminal').setup {},
+  require('my_plugins.godot-project-picker').setup {},
+  require('my_plugins.session-picker').setup {},
   -- { import = 'custom.plugins' }, -- for my own plugins
 }, {
   ui = {

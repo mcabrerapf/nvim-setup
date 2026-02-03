@@ -27,7 +27,7 @@ return {
       mappings = {
         close = 'q',
         go_in = 'l',
-        go_in_plus = 'L',
+        go_in_plus = '<M-l>',
         go_out = 'h',
         go_out_plus = 'H',
         mark_goto = "'",
@@ -116,9 +116,6 @@ return {
       files.open(vim.uv.cwd(), true)
     end, { desc = '[F]ile [e]xplorer' })
     --
-    vim.keymap.set('n', '<leader>nf', function()
-      files.open(vim.env.NOTES_DIR_PATH, false)
-    end, { desc = 'browse notes' })
     --
     vim.keymap.set('n', '<leader>ff', function()
       files.open(vim.api.nvim_buf_get_name(0), false)

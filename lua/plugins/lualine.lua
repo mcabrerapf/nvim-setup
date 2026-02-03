@@ -31,7 +31,6 @@ return {
           },
           lualine_b = {
             'branch',
-            'diff',
           },
           lualine_c = {
             {
@@ -44,10 +43,12 @@ return {
                 unnamed = '[No Name]',
                 newfile = '[New]',
               },
-              color = { fg = '#a9b1d6' },
+              color = { fg = '#04f49c' },
             },
           },
-          lualine_x = { 'encoding' },
+          lualine_x = {
+            'diff',
+          },
           lualine_y = { 'progress' },
           lualine_z = { 'location' },
         },
