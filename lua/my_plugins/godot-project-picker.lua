@@ -166,6 +166,7 @@ M.setup = function(opts)
   if not vim.env.GODOT_SERVER_PORT or not vim.env.GODOT_PROJECTS_PATH or not vim.env.GODOT_EXE_PATH then
     return
   else
+    M.state.floating.buf = vim.api.nvim_create_buf(false, true)
     set_auto_commands()
     set_commands()
     set_keymaps()

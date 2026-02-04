@@ -1,6 +1,6 @@
 local create_floating_window = function(opts)
   opts = opts or {}
-  local buf = nil
+  local buf = opts.buf
   local width = opts.width or math.floor(vim.o.columns * 0.6)
   local height = opts.height or math.floor(vim.o.lines * 0.6)
   local border = opts.border or 'rounded'
@@ -11,11 +11,6 @@ local create_floating_window = function(opts)
   local anchor = opts.anchor or 'NW'
   local fixed = opts.fixed or false
   local should_enter = opts.should_enter ~= false
-  if vim.api.nvim_buf_is_valid(opts.buf) then
-    buf = opts.buf
-  else
-    buf = vim.api.nvim_create_buf(false, true)
-  end
 
   local win_config = {
     relative = 'editor',

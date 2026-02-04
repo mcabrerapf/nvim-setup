@@ -113,6 +113,7 @@ local function set_keymaps()
 end
 
 M.setup = function(opts)
+  M.state.floating.buf = vim.api.nvim_create_buf(false, true)
   set_commands()
   set_keymaps()
 end

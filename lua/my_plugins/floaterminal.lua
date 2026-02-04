@@ -10,14 +10,17 @@ M.state = {
 local toggle_terminal = function()
   if vim.api.nvim_buf_is_valid(M.state.floating.buf) then
     vim.api.nvim_buf_delete(M.state.floating.buf, { force = true })
+    M.state.floating.buf = vim.api.nvim_create_buf(false, true)
+    vim.cmd.terminal()
   end
+
   if not vim.api.nvim_win_is_valid(M.state.floating.win) then
     local create_floating_window = require 'utils.create-floating-window'
     M.state.floating = create_floating_window { buf = M.state.floating.buf }
 
-    if vim.bo[M.state.floating.buf].buftype ~= 'terminal' then
-      vim.cmd.terminal()
-    end
+    -- if vim.bo[M.state.floating.buf].buftype ~= 'terminal' then
+    --   vim.cmd.terminal()
+    -- end
     vim.keymap.set('n', '<esc>', function()
       vim.api.nvim_win_hide(M.state.floating.win)
     end, { buffer = M.state.floating.buf, nowait = true })
@@ -44,8 +47,12 @@ local function set_keymaps()
 end
 
 M.setup = function(opts)
-  set_commands()
-  set_keymaps()
+  -- TODO: FIX THIS
+  return
+  -- M.state.floating.buf = vim.api.nvim_create_buf(false, true)
+  -- vim.cmd.terminal()
+  -- set_commands()
+  -- set_keymaps()
 end
 
 return M
