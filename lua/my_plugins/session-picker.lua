@@ -103,13 +103,13 @@ local function set_commands()
 end
 
 local function set_keymaps()
-  vim.keymap.set('n', '<leader>en', ':SeshPickCreate<CR>', { desc = 'create session', silent = true })
+  vim.keymap.set('n', '<leader>en', ':SeshPickCreate<CR>', { desc = 'Create session', silent = true })
   --
-  vim.keymap.set('n', '<leader>eN', ':SeshPickCreatePwd<CR>', { desc = 'create session in current pwd', silent = true })
+  vim.keymap.set('n', '<leader>eN', ':SeshPickCreatePwd<CR>', { desc = 'Create session in current pwd', silent = true })
   --
-  vim.keymap.set('n', '<leader>ef', ':SeshPickToggle<CR>', { desc = 'browse sessions', silent = true })
+  vim.keymap.set('n', '<leader>ef', ':SeshPickToggle<CR>', { desc = 'Browse sessions', silent = true })
   --
-  vim.keymap.set('n', '<leader>es', ':SeshPickUpdate<CR>', { desc = 'update current session', silent = true })
+  vim.keymap.set('n', '<leader>es', ':SeshPickUpdate<CR>', { desc = 'Save current session', silent = true })
 end
 
 M.setup = function(opts)
