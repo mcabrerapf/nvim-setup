@@ -43,8 +43,8 @@ vim.diagnostic.config {
   underline = { severity = vim.diagnostic.severity.ERROR },
 
   -- Can switch between these as you prefer
-  virtual_text = false, -- Text shows up at the end of the line
-  virtual_lines = true, -- Teest shows up underneath the line, with virtual lines
+  virtual_text = true, -- Text shows up at the end of the line
+  virtual_lines = false, -- Teest shows up underneath the line, with virtual lines
 
   -- Auto open the float, so you can easily read the errors when jumping with `[d` and `]d`
   jump = { float = true },

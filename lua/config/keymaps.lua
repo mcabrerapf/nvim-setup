@@ -1,13 +1,13 @@
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>', { desc = 'Clear search highlight' })
-vim.keymap.set('n', '<M-j>', '<C-d>', { desc = 'Scroll half screen Down' })
-vim.keymap.set('n', '<M-k>', '<C-u>', { desc = 'Scroll half screen Up' })
+vim.keymap.set('t', '<esc><esc>', '<c-\\><c-n>', { desc = 'Close terminal' })
+vim.keymap.set('i', 'lkj', '<esc>', { desc = 'Quit insert mode' })
 -- vim.keymap.set('n', '<C-M-j>', '<C-f>', { desc = 'Page Down' })
 -- vim.keymap.set('n', '<C-M-k>', '<C-b>', { desc = 'Page Up' })
 -- NOTE: Easy way to close terminal
-vim.keymap.set('t', '<esc><esc>', '<c-\\><c-n>', { desc = 'Close terminal' })
-vim.keymap.set('i', 'lkj', '<esc>', { desc = 'Quit insert mode' })
-vim.keymap.set('n', '<S-l>', 'g_', { desc = 'Move to last character in line' })
-vim.keymap.set('n', '<S-h>', '^', { desc = 'Move to first character in line' })
+vim.keymap.set('n', '<M-j>', '<C-d>', { desc = 'Scroll half screen Down' })
+vim.keymap.set('n', '<M-k>', '<C-u>', { desc = 'Scroll half screen Up' })
+vim.keymap.set('n', '<M-l>', 'g_', { desc = 'Move to last character in line' })
+vim.keymap.set('n', '<M-h>', '^', { desc = 'Move to first character in line' })
 -- move around windows
 vim.keymap.set('n', '<leader>j', '<C-w>j', { desc = 'move to bottom window' })
 vim.keymap.set('n', '<leader>k', '<C-w>k', { desc = 'move to top window' })
@@ -39,9 +39,7 @@ vim.keymap.set('n', '<leader>qj', function()
   vim.cmd 'cn'
 end, { desc = 'Go to next quickfix item' })
 
-vim.keymap.set('n', '<leader>b', function()
-  vim.cmd 'bp'
-end, { desc = 'previous buffer' })
+vim.keymap.set('n', '<leader>b', '<C-^>', { desc = 'Switch to last buffer' })
 
 vim.keymap.set('v', '<leader>w', function()
   vim.cmd('vimgrep /' .. vim.fn.expand '<cword>' .. '/ ./**')
