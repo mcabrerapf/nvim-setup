@@ -68,7 +68,7 @@ local function create_session()
 end
 
 local function create_session_in_current_pwd()
-  le_path = vim.fn.getcwd() .. '/' .. 'session.vim'
+  local file_path = vim.fn.getcwd() .. '/' .. 'session.vim'
   vim.cmd(':mksession ' .. file_path)
   M.current_session = file_path
 end
@@ -94,7 +94,7 @@ local function set_commands()
   end, {})
   --
   vim.api.nvim_create_user_command('SeshPickCreatePwd', function()
-    create_session()
+    create_session_in_current_pwd()
   end, {})
   --
   vim.api.nvim_create_user_command('SeshPickUpdate', function()

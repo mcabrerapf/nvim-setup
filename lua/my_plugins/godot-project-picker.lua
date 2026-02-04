@@ -15,6 +15,11 @@ local function updated_godot_session()
   vim.cmd('mksession! ' .. M.current_session)
 end
 
+local function load_haunts(path)
+  local project_bookmarks = path .. '/.bookmarks/'
+  require('haunt.api').change_data_dir(project_bookmarks)
+end
+
 local function load_godot_session(project_path)
   M.current_session = project_path .. '/session.vim'
   vim.cmd '%bd'
@@ -89,6 +94,7 @@ local toggle_project_picker = function()
       start_godot_server()
       open_godot(project_path)
       load_godot_session(project_path)
+      load_haunts(project_path)
     end, { buffer = M.state.floating.buf, nowait = true })
     --
     vim.keymap.set('n', 'l', function()
@@ -96,6 +102,7 @@ local toggle_project_picker = function()
       start_godot_server()
       open_project(project_path)
       load_godot_session(project_path)
+      load_haunts(project_path)
     end, { buffer = M.state.floating.buf, nowait = true })
   else
     vim.api.nvim_win_hide(M.state.floating.win)

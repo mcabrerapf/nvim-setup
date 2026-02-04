@@ -1,13 +1,16 @@
 local create_floating_window = function(opts)
   opts = opts or {}
+  local buf = nil
   local width = opts.width or math.floor(vim.o.columns * 0.6)
   local height = opts.height or math.floor(vim.o.lines * 0.6)
+  local border = opts.border or 'rounded'
   local title = opts.title or ''
   local title_pos = opts.title_pos or 'center'
-  local col = math.floor((vim.o.columns - width) / 2)
-  local row = math.floor((vim.o.lines - height) / 2)
-
-  local buf = nil
+  local col = opts.col or math.floor((vim.o.columns - width) / 2)
+  local row = opts.row or math.floor((vim.o.lines - height) / 2)
+  local anchor = opts.anchor or 'NW'
+  local fixed = opts.fixed or false
+  local should_enter = opts.should_enter ~= false
   if vim.api.nvim_buf_is_valid(opts.buf) then
     buf = opts.buf
   else
@@ -16,17 +19,18 @@ local create_floating_window = function(opts)
 
   local win_config = {
     relative = 'editor',
+    style = 'minimal', -- No borders or extra UI elements
+    border = border,
+    fixed = fixed,
     width = width,
     height = height,
     col = col,
     row = row,
-    style = 'minimal', -- No borders or extra UI elements
-    border = 'rounded',
     title = title,
     title_pos = title_pos,
+    anchor = anchor,
   }
-
-  local win = vim.api.nvim_open_win(buf, true, win_config)
+  local win = vim.api.nvim_open_win(buf, should_enter, win_config)
   return { buf = buf, win = win }
 end
 

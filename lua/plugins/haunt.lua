@@ -2,23 +2,42 @@ return {
   'TheNoeTrevino/haunt.nvim',
   -- default config: change to your liking, or remove it to use defaults
   ---@class HauntConfig
-  opts = {
-    sign = '󱙝',
-    sign_hl = 'DiagnosticInfo',
-    virt_text_hl = 'HauntAnnotation', -- links to DiagnosticVirtualTextHint
-    annotation_prefix = ' 󰆉 ',
-    line_hl = nil,
-    virt_text_pos = 'eol',
-    data_dir = nil,
-    per_branch_bookmarks = true,
-    picker = 'auto', -- "auto", "snacks", "telescope", or "fzf"
-    picker_keys = { -- picker agnostic, we got you covered
-      delete = { key = 'd', mode = { 'n' } },
-      edit_annotation = { key = 'a', mode = { 'n' } },
-    },
-  },
+  -- opts = {
+  --   sign = '󱙝',
+  --   sign_hl = 'DiagnosticInfo',
+  --   virt_text_hl = 'HauntAnnotation', -- links to DiagnosticVirtualTextHint
+  --   annotation_prefix = ' 󰆉 ',
+  --   line_hl = nil,
+  --   virt_text_pos = 'eol',
+  --   data_dir = nil,
+  --   per_branch_bookmarks = true,
+  --   picker = 'auto', -- "auto", "snacks", "telescope", or "fzf"
+  --   picker_keys = { -- picker agnostic, we got you covered
+  --     delete = { key = 'd', mode = { 'n' } },
+  --     edit_annotation = { key = 'a', mode = { 'n' } },
+  --   },
+  -- },
   -- recommended keymaps, with a helpful prefix alias
-  init = function()
+  config = function()
+    require('haunt').setup {
+      sign = '󱙝',
+      sign_hl = 'DiagnosticInfo',
+      virt_text_hl = 'HauntAnnotation', -- links to DiagnosticVirtualTextHint
+      annotation_prefix = ' 󰆉 ',
+      line_hl = nil,
+      virt_text_pos = 'eol', -- position of virtual text: "eol" (default), "eol_right_align", "overlay", "right_align", "inline"
+      data_dir = nil,
+      per_branch_bookmarks = true,
+      picker = 'auto', -- "auto", "snacks", "telescope", or "fzf"
+      --   picker_keys = { -- picker agnostic, we got you covered
+      --     delete = { key = 'd', mode = { 'n' } },
+      --     edit_annotation = { key = 'a', mode = { 'n' } },
+      --   },
+      picker_keys = { -- picker agnostic, we got you covered
+        delete = { key = '<M-d>', mode = { 'n' } },
+        edit_annotation = { key = '<M-e>', mode = { 'n' } },
+      },
+    }
     local haunt = require 'haunt.api'
     local haunt_picker = require 'haunt.picker'
     local map = vim.keymap.set
