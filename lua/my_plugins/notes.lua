@@ -153,11 +153,11 @@ local function set_keymaps()
 
   vim.keymap.set('n', '<leader>nf', ':NotesBrowse<CR>', { desc = 'Browse notes', silent = true })
 
-  vim.keymap.set('n', '<leader>ntt', ':NotesTodoToggle<CR>', { desc = 'Toggle TODO notes', silent = true })
+  vim.keymap.set('n', '<leader>nt', ':NotesTodoToggle<CR>', { desc = 'Toggle TODO notes', silent = true })
 
-  vim.keymap.set('n', '<leader>nta', ':NotesTodoAdd<CR>', { desc = 'Add task to TODO', silent = true })
+  vim.keymap.set('n', '<leader>na', ':NotesTodoAdd<CR>', { desc = 'Add task to TODO', silent = true })
 
-  vim.keymap.set('n', '<M-x>', toggle_todo_task_check, { desc = 'Mark TODO as done', silent = true, buffer = M.state.floating.buf })
+  vim.keymap.set('n', '<M-n>', toggle_todo_task_check, { desc = 'Mark TODO as done', silent = true, buffer = M.state.floating.buf })
 end
 
 M.setup = function(opts)
