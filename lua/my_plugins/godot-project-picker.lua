@@ -44,11 +44,9 @@ end
 local function open_godot(project_path)
   if vim.fn.filereadable(vim.env.GODOT_EXE_PATH) == 1 then
     vim.fn.jobstart({
-      'cmd.exe',
-      '/c',
       vim.env.GODOT_EXE_PATH,
-      '--editor',
-      '--path',
+      "--editor",
+      "--path",
       project_path,
     }, { detach = true })
   end
