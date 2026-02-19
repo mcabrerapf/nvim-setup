@@ -2,7 +2,7 @@ return {
   -- Main LSP Configuration
   'neovim/nvim-lspconfig',
   dependencies = {
-    { 'mason-org/mason.nvim', opts = {} },
+    { 'mason-org/mason.nvim',           opts = {} },
     { 'mason-org/mason-lspconfig.nvim', opts = {} },
     'WhoIsSethDaniel/mason-tool-installer.nvim',
     -- { 'j-hui/fidget.nvim', opts = {} },

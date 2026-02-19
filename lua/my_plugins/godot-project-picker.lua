@@ -1,3 +1,8 @@
+local create_floating_window = require 'utils.create-floating-window'
+local get_directories = require 'utils.get-directories'
+local get_longest_name = require 'utils.get-longest-string'
+local populate_buffer = require 'utils.populate-buffer'
+
 local M = {}
 
 M.state = {
@@ -22,7 +27,7 @@ end
 
 local function load_godot_session(project_path)
   M.current_session = project_path .. '/session.vim'
-  vim.cmd '%bd'
+  -- vim.cmd '%bd'
   if vim.fn.filereadable(M.current_session) == 1 then
     vim.cmd('source ' .. M.current_session)
   else
@@ -72,27 +77,29 @@ end
 
 local toggle_project_picker = function()
   if not vim.api.nvim_win_is_valid(M.state.floating.win) then
-    local create_floating_window = require 'utils.create-floating-window'
-    local get_directories = require 'utils.get-directories'
-    local get_longest_name = require 'utils.get-longest-string'
-    local populate_buffer = require 'utils.populate-buffer'
-
     local dirs = get_directories(vim.env.GODOT_PROJECTS_PATH)
     local longest_dir_name = get_longest_name(dirs)
+    if longest_dir_name < 25 then
+      longest_dir_name = 25
+    end
     M.state.floating = create_floating_window { buf = M.state.floating.buf, width = longest_dir_name, height = 10, title = 'Godot Projects' }
     populate_buffer(M.state.floating.buf, dirs, { filetype = 'godot_project_picker' })
-
+    --
+    vim.keymap.set('n', '<esc>', function()
+      vim.api.nvim_win_hide(M.state.floating.win)
+    end, { buffer = M.state.floating.buf, nowait = true })
+    --
     vim.keymap.set('n', 'q', function()
       vim.api.nvim_win_hide(M.state.floating.win)
     end, { buffer = M.state.floating.buf, nowait = true })
     --
     vim.keymap.set('n', '<M-l>', function()
       local project_path = get_selected_project_path()
-      open_project(project_path)
-      start_godot_server()
       open_godot(project_path)
-      load_godot_session(project_path)
-      load_haunts(project_path)
+      start_godot_server()
+      -- open_project(project_path)
+      -- load_godot_session(project_path)
+      -- load_haunts(project_path)
     end, { buffer = M.state.floating.buf, nowait = true })
     --
     vim.keymap.set('n', 'l', function()
@@ -108,8 +115,8 @@ local toggle_project_picker = function()
 end
 
 local function godot_script_search()
-  local pick = require 'mini.pick'
   local filename_first = require 'utils.filename-first'
+  local pick = require 'mini.pick'
   pick.builtin.files(nil, {
     source = {
       match = function(stritems, inds, query)

@@ -8,8 +8,11 @@ return {
         options = {
           icons_enabled = true,
           theme = 'auto',
-          component_separators = { left = '', right = '' },
-          section_separators = { left = '', right = '' },
+          -- theme = 'tokyonight',
+          -- component_separators = { left = '', right = '' },
+          -- section_separators = { left = '', right = '' },
+          section_separators = { left = '', right = '' },
+          component_separators = { left = '', right = '' },
           -- component_separators = '|',
           -- section_separators = '',
           disabled_filetypes = {
@@ -48,6 +51,8 @@ return {
           },
           lualine_x = {
             'diff',
+            -- 'fileformat',
+            'filetype',
           },
           lualine_y = { 'progress' },
           lualine_z = { 'location' },

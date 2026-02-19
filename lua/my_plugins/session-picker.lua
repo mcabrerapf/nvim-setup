@@ -35,9 +35,19 @@ local toggle_session_picker = function()
   if not vim.api.nvim_win_is_valid(M.state.floating.win) then
     local sessions = get_sessions(vim.env.SESSIONS_DIR_PATH)
     local longest_session_name = get_longest_filename(sessions)
+    if longest_session_name < 25 then
+      longest_session_name = 25
+    end
     M.state.floating = create_floating_window { buf = M.state.floating.buf, width = longest_session_name, height = 10, title = 'Sessions' }
     populate_buffer(M.state.floating.buf, sessions, { filetype = 'session_picker' })
-
+    --
+    vim.keymap.set('n', 'q', function()
+      vim.api.nvim_win_hide(M.state.floating.win)
+    end, { buffer = M.state.floating.buf, nowait = true })
+    vim.keymap.set('n', '<esc>', function()
+      vim.api.nvim_win_hide(M.state.floating.win)
+    end, { buffer = M.state.floating.buf, nowait = true })
+    --
     vim.keymap.set('n', 'q', function()
       vim.api.nvim_win_hide(M.state.floating.win)
     end, { buffer = M.state.floating.buf, nowait = true })

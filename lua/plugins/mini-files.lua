@@ -68,10 +68,10 @@ return {
           if not entry then
             return
           end
-          if entry.fs_type == 'file' then
-            return
-          end
           local path = entry.path
+          if entry.fs_type == 'file' then
+            path = vim.fs.dirname(path)
+          end
           vim.cmd('tcd ' .. path)
           print('Pwd set to -> ' .. path)
         end, { desc = 'Set dir as pwd' })

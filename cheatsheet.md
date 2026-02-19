@@ -108,6 +108,8 @@
 ####        ----- COMMANDS
 [:!]         ----- to run shell commands
 [:{start},{end}d]     ----- delete lines {start} to {end}
+[:{start},{end}t.]    ----- copy lines {start} to {end} to cursor (use '{mark} instead of . to send to mark)
+[:{start},{end}m.]    ----- move lines {start} to {end} to cursor
 [:s]        ----- search and replace in current line (start with % to apply to entire document) followed by regular expression, (ie :%s/word/new_word/g changes all word to new_word, add c to confirm on each) (ie :#,#s/old/new/g chantes old to new from line # to #
 )
 [:noh]      ----- clear search results
@@ -119,6 +121,12 @@
 [:g/{pattern}/d]  - delete all lines containing pattern
 [:g!/{pattern}/d] - delete all lines not containing pattern
 [:find {file_name}] - go to file
+
+####        ----- GLOBAL COMMAND :g/{pattern}/{cmd}
+[:g/{pattern}]     --- prints all lines with the pattern
+[:g/{pattern}/d]   --- deletes all lines with the pattern
+[:g!/{pattern}/d]  --- deletes all lines without the pattern (g! is the same as using v)  s
+
 
 ### EXTRAS
 - register [=] is an expression register (command line)
@@ -172,3 +180,4 @@ Value: gcc
 ####
 Inspired by https://vim.rtorr.com/
 ####
+
