@@ -63,6 +63,10 @@ vim.keymap.set('n', '<leader><leader>q', function()
   vim.cmd 'bdelete'
 end, { desc = 'Close buffer' })
 
-vim.keymap.set('n', '<leader><leader>Q', function()
+vim.keymap.set("n", "<leader><leader>Q", function()
+  vim.cmd '%bd|e#'
+end, { desc = "Close ALL other buffers" })
+
+vim.keymap.set('n', '<leader><leader><M-q>', function()
   vim.cmd 'qa'
 end, { desc = 'QUIT NVIM' })

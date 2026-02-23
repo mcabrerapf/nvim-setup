@@ -53,7 +53,11 @@ local function open_godot(project_path)
       "--editor",
       "--path",
       project_path,
-    }, { detach = true })
+    }, {
+      detach = true,
+      -- stdout = "null",
+      -- stderr = "null",
+    })
   end
 end
 
