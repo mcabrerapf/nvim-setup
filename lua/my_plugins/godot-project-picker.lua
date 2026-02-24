@@ -27,7 +27,6 @@ end
 
 local function load_godot_session(project_path)
   M.current_session = project_path .. '/session.vim'
-  -- vim.cmd '%bd'
   if vim.fn.filereadable(M.current_session) == 1 then
     vim.cmd('source ' .. M.current_session)
   else
@@ -38,8 +37,7 @@ end
 local function start_godot_server()
   local target = vim.env.GODOT_SERVER_PORT
   local servers = vim.fn.serverlist()
-  -- NOTE: In Godot add this to in
-  -- Editor Settings > External > Exec flags > --server {godo_port} --remote-send "<C-\><C-N>:wincmd l | edit {file}<CR>{line}G{col}"
+  -- NOTE: In Godot add this in Editor Settings > External > Exec flags > --server {godo_port} --remote-send "<C-\><C-N>:wincmd l | edit {file}<CR>{line}G{col}"
   if vim.tbl_contains(servers, target) then
     return
   end
@@ -48,16 +46,27 @@ end
 
 local function open_godot(project_path)
   if vim.fn.filereadable(vim.env.GODOT_EXE_PATH) == 1 then
-    vim.fn.jobstart({
+    vim.system({
+      "cmd.exe",
+      "/c",
+      "start",
+      "",
       vim.env.GODOT_EXE_PATH,
       "--editor",
       "--path",
       project_path,
-    }, {
-      detach = true,
-      -- stdout = "null",
-      -- stderr = "null",
     })
+    -- vim.system({
+    --   vim.env.GODOT_EXE_PATH,
+    --   "--editor",
+    --   "--path",
+    --   project_path,
+    -- }, {
+    --   stdout = false,
+    --   stderr = false,
+    --   text = false,
+    --   detach = true,
+    -- })
   end
 end
 
@@ -153,13 +162,9 @@ local function set_commands()
     print('Current Godot session -> ' .. M.current_session)
   end, {})
   --
-  vim.api.nvim_create_user_command('GodotPickerToggle', function()
-    toggle_project_picker()
-  end, {})
-  --
-  vim.api.nvim_create_user_command('GodotScriptSearch', function()
-    godot_script_search()
-  end, {})
+  vim.api.nvim_create_user_command('GodotPickerToggle', toggle_project_picker, {})
+  vim.api.nvim_create_user_command('GodotScriptSearch', godot_script_search, {})
+  vim.api.nvim_create_user_command('GodotStartServer', start_godot_server, {})
 end
 
 local function set_keymaps()

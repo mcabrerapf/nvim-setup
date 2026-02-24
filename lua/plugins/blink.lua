@@ -3,9 +3,9 @@ return {
   'saghen/blink.cmp',
   event = 'VimEnter',
   version = '1.*',
-  dependencies = {
-    'L3MON4D3/LuaSnip',
-  },
+  -- dependencies = {
+  --   'L3MON4D3/LuaSnip',
+  -- },
   --- @module 'blink.cmp'
   --- @type blink.cmp.Config
   opts = {
@@ -70,7 +70,7 @@ return {
     sources = {
       default = { 'lsp', 'path', 'snippets' },
     },
-    snippets = { preset = 'luasnip' },
+    -- snippets = { preset = 'luasnip' },
     -- Blink.cmp includes an optional, recommended rust fuzzy matcher,
     -- which automatically downloads a prebuilt binary when enabled.
     --
