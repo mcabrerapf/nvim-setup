@@ -60,6 +60,7 @@
 [gi]        ----- go to last instert
 [gj]        ----- move cursor down([k] up) in multi line text
 [gn]        ----- find next ([gN] prev) from previous search and visually highlight it
+[gO]        ----- show an outline of the current file
 [gp]        ----- paste after cursor and leave cursor after([gP] before) the new text
 [gt]        ----- go to next tab
 [gu]        ----- lower([U] upper, [~] toggle) at cursor requires motion ([w][e]etc..)
@@ -81,6 +82,7 @@
 [C-wq]      ----- quit a window
 [C-wx]      ----- exchange current window with next one
 [C-w=]      ----- make all windows equal height & width
+[[spacebar] ----- adds empty line before (]spacebar after) line
 
 ####        ----- INSERT MODE
 [C-a]       ----- insert last insert

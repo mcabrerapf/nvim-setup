@@ -131,33 +131,20 @@ local function set_auto_commands()
 end
 
 local function set_commands()
-  vim.api.nvim_create_user_command('NotesCreate', function()
-    create_note()
-  end, {})
-
-  vim.api.nvim_create_user_command('NotesBrowse', function()
-    browse_notes()
-  end, {})
-
-  vim.api.nvim_create_user_command('NotesTodoToggle', function()
-    toggle_todo_note()
-  end, {})
-
-  vim.api.nvim_create_user_command('NotesTodoAdd', function()
-    add_todo_task()
-  end, {})
+  vim.api.nvim_create_user_command('NotesCreate', create_note, {})
+  vim.api.nvim_create_user_command('NotesBrowse', browse_notes, {})
+  vim.api.nvim_create_user_command('NotesTodoToggle', toggle_todo_note, {})
+  vim.api.nvim_create_user_command('NotesTodoAdd', add_todo_task, {})
 end
 
 local function set_keymaps()
-  vim.keymap.set('n', '<leader>nn', ':NotesCreate<CR>', { desc = 'Create & open new markdown note in nvim config', silent = true })
-
+  vim.keymap.set('n', '<leader>nn', ':NotesCreate<CR>',
+    { desc = 'Create & open new markdown note in nvim config', silent = true })
   vim.keymap.set('n', '<leader>nf', ':NotesBrowse<CR>', { desc = 'Browse notes', silent = true })
-
   vim.keymap.set('n', '<leader>nt', ':NotesTodoToggle<CR>', { desc = 'Toggle TODO notes', silent = true })
-
   vim.keymap.set('n', '<leader>na', ':NotesTodoAdd<CR>', { desc = 'Add task to TODO', silent = true })
-
-  vim.keymap.set('n', '<M-n>', toggle_todo_task_check, { desc = 'Mark TODO as done', silent = true, buffer = M.state.floating.buf })
+  vim.keymap.set('n', '<M-n>', toggle_todo_task_check,
+    { desc = 'Mark TODO as done', silent = true, buffer = M.state.floating.buf })
 end
 
 M.setup = function(opts)
