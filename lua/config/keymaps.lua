@@ -41,11 +41,6 @@ end, { desc = 'Go to next quickfix item' })
 
 vim.keymap.set('n', '<leader>b', '<C-^>', { desc = 'Switch to last buffer' })
 
-vim.keymap.set('v', '<leader>w', function()
-  vim.cmd('vimgrep /' .. vim.fn.expand '<cword>' .. '/ ./**')
-  vim.cmd 'copen'
-end, { desc = 'vim[g]rep highlighted word' })
-
 vim.keymap.set('n', '<leader><leader>s', function()
   local buf_name = vim.api.nvim_buf_get_name(0)
   if buf_name == '' then

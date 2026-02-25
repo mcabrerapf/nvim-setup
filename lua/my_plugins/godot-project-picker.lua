@@ -20,11 +20,6 @@ local function updated_godot_session()
   vim.cmd('mksession! ' .. M.current_session)
 end
 
-local function load_haunts(path)
-  local project_bookmarks = path .. '/.bookmarks/'
-  require('haunt.api').change_data_dir(project_bookmarks)
-end
-
 local function load_godot_session(project_path)
   M.current_session = project_path .. '/session.vim'
   if vim.fn.filereadable(M.current_session) == 1 then
@@ -39,7 +34,7 @@ local function start_godot_server()
   local servers = vim.fn.serverlist()
   -- NOTE: In Godot add this in Editor Settings > External > Exec flags > --server {godo_port} --remote-send "<C-\><C-N>:wincmd l | edit {file}<CR>{line}G{col}"
   if vim.tbl_contains(servers, target) then
-    return
+    vim.fn.serverstop(target)
   end
   vim.fn.serverstart(target)
 end
@@ -110,9 +105,8 @@ local toggle_project_picker = function()
       local project_path = get_selected_project_path()
       open_godot(project_path)
       start_godot_server()
-      -- open_project(project_path)
-      -- load_godot_session(project_path)
-      -- load_haunts(project_path)
+      open_project(project_path)
+      load_godot_session(project_path)
     end, { buffer = M.state.floating.buf, nowait = true })
     --
     vim.keymap.set('n', 'l', function()
@@ -120,7 +114,6 @@ local toggle_project_picker = function()
       start_godot_server()
       open_project(project_path)
       load_godot_session(project_path)
-      load_haunts(project_path)
     end, { buffer = M.state.floating.buf, nowait = true })
   else
     vim.api.nvim_win_hide(M.state.floating.win)
@@ -130,25 +123,8 @@ end
 local function godot_script_search()
   local filename_first = require 'utils.filename-first'
   local pick = require 'mini.pick'
-  pick.builtin.files(nil, {
-    source = {
-      match = function(stritems, inds, query)
-        local prompt_pattern = vim.pesc(table.concat(query))
-        return vim.tbl_filter(function(i)
-          local item = stritems[i]
-          if item:find(prompt_pattern) == nil then
-            return false
-          end
-          if item:match '%.gd$' then
-            return true
-          end
-          return false
-        end, inds)
-      end,
-      name = 'Godot script search',
-      show = filename_first,
-    },
-  })
+  local items = vim.fn.glob('**/*.gd', false, true)
+  pick.start({ source = { items = items, show = filename_first, name = "Godot script search" } })
 end
 
 local function set_auto_commands()

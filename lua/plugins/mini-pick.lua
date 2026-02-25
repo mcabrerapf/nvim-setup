@@ -61,6 +61,17 @@ return {
       })
     end, { desc = 'Do grep [S]earch' })
     --
+    vim.keymap.set('n', '<leader>sw', function()
+      local cword = vim.fn.expand("<cword>")
+      pick.builtin.grep({ pattern = cword }, { source = { name = cword } })
+    end, { desc = "Grep [w]ord" })
+    --
+    vim.keymap.set('v', '<leader>s', function()
+      vim.cmd("normal! y")
+      local text = vim.fn.getreg('"')
+      pick.builtin.grep({ pattern = text }, { source = { name = text } })
+    end, { desc = "Grep [s]election" })
+    --
     vim.keymap.set('n', '<leader>sv', function()
       pick.builtin.files(nil, {
         source = {
@@ -79,5 +90,8 @@ return {
       pick.builtin.help()
     end, { desc = 'Search [h]elp tags' })
     --
+    vim.keymap.set('n', '<leader>sr', function()
+      pick.builtin.resume()
+    end, { desc = '[r]esume last search' })
   end,
 }

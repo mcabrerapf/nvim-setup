@@ -10,7 +10,12 @@ local filename_first = function(buf_id, item_arr)
     local icon, icon_hl = devicons.get_icon(basename, ext, { default = true })
     icon = icon or ''
     icon_hl = icon_hl or 'Normal'
-    local line = string.format('%s %s /%s', icon, basename, directory)
+    if directory == "." then
+      directory = ""
+    else
+      directory = "/" .. directory
+    end
+    local line = string.format('%s %s %s', icon, basename, directory)
     lines[i] = line
   end
 
@@ -21,8 +26,9 @@ local filename_first = function(buf_id, item_arr)
     local ext = vim.fn.fnamemodify(basename, ':e')
     local icon, icon_hl = devicons.get_icon(basename, ext, { default = true })
     icon_hl = icon_hl or 'Normal'
-    vim.api.nvim_buf_add_highlight(buf_id, -1, icon_hl, i - 1, 0, #icon)
-    vim.api.nvim_buf_add_highlight(buf_id, -1, 'CustomHighlightedText', i - 1, #icon + 1, #icon + 1 + #basename)
+    local ns = vim.api.nvim_create_namespace("my_highlights")
+    vim.hl.range(buf_id, ns, icon_hl, { i - 1, 0 }, { i - 1, #icon })
+    vim.hl.range(buf_id, ns, 'CustomHighlightedText', { i - 1, #icon + 1 }, { i - 1, #icon + 1 + #basename })
   end
 end
 
