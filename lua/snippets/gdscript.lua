@@ -9,81 +9,48 @@
 -- local fmta = require('luasnip.extras.fmt').fmta
 -- local rep = require('luasnip.extras').rep
 
-return {
-  -- NOTE: Enter and exit tree functons
-  s(
-    { trig = 'fee' },
-    fmta(
-      [[
-	func _enter_tree() ->> void:
-		<>.connect(<>)
-
-
-	func _exit_tree() ->> void:
-		<>.disconnect(<>)
-
-
-	]],
-      {
-        i(1, 'signal_name'),
-        i(2, 'func_name'),
-        rep(1),
-        rep(2),
-      }
-    )
-  ),
-}, {
-  -- NOTE: AUTOLOADS
-  -- Basic function
-  s(
-    { trig = 'funcd', snippetType = 'autosnippet' },
-    fmta(
-      [[
-	func <>(<>) ->> <>:
-		<>
-
-
-	]],
-      {
-        i(1),
-        i(2),
-        i(3, 'void'),
-        i(4, 'return'),
-      }
-    )
-  ),
-  --
-}
-
--- ls.add_snippets('gdscript', {
+-- return {
+--   -- NOTE: Enter and exit tree functons
+--   s(
+--     { trig = 'fee' },
+--     fmta(
+--       [[
+-- 	func _enter_tree() ->> void:
+-- 		<>.connect(<>)
 --
---   -- s(
---   --   { trig = 'func', snippetType = 'autosnippet' },
---   --   fmta(
---   --     [[
---   --   func <>(<>) - >> <>:
---   --   ]],
---   --     { i(1), rep(1), i(3) }
---   --   ),
---   --   {
---   --     t { '', '\t' },
---   --     i(4),
---   --   }
---   -- ),
---   -- s(
---   --   { trig = 'tree' },
---   --   fmta(
---   --     [[
---   --     func _enter_tree():
---   --     <>
+--
+-- 	func _exit_tree() ->> void:
+-- 		<>.disconnect(<>)
+--
+--
+-- 	]],
+--       {
+--         i(1, 'signal_name'),
+--         i(2, 'func_name'),
+--         rep(1),
+--         rep(2),
+--       }
+--     )
+--   ),
+-- }, {
+--   -- NOTE: AUTOLOADS
+--   -- Basic function
+--   s(
+--     { trig = 'funcd', snippetType = 'autosnippet' },
+--     fmta(
+--       [[
+-- 	func <>(<>) ->> <>:
+-- 		<>
+--
+--
+-- 	]],
+--       {
+--         i(1),
+--         i(2),
+--         i(3, 'void'),
+--         i(4, 'return'),
+--       }
+--     )
+--   ),
 --   --
---   --     func _exit_tree():
---   --     <>
---   --     ]],
---   --     {
---   --       { t '\t', i(1, '-- setup') },
---   --       { t '\t', rep(1) },
---   --     }
---   --   )
---   -- ),
--- })
+-- }

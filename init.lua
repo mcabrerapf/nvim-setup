@@ -1,4 +1,4 @@
-require 'utils.load-env'()
+require 'utils.load-env' ()
 
 if vim.fn.isdirectory(vim.env.NOTES_DIR_PATH) == 0 then
   vim.fn.mkdir(vim.env.NOTES_DIR_PATH, 'p')

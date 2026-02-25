@@ -24,7 +24,7 @@ vim.o.updatetime = 250   -- Decrease update time
 vim.o.timeoutlen = 300   -- Decrease mapped sequence wait time
 vim.o.splitright = true
 vim.o.splitbelow = true
-vim.o.eadirection = 'ver'  -- Tells when the 'equalalways' option applies
+vim.o.eadirection = 'both' -- Tells when the 'equalalways' option applies
 vim.o.list = true          -- Sets how neovim will display certain whitespace characters in the editor.
 vim.o.inccommand = 'split' -- Preview substitutions live, as you type
 vim.o.cursorline = true    -- Show which line your cursor is on
@@ -33,22 +33,22 @@ vim.o.confirm = true       -- Raise a dialog asking if you wish to save the curr
 vim.opt.foldenable = false -- set folds to open when opening file
 vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
 vim.opt.guicursor = {      -- cursor blink if using wezterm need to set its default blink rate as well
-    'n-v-c:block',
-    'i-ci-ve:ver25',
-    'r-cr:hor20',
-    'o:hor50',
-    'a:blinkon400-blinkoff400-blinkwait400',
+  'n-v-c:block',
+  'i-ci-ve:ver25',
+  'r-cr:hor20',
+  'o:hor50',
+  'a:blinkon400-blinkoff400-blinkwait400',
 }
 vim.diagnostic.config {
-    update_in_insert = false,
-    severity_sort = true,
-    float = { border = 'rounded', source = 'if_many' },
-    underline = { severity = vim.diagnostic.severity.ERROR },
+  update_in_insert = false,
+  severity_sort = true,
+  float = { border = 'rounded', source = 'if_many' },
+  underline = { severity = vim.diagnostic.severity.ERROR },
 
-    -- Can switch between these as you prefer
-    virtual_text = true, -- Text shows up at the end of the line
-    virtual_lines = false, -- Teest shows up underneath the line, with virtual lines
+  -- Can switch between these as you prefer
+  virtual_text = true,   -- Text shows up at the end of the line
+  virtual_lines = false, -- Teest shows up underneath the line, with virtual lines
 
-    -- Auto open the float, so you can easily read the errors when jumping with `[d` and `]d`
-    jump = { float = true },
+  -- Auto open the float, so you can easily read the errors when jumping with `[d` and `]d`
+  jump = { float = true },
 }
