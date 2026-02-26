@@ -3,16 +3,15 @@ return {
   'saghen/blink.cmp',
   event = 'VimEnter',
   version = '1.*',
-  -- dependencies = {
-  --   'L3MON4D3/LuaSnip',
-  -- },
+  dependencies = {
+    'L3MON4D3/LuaSnip',
+  },
   --- @module 'blink.cmp'
   --- @type blink.cmp.Config
   opts = {
     signature = { enabled = true },
     cmdline = {
       keymap = {
-
         -- preset = 'cmdline',
         ['<M-h>'] = { 'cancel' },
         ['<M-j>'] = { 'select_next', 'fallback' },
@@ -45,11 +44,15 @@ return {
       -- <c-k>: Toggle signature help
       --cancel
 
-      ['<M-q>'] = { 'cancel' },
-      ['<M-l>'] = { 'select_and_accept' },
+      ['<M-h>'] = { 'cancel' },
       ['<M-j>'] = { 'select_next', 'fallback' },
       ['<M-k>'] = { 'select_prev', 'fallback' },
       ['<M-n>'] = { 'show_documentation', 'hide_documentation' },
+      ['<M-m>'] = { 'show_signature', 'hide_signature' },
+      ['<C-n>'] = false,
+      ['<C-p>'] = false,
+      ['<M-q>'] = { 'cancel' },
+      ['<M-l>'] = { 'select_and_accept' },
       -- ['<C-m>'] = { 'show_signature', 'hide_signature' },
       -- ['<C-n>'] = false,
       -- ['<C-p>'] = false,
@@ -65,7 +68,15 @@ return {
     completion = {
       -- By default, you may press `<c-space>` to show the documentation.
       -- Optionally, set `auto_show = true` to show the documentation after a delay.
+      -- sources = {
+      --   default = {
+      --     "lsp", "path", "snippets"
+      --   }
+      -- },
       documentation = { auto_show = false, auto_show_delay_ms = 500 },
+    },
+    snippets = {
+      preset = "luasnip"
     },
     sources = {
       default = { 'lsp', 'path', 'snippets' },
@@ -80,6 +91,5 @@ return {
     -- See :h blink-cmp-config-fuzzy for more information
     fuzzy = { implementation = 'lua' },
     -- Shows a signature help window while you type arguments for a function
-    signature = { enabled = true },
   },
 }

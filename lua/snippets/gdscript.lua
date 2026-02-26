@@ -1,56 +1,34 @@
--- local ls = require 'luasnip'
--- local s = ls.snippet
+local ls = require 'luasnip'
+local s = ls.snippet
 -- local sn = ls.snippet_node
--- local t = ls.text_node
--- local i = ls.insert_node
--- -- local f = ls.function_node
+local t = ls.text_node
+local i = ls.insert_node
+-- local f = ls.function_node
 -- local d = ls.dynamic_node
--- -- local fmt = require("luasnip.extras.fmt").fmt
--- local fmta = require('luasnip.extras.fmt').fmta
--- local rep = require('luasnip.extras').rep
+-- local isn = ls.indent_snippet_node
+local fmt = require("luasnip.extras.fmt").fmt
+local fmta = require('luasnip.extras.fmt').fmta
+local rep = require('luasnip.extras').rep
 
--- return {
---   -- NOTE: Enter and exit tree functons
---   s(
---     { trig = 'fee' },
---     fmta(
---       [[
--- 	func _enter_tree() ->> void:
--- 		<>.connect(<>)
---
---
--- 	func _exit_tree() ->> void:
--- 		<>.disconnect(<>)
---
---
--- 	]],
---       {
---         i(1, 'signal_name'),
---         i(2, 'func_name'),
---         rep(1),
---         rep(2),
---       }
---     )
---   ),
--- }, {
---   -- NOTE: AUTOLOADS
---   -- Basic function
---   s(
---     { trig = 'funcd', snippetType = 'autosnippet' },
---     fmta(
---       [[
--- 	func <>(<>) ->> <>:
--- 		<>
---
---
--- 	]],
---       {
---         i(1),
---         i(2),
---         i(3, 'void'),
---         i(4, 'return'),
---       }
---     )
---   ),
---   --
--- }
+return {
+}, {
+  s(
+    {
+      trig = 'fnd',
+      snippetType = 'autosnippet'
+    },
+    fmta(
+      [[
+	    func <fName>(<fArgs>) ->> <fReturn>:
+		      <fBody>
+	    ]],
+      {
+        fName = i(1, '_name'),
+        fArgs = i(2),
+        fReturn = i(3, 'void'),
+        fBody = i(4, 'return'),
+      }
+    )
+  ),
+  --
+}

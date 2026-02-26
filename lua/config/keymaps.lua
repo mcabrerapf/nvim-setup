@@ -1,6 +1,5 @@
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>', { desc = 'Clear search highlight' })
 vim.keymap.set('t', '<esc><esc>', '<c-\\><c-n>', { desc = 'Close terminal' })
-vim.keymap.set('i', 'lkj', '<esc>', { desc = 'Quit insert mode' })
 -- vim.keymap.set('n', '<C-M-j>', '<C-f>', { desc = 'Page Down' })
 -- vim.keymap.set('n', '<C-M-k>', '<C-b>', { desc = 'Page Up' })
 -- NOTE: Easy way to close terminal
