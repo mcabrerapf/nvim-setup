@@ -1,30 +1,27 @@
 local create_floating_window = require 'utils.create-floating-window'
 
+local todo_note_filepath = vim.env.NOTES_DIR_PATH .. '/' .. 'todo.md'
 local M = {
-  state = {
-    floating = {
-      buf = -1,
-      win = -1,
-    },
+  floating = {
+    buf = -1,
+    win = -1,
   },
 }
-local notes_dir = vim.env.NOTES_DIR_PATH
-local todo_note_filepath = notes_dir .. '/' .. 'todo.md'
 
 local function setup_buffer()
   if vim.fn.filereadable(todo_note_filepath) == 0 then
     vim.fn.mkdir(vim.fn.fnamemodify(todo_note_filepath, ':h'), 'p')
     vim.fn.writefile({ '- [ ] First' }, todo_note_filepath)
   end
-  M.state.floating.buf = vim.api.nvim_create_buf(false, true)
-  vim.api.nvim_set_option_value('modifiable', true, { buf = M.state.floating.buf })
-  vim.bo[M.state.floating.buf].filetype = 'markdown'
+  M.floating.buf = vim.api.nvim_create_buf(false, true)
+  vim.api.nvim_set_option_value('modifiable', true, { buf = M.floating.buf })
+  vim.bo[M.floating.buf].filetype = 'markdown'
   local lines = vim.fn.readfile(todo_note_filepath)
-  vim.api.nvim_buf_set_lines(M.state.floating.buf, 0, -1, false, lines)
+  vim.api.nvim_buf_set_lines(M.floating.buf, 0, -1, false, lines)
 end
 
 local function save_buffer_to_file()
-  local buf = M.state.floating.buf
+  local buf = M.floating.buf
   if not buf or not vim.api.nvim_buf_is_valid(buf) then
     return
   end
@@ -35,7 +32,7 @@ end
 
 local function toggle_todo_task_check()
   local buf = vim.api.nvim_get_current_buf()
-  if buf ~= M.state.floating.buf then
+  if buf ~= M.floating.buf then
     return
   end
 
@@ -55,10 +52,10 @@ local function toggle_todo_task_check()
 end
 
 local function toggle_todo_note()
-  if not vim.api.nvim_win_is_valid(M.state.floating.win) then
+  if not vim.api.nvim_win_is_valid(M.floating.win) then
     local width = math.floor(vim.o.columns / 6)
-    M.state.floating = create_floating_window {
-      buf = M.state.floating.buf,
+    M.floating = create_floating_window {
+      buf = M.floating.buf,
       width = width,
       height = 15,
       title = '- TODO -',
@@ -69,12 +66,12 @@ local function toggle_todo_note()
       border = { '.', '-', '.', '║', '.', '_', '.', '║' },
     }
   else
-    vim.api.nvim_win_hide(M.state.floating.win)
+    vim.api.nvim_win_hide(M.floating.win)
   end
 end
 
 local function add_todo_task()
-  local buf = M.state.floating.buf
+  local buf = M.floating.buf
   if not buf or not vim.api.nvim_buf_is_valid(buf) then
     return
   end
@@ -98,7 +95,7 @@ local function create_note()
   if not name:match '%.md$' then
     name = name .. '.md'
   end
-  local file_path = notes_dir .. '/' .. name
+  local file_path = vim.env.NOTES_DIR_PATH .. '/' .. name
 
   if vim.fn.filereadable(file_path) == 0 then
     local file = io.open(file_path, 'w')
@@ -144,7 +141,7 @@ local function set_keymaps()
   vim.keymap.set('n', '<leader>nt', ':NotesTodoToggle<CR>', { desc = 'Toggle TODO notes', silent = true })
   vim.keymap.set('n', '<leader>na', ':NotesTodoAdd<CR>', { desc = 'Add task to TODO', silent = true })
   vim.keymap.set('n', '<M-n>', toggle_todo_task_check,
-    { desc = 'Mark TODO as done', silent = true, buffer = M.state.floating.buf })
+    { desc = 'Mark TODO as done', silent = true, buffer = M.floating.buf })
 end
 
 M.setup = function(opts)
