@@ -19,10 +19,10 @@ return {
       end
     end
 
-    vim.api.nvim_create_user_command('BufRemoveCurrent', removeCurrentBuf, { desc = "Delete current buffer" })
-    vim.api.nvim_create_user_command('BufRemoveAllOther', removeAllOtherBuffers, { desc = "Delete ALL other buffers" })
-    vim.keymap.set("n", "<leader><leader>q", ":BufRemoveCurrent<CR>", { desc = "Delete current buffer", silent = true })
-    vim.keymap.set("n", "<leader><leader>Q", ":BufRemoveAllOther<CR>",
-      { desc = "Delete ALL other buffers", silent = true })
+    vim.api.nvim_create_user_command('BufRemoveCurrent', removeCurrentBuf, { desc = "Close current buffer" })
+    vim.api.nvim_create_user_command('BufRemoveAllOther', removeAllOtherBuffers, { desc = "Close ALL other buffers" })
+    vim.keymap.set("n", "<leader>q", ":BufRemoveCurrent<CR>", { desc = "Close current buffer", silent = true })
+    vim.keymap.set("n", "<leader>Q", ":BufRemoveAllOther<CR>",
+      { desc = "Close ALL other buffers", silent = true })
   end
 }

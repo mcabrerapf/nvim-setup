@@ -1,10 +1,10 @@
-return { -- Useful plugin to show you pending keybinds.
+return {              -- Useful plugin to show you pending keybinds.
   'folke/which-key.nvim',
   event = 'VimEnter', -- Sets the loading event to 'VimEnter'
   opts = {
     layout = {
       width = { min = 20 }, -- min and max width of the columns
-      spacing = 2, -- spacing between columns
+      spacing = 2,          -- spacing between columns
     },
     -- delay between pressing a key and opening which-key (milliseconds)
     -- this setting is independent of vim.o.timeoutlen
@@ -52,15 +52,14 @@ return { -- Useful plugin to show you pending keybinds.
       },
     },
     spec = {
-      { '<leader>a', group = '[a]nnotations' },
-      { '<leader>e', group = 's[e]ssions' },
-      { '<leader>f', group = '[f]olders & [f]iles' },
-      { '<leader>fn', group = '[n]eovim' },
-      { '<leader>n', group = '[n]otes' },
-      { '<leader>o', group = '[o]pen' },
-      { '<leader>q', group = '[q]uickfix' },
-      { '<leader>s', group = '[s]earch' },
-      { '<leader>t', group = '[t]oggle' },
+      { '<leader>a',        group = '[a]nnotations' },
+      { '<leader>e',        group = 's[e]ssions' },
+      { '<leader>f',        group = '[f]olders & [f]iles' },
+      { '<leader>fn',       group = '[n]eovim' },
+      { '<leader>n',        group = '[n]otes' },
+      { '<leader>o',        group = '[o]pen' },
+      { '<leader>s',        group = '[s]earch' },
+      { '<leader>t',        group = '[t]oggle' },
       { '<leader><leader>', group = 'Other' },
     },
   },

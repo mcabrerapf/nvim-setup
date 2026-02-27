@@ -1,4 +1,4 @@
-local win_size = function()
+local win_config = function()
   local height = math.floor(0.35 * vim.o.lines)
   local width = math.floor(0.75 * vim.o.columns)
 
@@ -20,7 +20,7 @@ return {
     local pick = require 'mini.pick'
     pick.setup {
       window = {
-        config = win_size,
+        config = win_config,
       },
       mappings = {
         -- toggle_info    = '<C-k>',

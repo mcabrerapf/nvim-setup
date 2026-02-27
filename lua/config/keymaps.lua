@@ -30,32 +30,10 @@ vim.keymap.set('n', '<leader>tl', function()
   end
 end, { desc = 'Toggle [Q]uickfix list' })
 
-vim.keymap.set('n', '<leader>qk', function()
-  vim.cmd 'cp'
-end, { desc = 'Go to prev quickfix item' })
 
-vim.keymap.set('n', '<leader>qj', function()
-  vim.cmd 'cn'
-end, { desc = 'Go to next quickfix item' })
-
-vim.keymap.set('n', '<leader>b', '<C-^>', { desc = 'Switch to last buffer' })
+vim.keymap.set('n', '<leader>.', '<C-^>', { desc = 'Switch to last buffer' })
 
 vim.keymap.set('n', '<leader><leader>s', function()
-  local buf_name = vim.api.nvim_buf_get_name(0)
-  if buf_name == '' then
-    return
-  end
-  local currentBufId = vim.api.nvim_get_current_buf()
-  if vim.api.nvim_buf_is_valid(currentBufId)
-      and vim.bo[currentBufId].buflisted
-      and vim.bo[currentBufId].modifiable
-      and vim.bo[currentBufId].modified
-  then
-    vim.cmd('w')
-  end
-end, { desc = 'Save file' })
-
-vim.keymap.set('n', '<leader><leader>S', function()
   for _, buf in ipairs(vim.api.nvim_list_bufs()) do
     if vim.api.nvim_buf_is_valid(buf)
         and vim.api.nvim_buf_get_name(buf) ~= ''
@@ -68,7 +46,11 @@ vim.keymap.set('n', '<leader><leader>S', function()
       end)
     end
   end
-end, { desc = 'Save all files' })
+end, { desc = 'Save all buffers' })
+
+vim.keymap.set('n', '<leader><M-g>', function()
+  vim.cmd('!git-bash')
+end, { desc = 'Open [g]it bash', silent = true })
 
 vim.keymap.set('n', '<leader><leader><M-q>', function()
   vim.cmd 'qa'
