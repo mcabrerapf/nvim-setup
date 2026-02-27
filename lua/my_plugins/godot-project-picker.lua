@@ -101,12 +101,12 @@ local toggle_project_picker = function()
       vim.api.nvim_win_hide(M.state.floating.win)
     end, { buffer = M.state.floating.buf, nowait = true })
     --
-    vim.keymap.set('n', '<M-l>', function()
+    vim.keymap.set('n', '<M-e>', function()
       local project_path = get_selected_project_path()
       open_godot(project_path)
-      start_godot_server()
-      open_project(project_path)
-      load_godot_session(project_path)
+      -- start_godot_server()
+      -- open_project(project_path)
+      -- load_godot_session(project_path)
     end, { buffer = M.state.floating.buf, nowait = true })
     --
     vim.keymap.set('n', 'l', function()
@@ -145,7 +145,7 @@ end
 
 local function set_keymaps()
   vim.keymap.set('n', '<leader>fg', ':GodotPickerToggle<CR>', {
-    desc = '[g]odot',
+    desc = '[g]odot projects',
     silent = true,
   })
   vim.keymap.set('n', '<leader>sg', ':GodotScriptSearch<CR>', { desc = '[s]earch [g]odot scripts', silent = true })
