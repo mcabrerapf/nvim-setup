@@ -3,15 +3,15 @@ local get_directories = require 'utils.get-directories'
 local get_longest_name = require 'utils.get-longest-string'
 local populate_buffer = require 'utils.populate-buffer'
 
-local M = {}
-
-M.state = {
-  floating = {
-    buf = -1,
-    win = -1,
-  },
+local M = {
+  state = {
+    floating = {
+      buf = -1,
+      win = -1,
+    },
+    current_session = ''
+  }
 }
-M.current_session = ''
 
 local function updated_godot_session()
   if not M.current_session or M.current_session == '' then
