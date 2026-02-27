@@ -1,8 +1,6 @@
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>', { desc = 'Clear search highlight' })
-vim.keymap.set('t', '<esc><esc>', '<c-\\><c-n>', { desc = 'Close terminal' })
--- vim.keymap.set('n', '<C-M-j>', '<C-f>', { desc = 'Page Down' })
--- vim.keymap.set('n', '<C-M-k>', '<C-b>', { desc = 'Page Up' })
--- NOTE: Easy way to close terminal
+vim.keymap.set('t', '<esc><esc>', '<c-\\><c-n>', { desc = 'Close terminal' }) -- NOTE: Easy way to close terminal
+
 vim.keymap.set('n', '<M-j>', '<C-d>', { desc = 'Scroll half screen Down' })
 vim.keymap.set('n', '<M-k>', '<C-u>', { desc = 'Scroll half screen Up' })
 vim.keymap.set('n', '<M-l>', 'g_', { desc = 'Move to last character in line' })
@@ -12,46 +10,8 @@ vim.keymap.set('n', '<Down>', '<C-w>j', { desc = 'move to bottom window' })
 vim.keymap.set('n', '<Up>', '<C-w>k', { desc = 'move to top window' })
 vim.keymap.set('n', '<Left>', '<C-w>h', { desc = 'move to left window' })
 vim.keymap.set('n', '<Right>', '<C-w>l', { desc = 'move to right window' })
--- NOTE: Diagnostic keymaps
--- vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
-vim.keymap.set('n', '<leader>tl', function()
-  local qf_open = false
-  for _, win in ipairs(vim.fn.getwininfo()) do
-    if win.quickfix == 1 then
-      qf_open = true
-      break
-    end
-  end
-
-  if qf_open then
-    vim.cmd 'cclose'
-  else
-    vim.cmd 'copen'
-  end
-end, { desc = 'Toggle [Q]uickfix list' })
-
-
+--
 vim.keymap.set('n', '<leader>.', '<C-^>', { desc = 'Switch to last buffer' })
-
-vim.keymap.set('n', '<leader><leader>s', function()
-  for _, buf in ipairs(vim.api.nvim_list_bufs()) do
-    if vim.api.nvim_buf_is_valid(buf)
-        and vim.api.nvim_buf_get_name(buf) ~= ''
-        and vim.bo[buf].buflisted
-        and vim.bo[buf].modifiable
-        and vim.bo[buf].modified
-    then
-      vim.api.nvim_buf_call(buf, function()
-        vim.cmd('w')
-      end)
-    end
-  end
-end, { desc = 'Save all buffers' })
-
 vim.keymap.set('n', '<leader><M-g>', function()
   vim.cmd('!git-bash')
 end, { desc = 'Open [g]it bash', silent = true })
-
-vim.keymap.set('n', '<leader><leader><M-q>', function()
-  vim.cmd 'qa'
-end, { desc = 'QUIT NVIM' })

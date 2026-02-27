@@ -5,7 +5,7 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
   if vim.v.shell_error ~= 0 then
     vim.api.nvim_echo({
       { 'Failed to clone lazy.nvim:\n', 'ErrorMsg' },
-      { out, 'WarningMsg' },
+      { out,                            'WarningMsg' },
       { '\nPress any key to exit...' },
     }, true, {})
     vim.fn.getchar()
@@ -17,10 +17,10 @@ vim.opt.rtp:prepend(lazypath)
 
 require('lazy').setup({
   { import = 'plugins' },
-  require('my_plugins.notes').setup {},
-  require('my_plugins.floaterminal').setup {},
-  require('my_plugins.godot-project-picker').setup {},
-  require('my_plugins.session-picker').setup {},
+  require('my_plugins.notes').setup(),
+  require('my_plugins.floaterminal').setup(),
+  require('my_plugins.godot-project-picker').setup(),
+  require('my_plugins.session-picker').setup(),
   -- { import = 'custom.plugins' }, -- for my own plugins
 }, {
   ui = {

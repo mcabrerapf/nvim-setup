@@ -141,6 +141,17 @@ local function set_commands()
   vim.api.nvim_create_user_command('GodotPickerToggle', toggle_project_picker, {})
   vim.api.nvim_create_user_command('GodotScriptSearch', godot_script_search, {})
   vim.api.nvim_create_user_command('GodotStartServer', start_godot_server, {})
+  vim.api.nvim_create_user_command('GodotRestartLsp', function()
+    local clients = vim.lsp.get_clients(vim.lsp.get_clients({ name = 'gdscript' }))
+    for index, client in ipairs(clients) do
+      vim.lsp.stop_client(client.id)
+    end
+    vim.cmd('LspStart gdscript')
+    vim.defer_fn(function()
+      vim.cmd('e')
+    end, 500)
+    start_godot_server()
+  end, {})
 end
 
 local function set_keymaps()

@@ -12,15 +12,33 @@ return {
           -- component_separators = { left = '', right = '' },
           -- section_separators = { left = '', right = '' },
           section_separators = { left = '', right = '' },
-          component_separators = { left = '', right = '' },
-          -- component_separators = '|',
+          -- component_separators = { left = '', right = '' },
+          component_separators = { left = '|', right = '|' },
           -- section_separators = '',
-          disabled_filetypes = {
-            statusline = {},
-            winbar = {},
-          },
-          always_divide_middle = true,
-          globalstatus = false, -- single statusline
+          always_show_tabline = false,
+          -- disabled_filetypes = {
+          --   statusline = {},
+          --   winbar = {},
+          --   tabline = {}
+          -- },
+          always_divide_middle = false,
+          globalstatus = true, -- single statusline
+        },
+        winbar = {
+          lualine_a = {},
+          lualine_b = {},
+          lualine_c = { 'filename' },
+          lualine_x = {},
+          lualine_y = { "filetype" },
+          lualine_z = {}
+        },
+        inactive_winbar = {
+          lualine_a = {},
+          lualine_b = {},
+          lualine_c = { 'filename' },
+          lualine_x = {},
+          lualine_y = {},
+          lualine_z = {}
         },
         sections = {
           lualine_a = {
@@ -32,36 +50,17 @@ return {
               color = { gui = 'bold' },
             },
           },
-          lualine_b = {
-            'branch',
-          },
-          lualine_c = {
-            {
-              'filename',
-              file_status = true,
-              newfile_status = false,
-              symbols = {
-                modified = '[+]',
-                readonly = '[-]',
-                unnamed = '[No Name]',
-                newfile = '[New]',
-              },
-              color = { fg = '#04f49c' },
-            },
-          },
-          lualine_x = {
-            'diff',
-            -- 'fileformat',
-            'filetype',
-          },
-          lualine_y = { 'progress' },
-          lualine_z = { 'location' },
+          lualine_b = { 'branch' },
+          lualine_c = {},
+          lualine_x = { 'diff' },
+          lualine_y = { 'progress', 'location' },
+          lualine_z = { 'tabs' },
         },
         inactive_sections = {
           lualine_a = {},
           lualine_b = {},
-          lualine_c = { 'filename' },
-          lualine_x = { 'location' },
+          -- lualine_c = { 'filename' },
+          -- lualine_x = { 'location' },
           lualine_y = {},
           lualine_z = {},
         },

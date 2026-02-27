@@ -1,3 +1,12 @@
+vim.api.nvim_create_autocmd({ "BufRead", "BufNewfile" }, {
+  pattern = "*",
+  desc = 'todo comment highlights',
+  callback = function()
+    vim.fn.matchadd('TodoComment', 'TODO:')
+    vim.fn.matchadd('NoteComment', 'NOTE:')
+    vim.fn.matchadd('BugComment', 'BUG:')
+  end
+})
 -- highlight text on yank
 vim.api.nvim_create_autocmd('TextYankPost', {
   group = vim.api.nvim_create_augroup('highlight_yank', { clear = true }),
@@ -7,7 +16,6 @@ vim.api.nvim_create_autocmd('TextYankPost', {
     vim.highlight.on_yank { timeout = 200, visual = true }
   end,
 })
-
 -- restore cursor to file position in previous editing session
 vim.api.nvim_create_autocmd('BufReadPost', {
   callback = function(args)
@@ -22,26 +30,11 @@ vim.api.nvim_create_autocmd('BufReadPost', {
     end
   end,
 })
-
 -- open help in vertical split
 vim.api.nvim_create_autocmd('FileType', {
-  pattern = 'help',
+  pattern = { 'help', 'h' },
   command = 'wincmd L',
 })
-
--- auto resize splits when the terminal's window is resized
-vim.api.nvim_create_autocmd('VimResized', {
-  command = 'wincmd =',
-})
-
--- no auto continue comments on new line
--- vim.api.nvim_create_autocmd('FileType', {
---   group = vim.api.nvim_create_augroup('no_auto_comment', {}),
---   callback = function()
---     vim.opt_local.formatoptions:remove { 'c', 'r', 'o' }
---   end,
--- })
-
 -- show cursorline only in active window enable
 vim.api.nvim_create_autocmd({ 'WinEnter', 'BufEnter' }, {
   group = vim.api.nvim_create_augroup('active_cursorline', { clear = true }),
@@ -50,14 +43,20 @@ vim.api.nvim_create_autocmd({ 'WinEnter', 'BufEnter' }, {
   end,
 })
 
--- show cursorline only in active window disable
 vim.api.nvim_create_autocmd({ 'WinLeave', 'BufLeave' }, {
   group = 'active_cursorline',
   callback = function()
     vim.opt_local.cursorline = false
   end,
 })
---
+-- no auto continue comments on new line
+-- vim.api.nvim_create_autocmd('FileType', {
+--   group = vim.api.nvim_create_augroup('no_auto_comment', {}),
+--   callback = function()
+--     vim.opt_local.formatoptions:remove { 'c', 'r', 'o' }
+--   end,
+-- })
+
 
 -- ide like highlight when stopping cursor
 -- vim.api.nvim_create_autocmd('CursorMoved', {
