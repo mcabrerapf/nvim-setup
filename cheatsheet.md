@@ -19,7 +19,7 @@
 - a                     ===> insert after (A line)
 - m                     ===> add mark (use upper case to set global marks)
 - o                     ===> new line (O before)
-- p                     ===> paste (P paste before)
+- p                     ===> paste (P paste before, also preserves unamed registered)
 - C-a                   ===> increment (C-x decrease) number at cursor
 - u                     ===> undo (U line)
 - C-r                   ===> redo
@@ -121,6 +121,11 @@
 - :g/{pattern}/d        ===> deletes all lines with the pattern
 - :g!/{pattern}/d       ===> deletes all lines without the pattern (g! is the same as using v)  s
 
+## MINI COMMANDS
+- g=                    ===> evalute line
+- gm                    ===> multipli selection (works with text objects)
+- gs                    ===> sort selection
+- gx                    ===> exchange selection with next gx (works with text objects gxiw)
 
 ## EXTRAS
 - register [=] is an expression register (command line)

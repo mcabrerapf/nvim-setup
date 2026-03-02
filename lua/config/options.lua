@@ -11,51 +11,46 @@ vim.o.showtabline = 0
 vim.o.autoread = true
 vim.o.termguicolors = true
 vim.o.winborder = 'rounded'
-vim.o.number = true      -- Show line numbers
+vim.o.number = true             -- Show line numbers
+vim.o.clipboard = 'unnamedplus' -- Sync nvim clipboard with system clipboard
 -- vim.o.relativenumber = true
-vim.o.mouse = 'a'        -- enable mouse
-vim.o.showmode = false   -- dont show mode if using lualine or something else
+vim.o.mouse = 'a'               -- enable mouse
+vim.o.showmode = false          -- dont show mode if using lualine or something else
 -- vim.o.wrap = false -- disable wrapping
-vim.o.breakindent = true -- text breaks up if reaches end of screen
-vim.o.undofile = true    -- undo history remains after closing
-vim.o.ignorecase = true  -- ignore case unless forced with command or upper case in text
+vim.o.breakindent = true        -- text breaks up if reaches end of screen
+vim.o.undofile = true           -- undo history remains after closing
+vim.o.ignorecase = true         -- ignore case unless forced with command or upper case in text
 vim.o.smartcase = true
-vim.o.signcolumn = 'yes' -- When and how to draw the signcolumn
-vim.o.updatetime = 250   -- Decrease update time
-vim.o.timeoutlen = 300   -- Decrease mapped sequence wait time
+vim.o.signcolumn = 'yes'        -- When and how to draw the signcolumn
+vim.o.updatetime = 250          -- Decrease update time
+vim.o.timeoutlen = 300          -- Decrease mapped sequence wait time
 vim.o.splitright = true
 vim.o.splitbelow = true
 vim.o.eadirection = 'both' -- Tells when the 'equalalways' option applies
 vim.o.list = true          -- Sets how neovim will display certain whitespace characters in the editor.
 vim.o.inccommand = 'split' -- Preview substitutions live, as you type
 vim.o.cursorline = true    -- Show which line your cursor is on
-vim.o.scrolloff = 10       -- Minimal number of screen lines to keep above and below the cursor.
 vim.o.confirm = true       -- Raise a dialog asking if you wish to save the current file(s)
-vim.opt.tabstop = 2
-vim.opt.shiftwidth = 2
+vim.opt.virtualedit = 'block'
+vim.opt.scrolloff = 999    -- Minimal number of screen lines to keep above and below the cursor.
 vim.opt.expandtab = true
+vim.opt.tabstop = 4
+vim.opt.shiftwidth = 4
 vim.opt.foldenable = false -- set folds to open when opening file
 vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
 vim.opt.guicursor = {      -- cursor blink if using wezterm need to set its default blink rate as well
-  'n-v-c:block',
-  'i-ci-ve:ver25',
-  'r-cr:hor20',
-  'o:hor50',
-  'a:blinkon400-blinkoff400-blinkwait400',
+    'n-v-c:block',
+    'i-ci-ve:ver25',
+    'r-cr:hor20',
+    'o:hor50',
+    'a:blinkon400-blinkoff400-blinkwait400',
 }
 vim.diagnostic.config {
-  update_in_insert = false,
-  severity_sort = true,
-  float = { border = 'rounded', source = 'if_many' },
-  underline = { severity = vim.diagnostic.severity.ERROR },
-  virtual_text = true,     -- Text shows up at the end of the line
-  virtual_lines = false,   -- Teest shows up underneath the line, with virtual lines
-  jump = { float = true }, -- Auto open the float, so you can easily read the errors when jumping with `[d` and `]d`
+    update_in_insert = false,
+    severity_sort = true,
+    float = { border = 'rounded', source = 'if_many' },
+    underline = { severity = vim.diagnostic.severity.ERROR },
+    virtual_text = true,     -- Text shows up at the end of the line
+    virtual_lines = false,   -- Teest shows up underneath the line, with virtual lines
+    jump = { float = true }, -- Auto open the float, so you can easily read the errors when jumping with `[d` and `]d`
 }
--- NOTE: Sync clipboard between OS and Neovim.
---  Schedule the setting after `UiEnter` because it can increase startup-time.
---  Remove this option if you want your OS clipboard to remain independent.
---  See `:help 'clipboard'`
-vim.schedule(function()
-  vim.o.clipboard = 'unnamedplus'
-end)
