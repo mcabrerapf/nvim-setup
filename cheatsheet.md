@@ -112,6 +112,7 @@
 - :q                    ===> quit (fails if there are unsaved changes)
 - :q!                   ===> quit and throw away unsaved changes (or ZQ)
 - :wqa                  ===> write save and quit all
+- :{line_n}             ===> write save and quit all
 - :g/{pattern}/d        ===> delete all lines containing pattern
 - :g!/{pattern}/d       ===> delete all lines not containing pattern
 - :find {file_name}     ===> go to file
@@ -123,7 +124,7 @@
 
 ## MINI COMMANDS
 - g=                    ===> evalute line
-- gm                    ===> multipli selection (works with text objects)
+- gm                    ===> multiply selection (works with text objects)
 - gs                    ===> sort selection
 - gx                    ===> exchange selection with next gx (works with text objects gxiw)
 

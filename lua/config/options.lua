@@ -16,8 +16,8 @@ vim.o.clipboard = 'unnamedplus' -- Sync nvim clipboard with system clipboard
 -- vim.o.relativenumber = true
 vim.o.mouse = 'a'               -- enable mouse
 vim.o.showmode = false          -- dont show mode if using lualine or something else
--- vim.o.wrap = false -- disable wrapping
-vim.o.breakindent = true        -- text breaks up if reaches end of screen
+vim.o.wrap = false              -- disable wrapping
+vim.o.breakindent = false       -- text breaks up if reaches end of screen
 vim.o.undofile = true           -- undo history remains after closing
 vim.o.ignorecase = true         -- ignore case unless forced with command or upper case in text
 vim.o.smartcase = true
@@ -50,7 +50,15 @@ vim.diagnostic.config {
     severity_sort = true,
     float = { border = 'rounded', source = 'if_many' },
     underline = { severity = vim.diagnostic.severity.ERROR },
-    virtual_text = true,     -- Text shows up at the end of the line
-    virtual_lines = false,   -- Teest shows up underneath the line, with virtual lines
+    virtual_text = false,    -- Text shows up at the end of the line
+    virtual_lines = true,    -- Teest shows up underneath the line, with virtual lines
     jump = { float = true }, -- Auto open the float, so you can easily read the errors when jumping with `[d` and `]d`
+}
+vim.opt.sessionoptions = {
+    "buffers",
+    "curdir",
+    "folds",
+    "help",
+    "tabpages",
+    "winsize",
 }
