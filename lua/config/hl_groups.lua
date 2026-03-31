@@ -8,4 +8,3 @@ vim.api.nvim_set_hl(0, 'NoteComment', { fg = 'black', bg = '#16e9fc', bold = tru
 vim.api.nvim_set_hl(0, 'BugComment', { fg = 'black', bg = '#fc1e16', bold = true })
 vim.api.nvim_set_hl(0, 'Visual', { link = 'CustomHighlight' })
 vim.api.nvim_set_hl(0, 'IncSearch', { link = 'CustomHighlight' })
-vim.api.nvim_set_hl(0, 'MiniFilesTitleFocused', { link = 'CustomHighlightedText' })

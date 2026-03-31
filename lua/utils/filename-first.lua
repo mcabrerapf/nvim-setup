@@ -1,4 +1,7 @@
+vim.pack.add({"https://github.com/nvim-tree/nvim-web-devicons"})
 local devicons = require 'nvim-web-devicons'
+
+vim.api.nvim_set_hl(0, 'FirstNameHighlight', { fg = '#04f49c', bg = 'NONE', bold = true })
 
 local filename_first = function(buf_id, item_arr)
   local lines = {}
@@ -28,7 +31,7 @@ local filename_first = function(buf_id, item_arr)
     icon_hl = icon_hl or 'Normal'
     local ns = vim.api.nvim_create_namespace("my_highlights")
     vim.hl.range(buf_id, ns, icon_hl, { i - 1, 0 }, { i - 1, #icon })
-    vim.hl.range(buf_id, ns, 'CustomHighlightedText', { i - 1, #icon + 1 }, { i - 1, #icon + 1 + #basename })
+    vim.hl.range(buf_id, ns, 'FirstNameHighlight', { i - 1, #icon + 1 }, { i - 1, #icon + 1 + #basename })
   end
 end
 

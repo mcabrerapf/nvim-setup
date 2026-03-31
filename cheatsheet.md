@@ -127,15 +127,16 @@
 - gm                    ===> multiply selection (works with text objects)
 - gs                    ===> sort selection
 - gx                    ===> exchange selection with next gx (works with text objects gxiw)
+- sa{text_object}{char} ===> add surrounding to text object(w, W, f, b, etc)
+- sd{char}              ===> delete surrounding
+- sr{char}{char}        ===> replace surrounding
 
 ## EXTRAS
-- register [=] is an expression register (command line)
-- select something and do [:norm ithis text is at the start]
-- create a bunch of 0. do vip to select the elements and [g C-+a] to create a numbered list
+- create a bunch of 0. do vip to select the elements and [g<C-a>] to create a numbered list
 - in insert mode [C-j] works as Enter
-- in insert mode [C-w] deletes the previous word
 - in insert mode [C-o] puts you in normal mode and goes back to insert after a single command 
-
+- in insert mode [C-w] deletes the previous word
+- register [=] is an expression register (command line)
 
 ## FIX FOR TREESITER ON WINDOWS
 Download MSYS2 from
