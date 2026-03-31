@@ -1,8 +1,6 @@
 vim.pack.add({"https://github.com/nvim-tree/nvim-web-devicons"})
 local devicons = require 'nvim-web-devicons'
 
-vim.api.nvim_set_hl(0, 'FirstNameHighlight', { fg = '#04f49c', bg = 'NONE', bold = true })
-
 local filename_first = function(buf_id, item_arr)
   local lines = {}
 
