@@ -99,10 +99,6 @@ vim.keymap.set('n', '<leader>fF', function()
     files.open(vim.uv.cwd(), true)
 end, { desc = '[F]ile [e]xplorer' })
 
-vim.keymap.set('n', '<leader>fvc', function()
+vim.keymap.set('n', '<leader>fv', function()
     files.open(vim.fn.stdpath 'config', false)
 end, { desc = 'Open Neovim [c]onfig directory' })
-
-vim.keymap.set('n', '<leader>fvp', function()
-    files.open(vim.fn.stdpath 'config' .. '/lua/plugins', false)
-end, { desc = 'Open Neovim config [p]lugins dir' })

@@ -43,7 +43,7 @@ treesitter.install {
 }
 
 vim.api.nvim_create_autocmd('FileType', {
-    pattern = { 'gdscript', 'gdshader', 'godot_resource', 'javascript', 'html', 'typescript', 'json' },
+    pattern = {'lua', 'gdscript', 'gdshader', 'godot_resource', 'javascript', 'html', 'typescript', 'json' },
     callback = function()
         vim.treesitter.start()
         vim.wo[0][0].foldexpr = 'v:lua.vim.treesitter.foldexpr()'

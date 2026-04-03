@@ -32,12 +32,16 @@ vim.o.inccommand = 'split' -- Preview substitutions live, as you type
 vim.o.cursorline = true    -- Show which line your cursor is on
 vim.o.confirm = true       -- Raise a dialog asking if you wish to save the current file(s)
 vim.opt.virtualedit = 'block'
-vim.opt.scrolloff = 999    -- Minimal number of screen lines to keep above and below the cursor.
+vim.opt.scrolloff = 50    -- Minimal number of screen lines to keep above and below the cursor.
 vim.opt.expandtab = true
 vim.opt.tabstop = 4
 vim.opt.shiftwidth = 4
 vim.opt.foldenable = false -- set folds to open when opening file
-vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
+vim.opt.listchars = {
+    tab = '» ',
+    trail = '·',
+    nbsp = '␣'
+}
 vim.opt.guicursor = {      -- cursor blink if using wezterm need to set its default blink rate as well
     'n-v-c:block',
     'i-ci-ve:ver25',

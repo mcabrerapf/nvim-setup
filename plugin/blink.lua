@@ -1,7 +1,7 @@
 vim.pack.add({
     {
         src = "https://github.com/saghen/blink.cmp",
-        version = "v1.10.1"
+        version = vim.version.range("1.x")
     }
 })
 
@@ -44,13 +44,8 @@ require("blink.cmp").setup({
     --   preset = "luasnip"
     -- },
     sources = {
-      default = { 'lsp', 'path', 'snippets' },
+      default = { 'lsp', 'path', 'buffer','snippets' },
     },
     -- See :h blink-cmp-config-fuzzy for more information
     fuzzy = { implementation = 'lua' },
-    appearance = {
-        -- 'mono' (default) for 'Nerd Font Mono' or 'normal' for 'Nerd Font'
-        -- Adjusts spacing to ensure icons are aligned
-        nerd_font_variant = 'mono',
-    },
 })

@@ -1,4 +1,4 @@
-# Vim cheatsheet (:h index to see all bindings)
+# Vim cheatsheet (:h index to see all bindings, :h quickref for reference manual)
 -----------------------
 ## NORMAL MODE
 - "                     ===> access a register
@@ -137,6 +137,7 @@
 - in insert mode [C-o] puts you in normal mode and goes back to insert after a single command 
 - in insert mode [C-w] deletes the previous word
 - register [=] is an expression register (command line)
+- :.,$-bdelete          ===> delete buffers from the current one last
 
 ## FIX FOR TREESITER ON WINDOWS
 Download MSYS2 from

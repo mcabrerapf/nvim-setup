@@ -142,7 +142,7 @@ local function set_commands()
     vim.api.nvim_create_user_command('GodotRestartLsp', function()
         local clients = vim.lsp.get_clients(vim.lsp.get_clients({ name = 'gdscript' }))
         for index, client in ipairs(clients) do
-            vim.lsp.stop_client(client.id)
+            client.stop(client)
         end
         vim.cmd('LspStart gdscript')
         vim.defer_fn(function()

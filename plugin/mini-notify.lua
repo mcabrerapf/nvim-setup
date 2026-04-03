@@ -1,2 +1,2 @@
-vim.pack.add({"https://github.com/nvim-mini/mini.notify"})
-require('mini.notify').setup {}
+-- vim.pack.add({"https://github.com/nvim-mini/mini.notify"})
+-- require('mini.notify').setup {}
