@@ -46,10 +46,6 @@ local toggle_session_picker = function()
       vim.api.nvim_win_hide(M.floating.win)
     end, { buffer = M.floating.buf, nowait = true })
     --
-    vim.keymap.set('n', 'q', function()
-      vim.api.nvim_win_hide(M.floating.win)
-    end, { buffer = M.floating.buf, nowait = true })
-    --
     vim.keymap.set('n', 'l', function()
       M.current_session = get_selected_session_path()
       vim.api.nvim_win_hide(M.floating.win)

@@ -14,7 +14,6 @@ require 'config.autocmds'
 require 'my_plugins'
 
 -- Experimental UI2: floating cmdline and messages
-vim.o.cmdheight = 1
 require('vim._core.ui2').enable({
   enable = true,
   msg = {
@@ -61,20 +60,3 @@ require('vim._core.ui2').enable({
     },
   },
 })
-
--- Not great
--- -- Not great
--- vim.api.nvim_create_autocmd("LspProgress", {
---   callback = function(ev)
---     vim.print(ev.data)
---     local value = ev.data.params.value
---     vim.api.nvim_echo({ { value.message or "done" } }, false, {
---       id = "lsp." .. ev.data.client_id,
---       kind = "progress",
---       source = "vim.lsp",
---       title = value.title,
---       status = value.kind ~= "end" and "running" or "success",
---       percent = value.percentage,
---     })
---   end,
--- })
