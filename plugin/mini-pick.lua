@@ -1,7 +1,6 @@
+local gh = require("utils.gh")
+vim.pack.add({ gh("nvim-mini/mini.pick") })
 local filename_first = require 'utils.filename-first'
-
-vim.pack.add({"https://github.com/nvim-mini/mini.pick"})
-
 local win_config = function()
   local height = math.floor(0.35 * vim.o.lines)
   local width = math.floor(0.75 * vim.o.columns)
@@ -43,7 +42,7 @@ vim.keymap.set('n', '<leader>ss', function()
             show = filename_first,
         },
     })
-end, { desc = 'Do [s]earch' })
+end, { desc = 'Do search' })
 --
 vim.keymap.set('n', '<leader>sS', function()
     pick.builtin.grep_live(nil, {
@@ -51,18 +50,18 @@ vim.keymap.set('n', '<leader>sS', function()
             name = 'Grep search',
         },
     })
-end, { desc = 'Do grep [S]earch' })
+end, { desc = 'Do grep search' })
 --
 vim.keymap.set('n', '<leader>sw', function()
     local cword = vim.fn.expand("<cword>")
     pick.builtin.grep({ pattern = cword }, { source = { name = cword } })
-end, { desc = "Grep [w]ord" })
+end, { desc = "Grep word" })
 --
 vim.keymap.set('v', '<leader>s', function()
     vim.cmd("normal! y")
     local text = vim.fn.getreg('"')
     pick.builtin.grep({ pattern = text }, { source = { name = text } })
-end, { desc = "Grep [s]election" })
+end, { desc = "Grep selection" })
 --
 vim.keymap.set('n', '<leader>sv', function()
     pick.builtin.files(nil, {
@@ -72,16 +71,16 @@ vim.keymap.set('n', '<leader>sv', function()
             show = filename_first,
         },
     })
-end, { desc = 'Search files in neo[v]im config' })
+end, { desc = 'Search files in nvim config' })
 --
 vim.keymap.set('n', '<leader>sb', function()
     pick.builtin.buffers()
-end, { desc = 'Search in [b]uffers' })
+end, { desc = 'Search in buffers' })
 --
 vim.keymap.set('n', '<leader>sh', function()
     pick.builtin.help()
-end, { desc = 'Search [h]elp tags' })
+end, { desc = 'Search help tags' })
 --
 vim.keymap.set('n', '<leader>sr', function()
     pick.builtin.resume()
-end, { desc = '[r]esume last search' })
+end, { desc = 'Resume last search' })

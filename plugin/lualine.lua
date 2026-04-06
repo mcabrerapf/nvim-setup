@@ -1,4 +1,5 @@
-vim.pack.add({"https://github.com/nvim-lualine/lualine.nvim"})
+local gh = require("utils.gh")
+vim.pack.add({ gh("nvim-lualine/lualine.nvim") })
 require('lualine').setup({
     options = {
         icons_enabled = true,

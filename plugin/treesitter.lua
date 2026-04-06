@@ -1,3 +1,19 @@
+local gh = require("utils.gh")
+vim.pack.add({ gh("nvim-treesitter/nvim-treesitter") })
+
+-- local install_dir = vim.fn.stdpath('data') .. '/site'
+-- vim.opt.runtimepath:append(install_dir)
+
+local treesitter = require 'nvim-treesitter'
+local ensureInstalled = {
+    'gdscript',
+    'gdshader',
+    'godot_resource',
+    'javascript',
+    'html',
+    'typescript',
+    'json'
+}
 vim.api.nvim_create_autocmd(
     'PackChanged',
     {
@@ -11,15 +27,11 @@ vim.api.nvim_create_autocmd(
     }
 )
 
-vim.pack.add({"https://github.com/nvim-treesitter/nvim-treesitter"})
-
-local treesitter = require 'nvim-treesitter'
 treesitter.setup {
-    -- directory to install parsers and queries to (prepended to `runtimepath` to have priority)
     install_dir = vim.fn.stdpath 'data' .. '/site',
     highlight = {
-        enable = true, -- enable treesitter syntax highlighting
-        additional_vim_regex_highlighting = false,
+        enable = true,
+        additional_vim_regex_highlighting = true,
     },
     textobjects = {
         select = { enable = true },
@@ -30,20 +42,10 @@ treesitter.setup {
     },
 }
 
-treesitter.install {
-    'gdscript',
-    'gdshader',
-    'godot_resource',
-    'rust',
-    'javascript',
-    'html',
-    'zig',
-    'typescript',
-    'json'
-}
+treesitter.install(ensureInstalled)
 
 vim.api.nvim_create_autocmd('FileType', {
-    pattern = {'lua', 'gdscript', 'gdshader', 'godot_resource', 'javascript', 'html', 'typescript', 'json' },
+    pattern = ensureInstalled,
     callback = function()
         vim.treesitter.start()
         vim.wo[0][0].foldexpr = 'v:lua.vim.treesitter.foldexpr()'

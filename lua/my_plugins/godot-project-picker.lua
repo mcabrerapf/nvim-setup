@@ -154,10 +154,10 @@ end
 
 local function set_keymaps()
     vim.keymap.set('n', '<leader>fg', ':GodotPickerToggle<CR>', {
-        desc = '[g]odot projects',
+        desc = 'Godot projects',
         silent = true,
     })
-    vim.keymap.set('n', '<leader>sg', ':GodotScriptSearch<CR>', { desc = '[s]earch [g]odot scripts', silent = true })
+    vim.keymap.set('n', '<leader>sg', ':GodotScriptSearch<CR>', { desc = 'Search godot scripts', silent = true })
 end
 
 M.setup = function(opts)

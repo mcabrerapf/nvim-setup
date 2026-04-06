@@ -1,1 +1,2 @@
-vim.pack.add({"https://github.com/nvim-tree/nvim-web-devicons"})
+local gh = require("utils.gh")
+vim.pack.add({ gh("nvim-tree/nvim-web-devicons") })

@@ -1,5 +1,5 @@
-vim.pack.add({"https://github.com/nvim-mini/mini.files"})
-
+local gh = require("utils.gh")
+vim.pack.add({ gh("nvim-mini/mini.files") })
 local files = require('mini.files')
 files.setup({
     git_status = true,
@@ -66,7 +66,7 @@ vim.api.nvim_create_autocmd('User', {
             local pick = require 'mini.pick'
             local path = entry.path
             pick.builtin.files(nil, { source = { cwd = path, name = 'Search files' } })
-        end, { desc = '[s]earch files in folder' })
+        end, { desc = 'Search in folder' })
         --
         vim.keymap.set('n', '<M-s><M-s>', function()
             local fs = require 'mini.files'
@@ -78,7 +78,7 @@ vim.api.nvim_create_autocmd('User', {
             local pick = require 'mini.pick'
             local path = entry.path
             pick.builtin.grep_live(nil, { source = { cwd = path, name = 'Grep search' } })
-        end, { desc = 'Grep [S]earch in folder' })
+        end, { desc = 'Grep search in folder' })
     end,
 })
 vim.api.nvim_create_autocmd('User', {
@@ -93,12 +93,12 @@ vim.api.nvim_create_autocmd('User', {
 -- Key Mappings
 vim.keymap.set('n', '<leader>ff', function()
     files.open(vim.api.nvim_buf_get_name(0), false)
-end, { desc = '[f]ile explorer (current file)' })
+end, { desc = 'File explorer (current file)' })
 
 vim.keymap.set('n', '<leader>fF', function()
     files.open(vim.uv.cwd(), true)
-end, { desc = '[F]ile [e]xplorer' })
+end, { desc = 'File explorer' })
 
 vim.keymap.set('n', '<leader>fv', function()
     files.open(vim.fn.stdpath 'config', false)
-end, { desc = 'Open Neovim [c]onfig directory' })
+end, { desc = 'Open Neovim config directory' })

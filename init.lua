@@ -6,13 +6,8 @@ end
 if vim.fn.isdirectory(vim.env.SESSIONS_DIR_PATH) == 0 then
     vim.fn.mkdir(vim.env.SESSIONS_DIR_PATH, 'p')
 end
--- vim.cmd('packadd nohlsearch')
-vim.cmd('packadd nvim.undotree')
-require 'config.options'
-require 'config.keymaps'
-require 'config.autocmds'
-require 'my_plugins'
 
+vim.cmd('packadd nvim.undotree')
 -- Experimental UI2: floating cmdline and messages
 require('vim._core.ui2').enable({
   enable = true,
@@ -60,3 +55,8 @@ require('vim._core.ui2').enable({
     },
   },
 })
+
+require 'config.options'
+require 'config.keymaps'
+require 'config.autocmds'
+require 'my_plugins'

@@ -1,1 +1,18 @@
-vim.pack.add({"https://github.com/folke/which-key.nvim"})
+local gh = require("utils.gh")
+vim.pack.add({ gh("folke/which-key.nvim") })
+
+local wk = require("which-key")
+
+wk.add({
+    { "<leader>f", group = "File explorer" },
+    { "<leader>s", group = "Search" },
+    { "<leader>n", group = "Notes" },
+    { "<leader>e", group = "Sessions" },
+    { "<leader>g", group = "Git" },
+})
+-- Keymaps
+vim.keymap.set("n", "<leader>?", function ()
+    wk.show({ global = false })
+end, {
+    desc = "Show Keymaps"
+})

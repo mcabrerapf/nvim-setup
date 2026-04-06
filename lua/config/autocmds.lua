@@ -1,5 +1,10 @@
 -- Add highlight to todo, note and bug
-vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
+vim.api.nvim_create_autocmd({
+    "BufRead",
+    "BufNewFile",
+    "BufWinEnter",
+    "WinEnter"
+}, {
   pattern = "*",
   desc = 'todo comment highlights',
   callback = function()
