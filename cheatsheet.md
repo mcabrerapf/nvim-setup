@@ -75,6 +75,7 @@
 - C-wx                  ===> exchange current window with next one
 - C-w=                  ===> make all windows equal height & width
 - [spacebar             ===> adds empty line before (]spacebar after) line
+- [b                    ===> prev buffer (]b next)
 
 ## INSERT MODE
 - C-a                   ===> insert last insert
@@ -101,11 +102,11 @@
 
 ## COMMANDS
 - :!                    ===> to run shell commands
+- :help!                ===> help for word on cursor
 - :{start},{end}d       ===> delete lines {start} to {end}
 - :{start},{end}t.      ===> copy lines {start} to {end} to cursor (use '{mark} instead of . to send to mark)
 - :{start},{end}m.      ===> move lines {start} to {end} to cursor
 - :s                    ===> search and replace in current line (start with % to apply to entire document) followed by regular expression, (ie :%s/word/new_word/g changes all word to new_word, add c to confirm on each) (ie :#,#s/old/new/g chantes old to new from line # to #
-- 
 - :noh                  ===> clear search results
 - :w                    ===> write (save) the file, but don't exit
 - :wq                   ===> write (save) and quit(or :x or ZZ)

@@ -3,7 +3,6 @@ vim.g.maplocalleader = ' '
 -- vim.g.loaded_netrw = 1      -- Disable netrw if any other explorer is loaded
 -- vim.g.loaded_netrwPlugin = 1
 vim.g.have_nerd_font = true --Set to true if you have a Nerd Font installed and selected in the terminal
--- vim.o.shell = 'cmd'
 -- vim.o.title = true
 -- vim.o.titlelen = 10
 -- vim.o.tabline = true

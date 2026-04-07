@@ -28,13 +28,13 @@ local function load_godot_session(project_path)
 end
 
 local function start_godot_server()
-    local target = vim.env.GODOT_SERVER_PORT
-    local servers = vim.fn.serverlist()
-    -- NOTE: In Godot add this in Editor Settings > External > Exec flags > --server {godo_port} --remote-send "<C-\><C-N>:wincmd l | edit {file}<CR>{line}G{col}"
-    if vim.tbl_contains(servers, target) then
-        vim.fn.serverstop(target)
-    end
-    vim.fn.serverstart(target)
+    -- local target = vim.env.GODOT_SERVER_PORT
+    -- local servers = vim.fn.serverlist()
+    -- -- NOTE: In Godot add this in Editor Settings > External > Exec flags > --server {godo_port} --remote-send "<C-\><C-N>:wincmd l | edit {file}<CR>{line}G{col}"
+    -- if vim.tbl_contains(servers, target) then
+    --     vim.fn.serverstop(target)
+    -- end
+    -- vim.fn.serverstart(target)
 end
 
 local function open_godot(project_path)

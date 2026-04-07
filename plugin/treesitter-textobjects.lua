@@ -3,11 +3,9 @@ vim.pack.add({ gh("nvim-treesitter/nvim-treesitter-textobjects") })
 vim.g.no_plugin_maps = true
 
 local textobjects = require('nvim-treesitter-textobjects')
-local textobjectselect = require('nvim-treesitter-textobjects.select')
 textobjects.setup({
     move = { enable = true },
     select = {
-        -- Automatically jump forward to textobj, similar to targets.vim
         enable = true,
         lookahead = true,
         selection_modes = {
@@ -19,46 +17,56 @@ textobjects.setup({
             ['af'] = '@body.outer',
             ['if'] = '@body.inner',
         },
-        -- If you set this to `true` (default is `false`) then any textobject is
-        -- extended to include preceding or succeeding whitespace. Succeeding
-        -- whitespace has priority in order to act similarly to eg the built-in
-        -- `ap`.
-        --
-        -- Can also be a function which gets passed a table with the keys
-        -- * query_string: eg '@function.inner'
-        -- * selection_mode: eg 'v'
-        -- and should return true of false
         include_surrounding_whitespace = false,
     },
 })
 
+local textobjectsSelect = require('nvim-treesitter-textobjects.select')
+local textobjectsMove = require('nvim-treesitter-textobjects.move')
+-- Class
 vim.keymap.set({ "x", "o" }, "ic", function()
-    textobjectselect.select_textobject("@class.inner", "textobjects")
+    textobjectsSelect.select_textobject("@class.inner", "textobjects")
 end, { desc = 'class' })
 vim.keymap.set({ "x", "o" }, "ac", function()
-    textobjectselect.select_textobject("@class.outer", "textobjects")
+    textobjectsSelect.select_textobject("@class.outer", "textobjects")
 end, { desc = 'class' })
+-- Function
 vim.keymap.set({ 'x', 'o' }, 'if', function()
-    textobjectselect.select_textobject('@function.inner', 'textobjects')
+    textobjectsSelect.select_textobject('@function.inner', 'textobjects')
 end, { desc = 'function' })
 vim.keymap.set({ 'x', 'o' }, 'af', function()
-    textobjectselect.select_textobject('@function.outer', 'textobjects')
+    textobjectsSelect.select_textobject('@function.outer', 'textobjects')
 end, { desc = 'function' })
+vim.keymap.set({ 'n', 'x', 'o' }, '[f', function()
+    textobjectsMove.goto_previous_start("@function.outer", "textobjects")
+end, { desc = 'function' })
+vim.keymap.set({ 'n', 'x', 'o' }, ']f', function()
+    textobjectsMove.goto_next_start("@function.outer", "textobjects")
+end, { desc = 'function' })
+-- Loop
 vim.keymap.set({ 'x', 'o' }, 'il', function()
-    textobjectselect.select_textobject('@loop.inner', 'textobjects')
+    textobjectsSelect.select_textobject('@loop.inner', 'textobjects')
 end, { desc = 'loop' })
 vim.keymap.set({ 'x', 'o' }, 'al', function()
-    textobjectselect.select_textobject('@loop.outer', 'textobjects')
+    textobjectsSelect.select_textobject('@loop.outer', 'textobjects')
 end, { desc = 'loop' })
+-- If
 vim.keymap.set({ 'x', 'o' }, 'ii', function()
-    textobjectselect.select_textobject('@conditional.inner', 'textobjects')
+    textobjectsSelect.select_textobject('@conditional.inner', 'textobjects')
 end, { desc = 'if' })
 vim.keymap.set({ 'x', 'o' }, 'ai', function()
-    textobjectselect.select_textobject('@conditional.outer', 'textobjects')
+    textobjectsSelect.select_textobject('@conditional.outer', 'textobjects')
 end, { desc = 'if' })
+-- Parameter
 vim.keymap.set({ "x", "o" }, "ia", function()
-    textobjectselect.select_textobject("@parameter.inner", "textobjects")
+    textobjectsSelect.select_textobject("@parameter.inner", "textobjects")
 end, { desc = 'argument' })
 vim.keymap.set({ "x", "o" }, "aa", function()
-    textobjectselect.select_textobject("@parameter.outer", "textobjects")
+    textobjectsSelect.select_textobject("@parameter.outer", "textobjects")
+end, { desc = 'argument' })
+vim.keymap.set({ 'n', 'x', 'o' }, '[a', function()
+    textobjectsMove.goto_previous_start("@parameter.inner", "textobjects")
+end, { desc = 'argument' })
+vim.keymap.set({ 'n', 'x', 'o' }, ']a', function()
+    textobjectsMove.goto_next_start("@parameter.inner", "textobjects")
 end, { desc = 'argument' })

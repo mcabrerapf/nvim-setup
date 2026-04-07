@@ -16,3 +16,38 @@ vim.keymap.set('n', '<leader>.', '<C-^>', { desc = 'Switch to last buffer' })
 vim.keymap.set('n', '<leader><M-d>', function()
     vim.diagnostic.setqflist()
 end, { desc = 'Send diagnostics to qflist' })
+--
+vim.keymap.set("n", "<leader>q", function()
+    local current = vim.api.nvim_get_current_buf()
+    local wins = vim.fn.win_findbuf(current)
+    local targetbuf
+    local alt = vim.fn.bufnr("#")
+
+    if alt ~= -1 and vim.api.nvim_buf_is_loaded(alt) then
+        targetbuf = alt
+    end
+    -- iterate through buffers and get the last one that points to a file
+    if targetbuf == nil then
+        local buffers = vim.fn.getbufinfo({ buflisted = 1 })
+        for i = #buffers, 1, -1 do
+            local buf = buffers[i].bufnr
+
+            if buf ~= current then
+                local name = vim.api.nvim_buf_get_name(buf)
+
+                if name ~= "" then
+                    targetbuf = buf
+                    break
+                end
+            end
+        end
+    end
+
+    if targetbuf ~= nil then
+        vim.api.nvim_set_current_buf(targetbuf)
+        -- only delete buf if its not used by any other window
+        if #wins < 2 then
+            vim.api.nvim_buf_delete(current, { force = false })
+        end
+    end
+end, { desc = "Delete buffer without closing window" })
