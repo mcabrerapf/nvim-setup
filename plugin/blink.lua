@@ -9,7 +9,6 @@ require("blink.cmp").setup({
     signature = { enabled = true },
     cmdline = {
         keymap = {
-        -- preset = 'cmdline',
             ['<M-h>'] = { 'cancel' },
             ['<M-j>'] = { 'select_next', 'fallback' },
             ['<M-k>'] = { 'select_prev', 'fallback' },
@@ -18,7 +17,7 @@ require("blink.cmp").setup({
             ['<M-m>'] = { 'show_signature', 'hide_signature' },
             ['<C-n>'] = false,
             ['<C-p>'] = false,
-      },
+        },
     },
     keymap = {
         ['<M-h>'] = { 'cancel' },
@@ -32,8 +31,8 @@ require("blink.cmp").setup({
         ['<M-q>'] = { 'cancel' },
     },
     completion = {
-      -- By default, you may press `<c-space>` to show the documentation.
-      -- Optionally, set `auto_show = true` to show the documentation after a delay.
+        -- By default, you may press `<c-space>` to show the documentation.
+        -- Optionally, set `auto_show = true` to show the documentation after a delay.
         -- sources = {
         --     default = {
         --         "lsp", "path", "snippets"
@@ -45,7 +44,7 @@ require("blink.cmp").setup({
     --   preset = "luasnip"
     -- },
     sources = {
-      default = { 'lsp', 'snippets', 'path', 'buffer' },
+        default = { 'lsp', 'snippets', 'path', 'buffer' },
     },
     -- See :h blink-cmp-config-fuzzy for more information
     fuzzy = { implementation = 'lua' },

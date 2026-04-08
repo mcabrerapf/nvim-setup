@@ -42,12 +42,16 @@ vim.keymap.set("n", "<leader>q", function()
             end
         end
     end
+    if targetbuf == nil then
+        print('Cant delete last buffer')
+        return
+    end
 
-    if targetbuf ~= nil then
-        vim.api.nvim_set_current_buf(targetbuf)
-        -- only delete buf if its not used by any other window
-        if #wins < 2 then
-            vim.api.nvim_buf_delete(current, { force = false })
-        end
+    vim.api.nvim_set_current_buf(targetbuf)
+    -- only delete buf if its not used by any other window
+    if #wins < 2 then
+        vim.api.nvim_buf_delete(current, { force = false })
+    else
+        print('Cant delete last buffer')
     end
 end, { desc = "Delete buffer without closing window" })

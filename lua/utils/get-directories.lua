@@ -1,12 +1,12 @@
-local get_directories = function(root)
-  local dirs = {}
-  for _, name in ipairs(vim.fn.readdir(root)) do
-    local full = root .. '/' .. name
-    if vim.fn.isdirectory(full) == 1 then
-      table.insert(dirs, name)
+local function get_directories(root)
+    local dirs = {}
+    for _, name in ipairs(vim.fn.readdir(root)) do
+        local full = root .. '/' .. name
+        if vim.fn.isdirectory(full) == 1 then
+            table.insert(dirs, name)
+        end
     end
-  end
-  return dirs
+    return dirs
 end
 
 return get_directories

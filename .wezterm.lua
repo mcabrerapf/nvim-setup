@@ -26,34 +26,34 @@ config.line_height = 1.2
 config.window_background_opacity = 0.90
 -- config.color_scheme = 'AdventureTime'
 config.colors = {
-  -- cursor_bg = "red",
-  -- cursor_border = "red"
-  -- background = "pink",
-  -- split = "pink",
+    -- cursor_bg = "red",
+    -- cursor_border = "red"
+    -- background = "pink",
+    -- split = "pink",
 }
 config.window_decorations = "RESIZE"
 config.enable_tab_bar = false
 config.keys = {
-  {
-    key = "-",
-    mods = "CTRL",
-    action = wezterm.action.DisableDefaultAssignment,
-  },
-  {
-    key = "+",
-    mods = "CTRL",
-    action = wezterm.action.DisableDefaultAssignment,
-  },
-  {
-    key = ">",
-    mods = "CTRL|SHIFT ",
-    action = wezterm.action.DecreaseFontSize,
-  },
-  {
-    key = "<",
-    mods = "CTRL",
-    action = wezterm.action.IncreaseFontSize,
-  },
+    {
+        key = "-",
+        mods = "CTRL",
+        action = wezterm.action.DisableDefaultAssignment,
+    },
+    {
+        key = "+",
+        mods = "CTRL",
+        action = wezterm.action.DisableDefaultAssignment,
+    },
+    {
+        key = ">",
+        mods = "CTRL|SHIFT ",
+        action = wezterm.action.DecreaseFontSize,
+    },
+    {
+        key = "<",
+        mods = "CTRL",
+        action = wezterm.action.IncreaseFontSize,
+    },
 }
 -- config.mouse_bindings = {
 -- 	-- and make CTRL-Click open hyperlinks
@@ -66,7 +66,7 @@ config.keys = {
 -- 	-- Read more below on the gotcha of binding an 'Up' event only.
 -- }
 wezterm.on("gui-startup", function(cmd)
-  local tab, pane, window = wezterm.mux.spawn_window(cmd or {})
-  window:gui_window():maximize()
+    local _, _, window = wezterm.mux.spawn_window(cmd or {})
+    window:gui_window():maximize()
 end)
 return config

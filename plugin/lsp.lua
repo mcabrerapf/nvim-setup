@@ -1,16 +1,15 @@
 local keymap = require('utils.keymap')
--- LUA
 vim.lsp.enable('lua_ls')
 vim.lsp.enable('gdscript')
 vim.lsp.enable('gdshader')
 
-vim.keymap.del({ "n", "v"}, "gra")
+vim.keymap.del({ "n", "v" }, "gra")
 vim.keymap.del("n", "gri")
 vim.keymap.del("n", "grn")
 vim.keymap.del("n", "grr")
 vim.keymap.del("n", "grt")
 vim.keymap.del("n", "grx")
--- Autocmds
+
 vim.api.nvim_create_autocmd('LspAttach', {
     group = vim.api.nvim_create_augroup('lsp-attach', { clear = true }),
     callback = function(event)
@@ -43,14 +42,14 @@ vim.api.nvim_create_autocmd('LspAttach', {
                 end,
             })
         end
-        -- Keympas
+
         lspkeymap('textDocument/codeAction', 'gra', vim.lsp.buf.code_action, "Go to code action")
         lspkeymap('textDocument/declaration', 'grd', vim.lsp.buf.declaration, "Go to declaration")
         lspkeymap('textDocument/definition', 'grD', vim.lsp.buf.definition, "Go to definition")
         lspkeymap('textDocument/formatting', 'grf', vim.lsp.buf.format, "Format")
-        lspkeymap('textDocument/inlayHint', 'grh', function ()
-                vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
-        end,"Toggle lsp inlay hints")
+        lspkeymap('textDocument/inlayHint', 'grh', function()
+            vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
+        end, "Toggle lsp inlay hints")
         lspkeymap('textDocument/implementation', 'gri', vim.lsp.buf.implementation, "Go to implementation")
         lspkeymap('textDocument/rename', 'grn', vim.lsp.buf.rename, "Rename")
         lspkeymap('textDocument/documentSymbol', 'gro', vim.lsp.buf.document_symbol, "Document symbols")

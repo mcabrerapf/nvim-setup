@@ -147,7 +147,7 @@ local function set_keymaps()
         { desc = 'Mark TODO as done', silent = true, buffer = M.floating.buf })
 end
 
-M.setup = function(opts)
+M.setup = function()
     setup_buffer()
     set_auto_commands()
     set_commands()

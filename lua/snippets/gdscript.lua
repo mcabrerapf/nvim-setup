@@ -12,23 +12,23 @@ local rep = require('luasnip.extras').rep
 
 return {
 }, {
-  s(
-    {
-      trig = 'fnd',
-      snippetType = 'autosnippet'
-    },
-    fmta(
-      [[
+    s(
+        {
+            trig = 'fnd',
+            snippetType = 'autosnippet'
+        },
+        fmta(
+            [[
 	    func <fName>(<fArgs>) ->> <fReturn>:
 		      <fBody>
 	    ]],
-      {
-        fName = i(1, '_name'),
-        fArgs = i(2),
-        fReturn = i(3, 'void'),
-        fBody = i(4, 'return'),
-      }
-    )
-  ),
-  --
+            {
+                fName = i(1, '_name'),
+                fArgs = i(2),
+                fReturn = i(3, 'void'),
+                fBody = i(4, 'return'),
+            }
+        )
+    ),
+    --
 }

@@ -1,36 +1,36 @@
-vim.pack.add({"https://github.com/nvim-tree/nvim-web-devicons"})
+vim.pack.add({ "https://github.com/nvim-tree/nvim-web-devicons" })
 local devicons = require 'nvim-web-devicons'
 
-local filename_first = function(buf_id, item_arr)
-  local lines = {}
+local function filename_first(buf_id, item_arr)
+    local lines = {}
 
-  for i, item in ipairs(item_arr) do
-    local directory = vim.fs.dirname(item)
-    local basename = vim.fs.basename(item)
-    local ext = vim.fn.fnamemodify(basename, ':e')
-    local icon, icon_hl = devicons.get_icon(basename, ext, { default = true })
-    icon = icon or ''
-    icon_hl = icon_hl or 'Normal'
-    if directory == "." then
-      directory = ""
-    else
-      directory = "/" .. directory
+    for i, item in ipairs(item_arr) do
+        local directory = vim.fs.dirname(item)
+        local basename = vim.fs.basename(item)
+        local ext = vim.fn.fnamemodify(basename, ':e')
+        local icon, icon_hl = devicons.get_icon(basename, ext, { default = true })
+        icon = icon or ''
+        icon_hl = icon_hl or 'Normal'
+        if directory == "." then
+            directory = ""
+        else
+            directory = "/" .. directory
+        end
+        local line = string.format('%s %s %s', icon, basename, directory)
+        lines[i] = line
     end
-    local line = string.format('%s %s %s', icon, basename, directory)
-    lines[i] = line
-  end
 
-  vim.api.nvim_buf_set_lines(buf_id, 0, -1, false, lines)
+    vim.api.nvim_buf_set_lines(buf_id, 0, -1, false, lines)
 
-  for i, item in ipairs(item_arr) do
-    local basename = vim.fs.basename(item)
-    local ext = vim.fn.fnamemodify(basename, ':e')
-    local icon, icon_hl = devicons.get_icon(basename, ext, { default = true })
-    icon_hl = icon_hl or 'Normal'
-    local ns = vim.api.nvim_create_namespace("my_highlights")
-    vim.hl.range(buf_id, ns, icon_hl, { i - 1, 0 }, { i - 1, #icon })
-    vim.hl.range(buf_id, ns, 'FirstNameHighlight', { i - 1, #icon + 1 }, { i - 1, #icon + 1 + #basename })
-  end
+    for i, item in ipairs(item_arr) do
+        local basename = vim.fs.basename(item)
+        local ext = vim.fn.fnamemodify(basename, ':e')
+        local icon, icon_hl = devicons.get_icon(basename, ext, { default = true })
+        icon_hl = icon_hl or 'Normal'
+        local ns = vim.api.nvim_create_namespace("my_highlights")
+        vim.hl.range(buf_id, ns, icon_hl, { i - 1, 0 }, { i - 1, #icon })
+        vim.hl.range(buf_id, ns, 'FirstNameHighlight', { i - 1, #icon + 1 }, { i - 1, #icon + 1 + #basename })
+    end
 end
 
 return filename_first

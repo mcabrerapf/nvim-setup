@@ -141,7 +141,7 @@ local function set_commands()
     vim.api.nvim_create_user_command('GodotStartServer', start_godot_server, {})
     vim.api.nvim_create_user_command('GodotRestartLsp', function()
         local clients = vim.lsp.get_clients(vim.lsp.get_clients({ name = 'gdscript' }))
-        for index, client in ipairs(clients) do
+        for _, client in ipairs(clients) do
             client.stop(client)
         end
         vim.cmd('LspStart gdscript')
@@ -160,8 +160,8 @@ local function set_keymaps()
     vim.keymap.set('n', '<leader>sg', ':GodotScriptSearch<CR>', { desc = 'Search godot scripts', silent = true })
 end
 
-M.setup = function(opts)
-    -- WARN: Make sure both godot.exe AND the projects folder are in the same drive
+M.setup = function()
+    -- NOTE: Make sure both godot.exe AND the projects folder are in the same drive
     if not vim.env.GODOT_SERVER_PORT or not vim.env.GODOT_PROJECTS_PATH or not vim.env.GODOT_EXE_PATH then
         return
     else

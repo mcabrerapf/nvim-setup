@@ -1,8 +1,8 @@
-local gh = function (path)
+local function gh(path)
     if path == "" or path == nil then
-        return nil
+        return ''
     end
-   return "https://github.com/" .. path
+    return "https://github.com/" .. path
 end
 
 return gh

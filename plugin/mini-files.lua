@@ -1,7 +1,7 @@
 local gh = require("utils.gh")
 vim.pack.add({ gh("nvim-mini/mini.files") })
-local files = require('mini.files')
-files.setup({
+local mini_files = require('mini.files')
+mini_files.setup({
     git_status = true,
     mappings = {
         close = 'q',
@@ -35,70 +35,71 @@ files.setup({
         },
     },
 })
--- Auto Commands
+
+local function base_filter(fs_entry)
+    return not vim.endswith(fs_entry.name, '.uid') and not vim.endswith(fs_entry.name, '.tmp')
+end
+
+local function open_mini_files()
+    mini_files.open(nil, true, { content = { filter = base_filter } })
+end
+
+local function open_in_file()
+    mini_files.open(vim.api.nvim_buf_get_name(0), false, { content = { filter = base_filter } })
+end
+
+local function open_nvim_config()
+    mini_files.open(vim.fn.stdpath 'config', false)
+end
+
+local function set_as_cwd()
+    local fs = require 'mini.files'
+    local entry = fs.get_fs_entry()
+    if not entry then return end
+    local path = entry.path
+    if entry.fs_type == 'file' then
+        path = vim.fs.dirname(path)
+    end
+    vim.cmd('tcd ' .. path)
+    print('cwd set to -> ' .. path)
+end
+
+local function open_mini_pick()
+    local fs = require 'mini.files'
+    local entry = fs.get_fs_entry()
+    if not entry or entry.fs_type == 'file' then return end
+    fs.close()
+    local pick = require 'mini.pick'
+    local path = entry.path
+    pick.builtin.files(nil, { source = { cwd = path, name = 'Search files in ' .. path } })
+end
+
+local function open_mini_pick_grep()
+    local fs = require 'mini.files'
+    local entry = fs.get_fs_entry()
+    if not entry or entry.fs_type == 'file' then return end
+    fs.close()
+    local pick = require 'mini.pick'
+    local path = entry.path
+    pick.builtin.grep_live(nil, { source = { cwd = path, name = 'Grep search in ' .. path } })
+end
+
+local ui_open = function() vim.ui.open(mini_files.get_fs_entry().path) end
+
 local group = vim.api.nvim_create_augroup('MiniFilesHooks', { clear = true })
 vim.api.nvim_create_autocmd('User', {
     group = group,
-    pattern = 'MiniFilesExplorerOpen',
-    callback = function()
+    pattern = 'MiniFilesBufferCreate',
+    callback = function(event)
         -- Key maps
-        vim.keymap.set('n', '<M-e>', function()
-            local fs = require 'mini.files'
-            local entry = fs.get_fs_entry()
-            if not entry then
-                return
-            end
-            local path = entry.path
-            if entry.fs_type == 'file' then
-                path = vim.fs.dirname(path)
-            end
-            vim.cmd('tcd ' .. path)
-            print('Pwd set to -> ' .. path)
-        end, { desc = 'Set dir as pwd' })
-        --
-        vim.keymap.set('n', '<M-s>', function()
-            local fs = require 'mini.files'
-            local entry = fs.get_fs_entry()
-            if not entry or entry.fs_type == 'file' then
-                return
-            end
-            fs.close()
-            local pick = require 'mini.pick'
-            local path = entry.path
-            pick.builtin.files(nil, { source = { cwd = path, name = 'Search files' } })
-        end, { desc = 'Search in folder' })
-        --
-        vim.keymap.set('n', '<M-s><M-s>', function()
-            local fs = require 'mini.files'
-            local entry = fs.get_fs_entry()
-            if not entry or entry.fs_type == 'file' then
-                return
-            end
-            fs.close()
-            local pick = require 'mini.pick'
-            local path = entry.path
-            pick.builtin.grep_live(nil, { source = { cwd = path, name = 'Grep search' } })
-        end, { desc = 'Grep search in folder' })
-    end,
-})
-vim.api.nvim_create_autocmd('User', {
-    group = group,
-    pattern = 'MiniFilesExplorerClose',
-    callback = function()
-        vim.keymap.del('n', '<M-e>', {})
-        vim.keymap.del('n', '<M-s>', {})
-        vim.keymap.del('n', '<M-s><M-s>', {})
+        local buf_id = event.data.buf_id
+        vim.keymap.set('n', '<M-e>', set_as_cwd, { buf = buf_id, desc = 'Set dir as cwd' })
+        vim.keymap.set('n', '<M-s>', open_mini_pick, { buf = buf_id, desc = 'Search in folder' })
+        vim.keymap.set('n', '<M-S>', open_mini_pick_grep, { buffer = buf_id, desc = 'Grep search in folder' })
+        vim.keymap.set('n', '<M-o>', ui_open, { buffer = buf_id, desc = 'Open with os' })
     end,
 })
 -- Key Mappings
-vim.keymap.set('n', '<leader>ff', function()
-    files.open(vim.api.nvim_buf_get_name(0), false)
-end, { desc = 'File explorer (current file)' })
-
-vim.keymap.set('n', '<leader>fF', function()
-    files.open(vim.uv.cwd(), true)
-end, { desc = 'File explorer' })
-
-vim.keymap.set('n', '<leader>fv', function()
-    files.open(vim.fn.stdpath 'config', false)
-end, { desc = 'Open Neovim config directory' })
+vim.keymap.set('n', '<leader>ff', open_mini_files, { desc = 'File explorer' })
+vim.keymap.set('n', '<leader>fF', open_in_file, { desc = 'File explorer (current file)' })
+vim.keymap.set('n', '<leader>fv', open_nvim_config, { desc = 'Open Neovim config directory' })

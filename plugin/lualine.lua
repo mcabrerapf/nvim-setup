@@ -49,7 +49,7 @@ require('lualine').setup({
         lualine_b = { 'branch' },
         lualine_c = { "buffers" },
         lualine_x = { 'diff' },
-        lualine_y = { 'progress', 'location',  'lsp_status'},
+        lualine_y = { 'progress', 'location', 'lsp_status' },
         lualine_z = { 'tabs' },
     },
     inactive_sections = {
