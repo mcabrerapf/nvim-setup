@@ -1,3 +1,0 @@
--- local gh = require("utils.gh")
--- vim.pack.add({ gh("nvim-mini/mini.ai") })
--- require('mini.ai').setup { n_lines = 500 }

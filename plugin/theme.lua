@@ -1,7 +1,7 @@
 local gh = require("utils.gh")
 vim.pack.add({ gh("navarasu/onedark.nvim") })
 require('onedark').setup {
-    style = 'warmer', -- **Options:**  dark, darker, cool, deep, warm, warmer, light
+    style = 'darker', -- **Options:**  dark, darker, cool, deep, warm, warmer, light
     code_style = {
         comments = 'none',
         keywords = 'bold,italic',
