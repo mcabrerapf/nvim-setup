@@ -1,6 +1,7 @@
 local function create_floating_window(opts)
     opts = opts or {}
     local buf = opts.buf
+    local style = opts.style or 'minimal'
     local width = opts.width or math.floor(vim.o.columns * 0.6)
     local height = opts.height or math.floor(vim.o.lines * 0.6)
     local border = opts.border or 'rounded'
@@ -14,7 +15,7 @@ local function create_floating_window(opts)
 
     local win_config = {
         relative = 'editor',
-        style = 'minimal', -- No borders or extra UI elements
+        style = style, -- No borders or extra UI elements
         border = border,
         fixed = fixed,
         width = width,
