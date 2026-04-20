@@ -1,3 +1,5 @@
+require('my_plugins.status-line').setup()
+require('my_plugins.tab-line').setup()
 require('my_plugins.pinned-buffers').setup()
 require('my_plugins.notes').setup()
 require('my_plugins.floating-terminal').setup()

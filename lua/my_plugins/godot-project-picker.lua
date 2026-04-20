@@ -88,7 +88,11 @@ local toggle_project_picker = function()
         if longest_dir_name < 25 then
             longest_dir_name = 25
         end
-        M.floating = create_floating_window { buf = M.floating.buf, width = longest_dir_name, height = 10, title = 'Godot Projects' }
+        local height = #dirs
+        if height > 15 then
+            height = 15
+        end
+        M.floating = create_floating_window { buf = M.floating.buf, width = longest_dir_name, height = height, title = 'Godot Projects' }
         populate_buffer(M.floating.buf, dirs, { filetype = 'godot_project_picker' })
         --
         vim.keymap.set('n', '<esc>', function()

@@ -6,7 +6,8 @@ vim.g.have_nerd_font = true --Set to true if you have a Nerd Font installed and 
 -- vim.o.title = true
 -- vim.o.titlelen = 10
 -- vim.o.tabline = true
-vim.o.showtabline = 0
+vim.o.showmode = false
+vim.o.showtabline = 2 -- 0: never 1: when at least 2 tabs 2: always
 vim.o.autoread = true
 vim.o.termguicolors = true
 vim.o.winborder = 'rounded'
@@ -31,7 +32,7 @@ vim.o.inccommand = 'split' -- Preview substitutions live, as you type
 vim.o.cursorline = true    -- Show which line your cursor is on
 vim.o.confirm = true       -- Raise a dialog asking if you wish to save the current file(s)
 vim.opt.virtualedit = 'block'
-vim.opt.scrolloff = 50    -- Minimal number of screen lines to keep above and below the cursor.
+vim.opt.scrolloff = 50     -- Minimal number of screen lines to keep above and below the cursor.
 vim.opt.expandtab = true
 vim.opt.tabstop = 4
 vim.opt.shiftwidth = 4
@@ -41,7 +42,7 @@ vim.opt.listchars = {
     trail = '·',
     nbsp = '␣'
 }
-vim.opt.guicursor = {      -- cursor blink if using wezterm need to set its default blink rate as well
+vim.opt.guicursor = { -- cursor blink if using wezterm need to set its default blink rate as well
     'n-v-c:block',
     'i-ci-ve:ver25',
     'r-cr:hor20',

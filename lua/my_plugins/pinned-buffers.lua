@@ -2,7 +2,6 @@ local create_floating_window = require 'utils.create-floating-window'
 local first_name_first = require('utils.filename-first')
 local get_longest_name = require('utils.get-longest-string')
 local save_load = require('utils.save-load')
--- TODO: Implement saving/loading
 local data_file = vim.fn.stdpath("data") .. "/pinned_buffers.json"
 
 local M = {
@@ -82,12 +81,12 @@ local function toggle_buffers_browser()
             local lineNumber, _ = unpack(vim.api.nvim_win_get_cursor(0))
             load_pinned_buffer(lineNumber)
         end, { buffer = M.floating.buf, nowait = true })
-        vim.keymap.set('n', 'd', ':DeletePinnedBuffer<CR>', { desc = 'Delete pinned buffer', silent = true })
-        vim.keymap.set('n', '1', ':OpenPinnedBuffer 1<CR>', { desc = 'Open tagged buf at 1', silent = true })
-        vim.keymap.set('n', '2', ':OpenPinnedBuffer 2<CR>', { desc = 'Open tagged buf at 2', silent = true })
-        vim.keymap.set('n', '3', ':OpenPinnedBuffer 3<CR>', { desc = 'Open tagged buf at 3', silent = true })
-        vim.keymap.set('n', '4', ':OpenPinnedBuffer 4<CR>', { desc = 'Open tagged buf at 4', silent = true })
-        vim.keymap.set('n', '5', ':OpenPinnedBuffer 5<CR>', { desc = 'Open tagged buf at 5', silent = true })
+        vim.keymap.set('n', 'd', ':DeletePinnedBuffer<CR>', { desc = 'Delete pinned buffer', silent = true, buffer = M.floating.buf })
+        vim.keymap.set('n', '1', ':OpenPinnedBuffer 1<CR>', { desc = 'Open tagged buf at 1', silent = true, buffer = M.floating.buf })
+        vim.keymap.set('n', '2', ':OpenPinnedBuffer 2<CR>', { desc = 'Open tagged buf at 2', silent = true, buffer = M.floating.buf })
+        vim.keymap.set('n', '3', ':OpenPinnedBuffer 3<CR>', { desc = 'Open tagged buf at 3', silent = true, buffer = M.floating.buf })
+        vim.keymap.set('n', '4', ':OpenPinnedBuffer 4<CR>', { desc = 'Open tagged buf at 4', silent = true, buffer = M.floating.buf })
+        vim.keymap.set('n', '5', ':OpenPinnedBuffer 5<CR>', { desc = 'Open tagged buf at 5', silent = true, buffer = M.floating.buf })
     else
         vim.api.nvim_win_hide(M.floating.win)
     end
