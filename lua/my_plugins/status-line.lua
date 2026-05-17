@@ -1,9 +1,50 @@
+local gh = require("utils.gh")
 local get_filename = require('utils.get-filename')
 local get_filetype_icon = require('utils.get-filetype-icon')
+vim.pack.add({ gh("lewis6991/gitsigns.nvim") })
+
 
 local M = {
     show_cmd = false
 }
+
+local function get_branch_name()
+    local head = vim.b.gitsigns_head
+
+    if not head then
+        return ""
+    end
+    return " " .. head
+end
+
+local function get_git_diff()
+    local dict = vim.b.gitsigns_status_dict
+
+    local added = dict and dict.added or 0
+    local changed = dict and dict.changed or 0
+    local removed = dict and dict.removed or 0
+    if added == 0 and changed == 0 and removed == 0 then
+        return ""
+    end
+
+    return string.format("+%d ~%d -%d", added, changed, removed)
+end
+
+local function get_git_bits()
+    local branchName = get_branch_name()
+    local gitDiff = get_git_diff()
+    local gitBits = ''
+    if branchName ~= '' then
+        gitBits = gitBits .. branchName
+    end
+    if gitDiff ~= '' then
+        gitBits = gitBits .. ' ' .. gitDiff
+    end
+    if gitBits ~= '' then
+        gitBits = gitBits .. ' ' .. ''
+    end
+    return gitBits
+end
 
 local function get_mode()
     -- Note: termcodes \19 and \22 are ^S and ^V
@@ -72,7 +113,8 @@ local function get_left_side(is_active)
     if not is_active then return get_filename() end
     return table.concat({
         get_mode(),
-        " " .. get_filetype_icon(),
+        -- " " .. get_git_bits(),
+        -- " " .. get_filetype_icon(),
         " " .. get_filename(),
     })
 end
@@ -82,7 +124,7 @@ local function get_right_side(is_active)
     if not is_active then
         return '%= %l:%c %p%%'
     end
-    return get_current_lsp() .. ' ' .. '%l:%c %p%%'
+    return get_current_lsp() .. '' .. '%l:%c %p%%'
 end
 
 M.render_status_line = function()

@@ -1,5 +1,6 @@
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>', { desc = 'Clear search highlight' })
 vim.keymap.set('t', '<esc><esc>', '<c-\\><c-n>', { desc = 'Close terminal' }) -- NOTE: Easy way to close terminal
+vim.keymap.set('n', '<C-s>', ':w<CR>', { desc = "Save" })
 
 vim.keymap.set('n', '<M-j>', '+', { desc = 'Scroll half screen Down' })
 vim.keymap.set('n', '<M-k>', '-', { desc = 'Scroll half screen Up' })

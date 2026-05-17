@@ -89,11 +89,9 @@ local function add_todo_task()
 end
 
 local function create_note()
-    local name = vim.fn.input 'New note name: '
-    if name == '' then
-        return
-    end
-
+    local name = vim.fn.input 'New note name -> '
+    if name == '' then return end
+    name = string.lower(name):gsub(" ", "_")
     if not name:match '%.md$' then
         name = name .. '.md'
     end
@@ -109,9 +107,8 @@ local function create_note()
     local readableName = name:gsub('%.[^%.]+$', ''):gsub('[-_]', ' '):gsub('^%l', string.upper)
     vim.api.nvim_buf_set_lines(0, 0, -1, false, {
         '# ' .. readableName,
-        '',
-        '## Created: ' .. os.date '%Y-%m-%d %H:%M',
-        '----------------------------',
+        '>[!TLDR]' .. os.date '%Y-%m-%d %H:%M',
+        '---',
         '',
     })
     vim.cmd 'normal G'
