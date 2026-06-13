@@ -32,7 +32,7 @@ vim.o.inccommand = 'split' -- Preview substitutions live, as you type
 vim.o.cursorline = true    -- Show which line your cursor is on
 vim.o.confirm = true       -- Raise a dialog asking if you wish to save the current file(s)
 vim.opt.virtualedit = 'block'
-vim.opt.scrolloff = 50     -- Minimal number of screen lines to keep above and below the cursor.
+-- vim.opt.scrolloff = 50     -- Minimal number of screen lines to keep above and below the cursor.
 vim.opt.expandtab = true
 vim.opt.tabstop = 4
 vim.opt.shiftwidth = 4
@@ -58,7 +58,7 @@ vim.diagnostic.config {
     virtual_lines = true,    -- Teest shows up underneath the line, with virtual lines
     jump = { float = true }, -- Auto open the float, so you can easily read the errors when jumping with `[d` and `]d`
 }
-vim.opt.sessionoptions = {
+vim.opt.sessionoptions = { -- specify what is saved in a session
     "buffers",
     "curdir",
     "folds",
