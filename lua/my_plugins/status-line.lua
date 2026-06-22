@@ -3,7 +3,6 @@ local get_filename = require('utils.get-filename')
 local get_filetype_icon = require('utils.get-filetype-icon')
 vim.pack.add({ gh("lewis6991/gitsigns.nvim") })
 
-
 local M = {
     show_cmd = false
 }
@@ -35,7 +34,7 @@ local function get_git_bits()
     local gitDiff = get_git_diff()
     local gitBits = ''
     if branchName ~= '' then
-        gitBits = gitBits .. branchName
+        gitBits = branchName
     end
     if gitDiff ~= '' then
         gitBits = gitBits .. ' ' .. gitDiff
@@ -87,7 +86,7 @@ local function get_mode()
         ["t"] = { name = "TERM", hl = "Command" },
     }
     local mode = mode_options[vim.fn.mode()] or {}
-    local modeText = mode.name
+    local modeText = mode.name .. ' ' .. get_branch_name()
     if M.show_cmd == true then
         modeText = vim.fn.getcwd()
     end
@@ -105,8 +104,9 @@ local function get_current_lsp()
     if #lspClients == 0 then
         return ''
     end
-    local firstCllient = lspClients[1].name
-    return firstCllient
+    -- local firstCllient = lspClients[1].name
+    local clientIcon = get_filetype_icon()
+    return clientIcon .. ' | '
 end
 
 local function get_left_side(is_active)
@@ -119,12 +119,15 @@ local function get_left_side(is_active)
     })
 end
 
-
 local function get_right_side(is_active)
     if not is_active then
         return '%= %l:%c %p%%'
     end
-    return get_current_lsp() .. '' .. '%l:%c %p%%'
+    local gitDiff = get_git_diff()
+    if gitDiff ~= '' then
+        return get_current_lsp() .. gitDiff .. ' | ' .. '%l:%c %p%%'
+    end
+    return get_current_lsp() .. '%l:%c %p%%'
 end
 
 M.render_status_line = function()
