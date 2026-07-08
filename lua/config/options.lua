@@ -60,9 +60,12 @@ vim.diagnostic.config {
 }
 vim.opt.sessionoptions = { -- specify what is saved in a session
     "buffers",
+    "tabpages",
     "curdir",
     "folds",
-    "help",
+    -- "localoptions",
+    -- "options",
     "tabpages",
+    "winpos",
     "winsize",
 }

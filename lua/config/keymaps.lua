@@ -1,12 +1,10 @@
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>', { desc = 'Clear search highlight' })
 vim.keymap.set('t', '<esc><esc>', '<c-\\><c-n>', { desc = 'Close terminal' }) -- NOTE: Easy way to close terminal
 vim.keymap.set('n', '<C-s>', ':w<CR>', { desc = "Save" })
-
-vim.keymap.set('n', '<M-j>', '+', { desc = 'Scroll half screen Down' })
-vim.keymap.set('n', '<M-k>', '-', { desc = 'Scroll half screen Up' })
-vim.keymap.set('n', '<M-l>', 'g_', { desc = 'Move to last character in line' })
+-- NOTE: line navigation
 vim.keymap.set('n', '<M-h>', '^', { desc = 'Move to first character in line' })
--- move around windows
+vim.keymap.set('n', '<M-l>', 'g_', { desc = 'Move to last character in line' })
+-- NOTE: move around windows
 vim.keymap.set('n', '<C-j>', '<C-w>j', { desc = 'move to bottom window' })
 vim.keymap.set('n', '<C-k>', '<C-w>k', { desc = 'move to top window' })
 vim.keymap.set('n', '<C-h>', '<C-w>h', { desc = 'move to left window' })
@@ -25,7 +23,6 @@ vim.keymap.set('n', '<leader>H', function()
 end, { desc = 'Grep search help for cword' })
 vim.keymap.set('n', '<leader>.', '<C-^>', { desc = 'Switch to last buffer' })
 vim.keymap.set('n', '<leader><M-d>', vim.diagnostic.setloclist, { desc = 'Send diagnostics to qflist' })
---
 vim.keymap.set("n", "<leader>q", function()
     local current = vim.api.nvim_get_current_buf()
     local wins = vim.fn.win_findbuf(current)
@@ -52,15 +49,15 @@ vim.keymap.set("n", "<leader>q", function()
         end
     end
     if targetbuf == nil then
-        print('Cant delete last buffer')
-        return
+        targetbuf = vim.api.nvim_create_buf(true, false)
     end
-
     vim.api.nvim_set_current_buf(targetbuf)
-    -- only delete buf if its not used by any other window
-    if #wins < 2 then
-        vim.api.nvim_buf_delete(current, { force = false })
-    else
-        print('Cant delete last buffer')
+
+    -- #NOTE: Search windows and replace buf if its being deleted
+    for _, value in pairs(wins) do
+        if vim.api.nvim_win_get_buf(value) == current then
+            vim.api.nvim_win_set_buf(value, targetbuf)
+        end
     end
-end, { desc = "Delete buffer without closing window" })
+    vim.api.nvim_buf_delete(current, { force = false })
+end, { desc = "Delete current buffer without closing window" })

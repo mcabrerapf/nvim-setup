@@ -108,7 +108,7 @@
 - `:q`                    ===> quit (fails if there are unsaved changes)
 - `:q!`                   ===> quit and throw away unsaved changes (or `ZQ`)
 - `:wqa`                  ===> write save and quit all
-- `:{line_n}`             ===> write save and quit all
+- `:{line_n}`             ===> go to line
 - `:g/{pattern}/d`        ===> delete all lines containing pattern
 - `:g!/{pattern}/d`       ===> delete all lines not containing pattern
 - `:find {file_name}`     ===> go to file
@@ -133,6 +133,7 @@
 - in insert mode `<C-o>` puts you in normal mode and goes back to insert after a single command 
 - in insert mode `<C-w>` deletes the previous word
 - register `=` is an expression register (command line)
+- %bd deletes all buffers
 - `:.,$-bdelete`  delete buffers from the current one last
 
 > [!IMPORTANT] FIX FOR TREESITER ON WINDOWS

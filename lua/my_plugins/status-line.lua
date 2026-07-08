@@ -25,24 +25,8 @@ local function get_git_diff()
     if added == 0 and changed == 0 and removed == 0 then
         return ""
     end
-
+    -- return "%#StatuslineGitAdd# " .. string.format("+%d", added) .. " %#StatuslineGitAdd#"
     return string.format("+%d ~%d -%d", added, changed, removed)
-end
-
-local function get_git_bits()
-    local branchName = get_branch_name()
-    local gitDiff = get_git_diff()
-    local gitBits = ''
-    if branchName ~= '' then
-        gitBits = branchName
-    end
-    if gitDiff ~= '' then
-        gitBits = gitBits .. ' ' .. gitDiff
-    end
-    if gitBits ~= '' then
-        gitBits = gitBits .. ' ' .. ''
-    end
-    return gitBits
 end
 
 local function get_mode()
@@ -113,8 +97,6 @@ local function get_left_side(is_active)
     if not is_active then return get_filename() end
     return table.concat({
         get_mode(),
-        -- " " .. get_git_bits(),
-        -- " " .. get_filetype_icon(),
         " " .. get_filename(),
     })
 end

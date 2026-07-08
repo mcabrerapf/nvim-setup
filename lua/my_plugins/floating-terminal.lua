@@ -1,37 +1,27 @@
 local create_floating_window = require 'utils.create-floating-window'
 local M = {
-    floating = {
-        buf = -1,
-        win = -1,
-    }
+    buf = -1,
+    win = -1,
 }
 
 local function setup_buffer()
+        if M.buf ~= -1 and vim.api.nvim_buf_is_valid(M.buf) then return end
     local buf = vim.api.nvim_create_buf(false, true)
-    vim.bo[buf].buflisted = false
-    vim.bo[buf].bufhidden = 'wipe'
-    vim.bo[buf].swapfile = false
-    M.floating.buf = buf
+    M.buf = buf
 end
 
 local toggle_terminal = function()
-    if not vim.api.nvim_win_is_valid(M.floating.win) then
+    if not vim.api.nvim_win_is_valid(M.win) then
         setup_buffer()
-        M.floating = create_floating_window { buf = M.floating.buf }
-
-        vim.fn.jobstart(vim.o.shell, { term = true })
+        M.win = create_floating_window { buf = M.buf }.win
+        vim.cmd.terminal()
         vim.cmd 'startinsert'
         --
         vim.keymap.set({ 'n', 'i', 't' }, '<M-q>', function()
-            vim.api.nvim_win_hide(M.floating.win)
-        end, { buffer = true, nowait = true })
-        --
-        vim.keymap.set('n', 'q', function()
-            vim.api.nvim_win_hide(M.floating.win)
+            vim.api.nvim_win_hide(M.win)
         end, { buffer = true, nowait = true })
     else
-        vim.api.nvim_win_hide(M.floating.win)
-        vim.api.nvim_buf_delete(M.floating.buf, {})
+        vim.api.nvim_win_hide(M.win)
     end
 end
 

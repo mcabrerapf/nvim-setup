@@ -47,6 +47,7 @@ vim.api.nvim_set_hl(0, 'MiniPickHeader', { link = 'FloatTitle' })
 vim.api.nvim_set_hl(0, 'MiniPickBorder', { link = 'FloatBorder' })
 vim.api.nvim_set_hl(0, 'MiniPickMatchMarked', { fg = '#000000', bg = '#ffffff' })
 
+vim.api.nvim_set_hl(0, 'StatuslineGitAdd', { fg = '#ff1111', bg = '#ffffff' })
 -- status line
 local hl = function(group)
 	return vim.api.nvim_get_hl(0, {

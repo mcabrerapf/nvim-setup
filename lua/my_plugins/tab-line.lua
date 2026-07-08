@@ -53,8 +53,7 @@ M.render_tab_line = function()
         else
             tabs_content = tabs_content .. "%#TabLine#"
         end
-        tabs_content = tabs_content .. "["
-        tabs_content = tabs_content .. i .. "]"
+        tabs_content =  " " .. tabs_content .. i .. "] "
         tabs_content = tabs_content .. truncate(get_tab_label(tab), per_tab - 2)
         local windows = get_real_win_count(tab)
         tabs_content = tabs_content .. ' ' .. windows
