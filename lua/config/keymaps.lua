@@ -21,9 +21,9 @@ vim.keymap.set('n', '<leader>H', function()
     vim.cmd('lh ' .. cword)
     vim.cmd 'lwindow'
 end, { desc = 'Grep search help for cword' })
-vim.keymap.set('n', '<leader>.', '<C-^>', { desc = 'Switch to last buffer' })
+vim.keymap.set('n', '<M-.>', '<C-^>', { desc = 'Switch to last buffer' })
 vim.keymap.set('n', '<leader><M-d>', vim.diagnostic.setloclist, { desc = 'Send diagnostics to qflist' })
-vim.keymap.set("n", "<leader>q", function()
+vim.keymap.set("n", "<M-q>", function()
     local current = vim.api.nvim_get_current_buf()
     local wins = vim.fn.win_findbuf(current)
     local targetbuf
@@ -61,3 +61,34 @@ vim.keymap.set("n", "<leader>q", function()
     end
     vim.api.nvim_buf_delete(current, { force = false })
 end, { desc = "Delete current buffer without closing window" })
+
+vim.keymap.set("x", "m", function()
+    local start_pos = vim.fn.getpos("v")
+    local end_pos = vim.fn.getpos(".")
+
+    local start_line = start_pos[2]
+    local end_line = end_pos[2]
+
+    -- Ensure start_line is before end_line
+    if start_line > end_line then
+        start_line, end_line = end_line, start_line
+    end
+
+    -- Exit visual mode
+    vim.cmd("normal! \\<Esc>")
+
+    local dest = vim.fn.input("Move after line: ")
+
+    if dest == "" then
+        return
+    end
+
+    dest = tonumber(dest)
+    if not dest then
+        vim.notify("Invalid line number", vim.log.levels.ERROR)
+        return
+    end
+
+    -- print(start_line, end_line, dest)
+    vim.cmd(string.format("%d,%dm%d", start_line, end_line, dest))
+end, { desc = "Move selected lines" })

@@ -6,11 +6,11 @@ local function get_modified_status(tab_index)
         local buf = vim.api.nvim_win_get_buf(win)
 
         if vim.bo[buf].modified then
-            return '●'
+            return ' ●'
         end
     end
 
-    return ' '
+    return '  '
 end
 
 local function get_real_win_count(tabnr)
@@ -36,7 +36,7 @@ local function get_real_win_count(tabnr)
 end
 
 local function get_tab_label(tab_index)
-    local tabCwd = vim.fn.getcwd(1, tab_index) or 'Tab'
+    local tabCwd = vim.fn.getcwd(0, tab_index) or 'Tab'
     return tabCwd
 end
 
@@ -47,16 +47,15 @@ M.render_tab_line = function()
     local per_tab = math.floor(total_width / #tabs)
     for i, tab in ipairs(tabs) do
         local is_current = (tab == vim.api.nvim_get_current_tabpage())
-
         if is_current then
             tabs_content = tabs_content .. "%#TabLineSel#"
         else
             tabs_content = tabs_content .. "%#TabLine#"
         end
-        tabs_content =  " " .. tabs_content .. i .. "] "
+        tabs_content =  tabs_content .. ' '.. i .. ") "
         tabs_content = tabs_content .. truncate(get_tab_label(tab), per_tab - 2)
-        local windows = get_real_win_count(tab)
-        tabs_content = tabs_content .. ' ' .. windows
+        -- local windows = get_real_win_count(tab)
+        -- tabs_content = tabs_content .. ' ' .. windows
         tabs_content = tabs_content .. get_modified_status(tab) .. ' '
     end
 

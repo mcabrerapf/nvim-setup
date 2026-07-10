@@ -26,8 +26,7 @@ local function create_floating_window(opts)
         title_pos = title_pos,
         anchor = anchor,
     }
-    local win = vim.api.nvim_open_win(buf, should_enter, win_config)
-    return { buf = buf, win = win }
+    return vim.api.nvim_open_win(buf, should_enter, win_config)
 end
 
 return create_floating_window

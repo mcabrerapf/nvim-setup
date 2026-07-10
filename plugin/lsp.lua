@@ -2,6 +2,7 @@ local keymap = require('utils.keymap')
 vim.lsp.enable('lua_ls')
 vim.lsp.enable('gdscript')
 vim.lsp.enable('gdshader')
+vim.lsp.enable('org')
 
 vim.keymap.del({ "n", "v" }, "gra")
 vim.keymap.del("n", "gri")

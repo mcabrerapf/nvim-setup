@@ -1,6 +1,6 @@
 local gh = require("utils.gh")
-vim.pack.add({ gh("nvim-mini/mini.pick") })
 local filename_first = require 'utils.filename-first'
+vim.pack.add({ gh("nvim-mini/mini.pick") })
 
 local mini_pick = require('mini.pick')
 
@@ -38,18 +38,20 @@ mini_pick.setup({
 })
 
 local function open_mini_pick()
+    local cwd = vim.fn.getcwd()
     mini_pick.builtin.files(nil, {
         source = {
-            name = 'Search files',
+            name = 'Search files in ' .. cwd,
             show = filename_first,
         },
     })
 end
 
 local function open_mini_pick_grep()
+    local cwd = vim.fn.getcwd()
     mini_pick.builtin.grep_live(nil, {
         source = {
-            name = 'Grep search',
+            name = 'Grep search in ' .. cwd,
         },
     })
 end

@@ -5,16 +5,20 @@ local M = {
 }
 
 local function setup_buffer()
-        if M.buf ~= -1 and vim.api.nvim_buf_is_valid(M.buf) then return end
+    if vim.api.nvim_buf_is_valid(M.buf) then return end
     local buf = vim.api.nvim_create_buf(false, true)
+    vim.bo[buf].bufhidden = "hide"
+    vim.bo[buf].buflisted = false
     M.buf = buf
 end
 
 local toggle_terminal = function()
     if not vim.api.nvim_win_is_valid(M.win) then
         setup_buffer()
-        M.win = create_floating_window { buf = M.buf }.win
-        vim.cmd.terminal()
+        M.win = create_floating_window { buf = M.buf }
+        if vim.bo[M.buf].buftype ~= 'terminal' then
+            vim.cmd.terminal()
+        end
         vim.cmd 'startinsert'
         --
         vim.keymap.set({ 'n', 'i', 't' }, '<M-q>', function()

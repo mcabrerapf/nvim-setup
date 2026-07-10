@@ -110,7 +110,7 @@ local function toggle_window()
             height = 5,
             title = 'Pinned Files',
             style = ''
-        }.win
+        }
     else
         vim.api.nvim_win_hide(M.win)
     end

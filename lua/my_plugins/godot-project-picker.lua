@@ -4,10 +4,8 @@ local get_longest_name = require 'utils.get-longest-string'
 local populate_buffer = require 'utils.populate-buffer'
 
 local M = {
-    floating = {
-        buf = -1,
-        win = -1,
-    },
+    buf = -1,
+    win = -1,
     current_session = ''
 }
 
@@ -72,8 +70,8 @@ local function get_selected_project_path()
 end
 
 local function open_project(project_path)
-    if vim.api.nvim_win_is_valid(M.floating.win) then
-        vim.api.nvim_win_close(M.floating.win, true)
+    if vim.api.nvim_win_is_valid(M.win) then
+        vim.api.nvim_win_close(M.win, true)
     end
     if project_path == '' then
         return
@@ -82,7 +80,7 @@ local function open_project(project_path)
 end
 
 local toggle_project_picker = function()
-    if not vim.api.nvim_win_is_valid(M.floating.win) then
+    if not vim.api.nvim_win_is_valid(M.win) then
         local dirs = get_directories(vim.env.GODOT_PROJECTS_PATH)
         local longest_dir_name = get_longest_name(dirs)
         if longest_dir_name < 25 then
@@ -92,16 +90,16 @@ local toggle_project_picker = function()
         if height > 15 then
             height = 15
         end
-        M.floating = create_floating_window { buf = M.floating.buf, width = longest_dir_name, height = height, title = 'Godot Projects' }
-        populate_buffer(M.floating.buf, dirs, { filetype = 'godot_project_picker' })
+        M.win = create_floating_window { buf = M.buf, width = longest_dir_name, height = height, title = 'Godot Projects' }
+        populate_buffer(M.buf, dirs, { filetype = 'godot_project_picker' })
         --
         vim.keymap.set('n', '<esc>', function()
-            vim.api.nvim_win_hide(M.floating.win)
-        end, { buffer = M.floating.buf, nowait = true })
+            vim.api.nvim_win_hide(M.win)
+        end, { buffer = M.buf, nowait = true })
         --
         vim.keymap.set('n', 'q', function()
-            vim.api.nvim_win_hide(M.floating.win)
-        end, { buffer = M.floating.buf, nowait = true })
+            vim.api.nvim_win_hide(M.win)
+        end, { buffer = M.buf, nowait = true })
         --
         vim.keymap.set('n', '<M-e>', function()
             local project_path = get_selected_project_path()
@@ -109,24 +107,28 @@ local toggle_project_picker = function()
             -- start_godot_server()
             -- open_project(project_path)
             -- load_godot_session(project_path)
-        end, { buffer = M.floating.buf, nowait = true })
+        end, { buffer = M.buf, nowait = true })
         --
         vim.keymap.set('n', 'l', function()
             local project_path = get_selected_project_path()
             start_godot_server()
             open_project(project_path)
             load_godot_session(project_path)
-        end, { buffer = M.floating.buf, nowait = true })
+        end, { buffer = M.buf, nowait = true })
     else
-        vim.api.nvim_win_hide(M.floating.win)
+        vim.api.nvim_win_hide(M.win)
     end
 end
 
 local function godot_script_search()
-    local filename_first = require 'utils.filename-first'
-    local pick = require 'mini.pick'
-    local items = vim.fn.glob('**/*.gd', false, true)
-    pick.start({ source = { items = items, show = filename_first, name = "Godot script search" } })
+    if vim.fn.filereadable(vim.fn.getcwd() .. '/project.godot') == 1 then
+        local filename_first = require 'utils.filename-first'
+        local pick = require 'mini.pick'
+        local items = vim.fn.glob('**/*.gd', false, true)
+        pick.start({ source = { items = items, show = filename_first, name = "Godot script search" } })
+    else
+        print("Cant a do gdscript search in non godot project")
+    end
 end
 
 local function set_auto_commands()
@@ -169,7 +171,7 @@ M.setup = function()
     if not vim.env.GODOT_SERVER_PORT or not vim.env.GODOT_PROJECTS_PATH or not vim.env.GODOT_EXE_PATH then
         return
     else
-        M.floating.buf = vim.api.nvim_create_buf(false, true)
+        M.buf = vim.api.nvim_create_buf(false, true)
         set_auto_commands()
         set_commands()
         set_keymaps()
