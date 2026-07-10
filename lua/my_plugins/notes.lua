@@ -143,10 +143,10 @@ local function set_keymaps()
 end
 
 M.setup = function()
-    setup_buffer()
-    set_auto_commands()
-    set_commands()
-    set_keymaps()
+    -- TODO: Improve this before re enabling
+    -- set_auto_commands()
+    -- set_commands()
+    -- set_keymaps()
 end
 
 return M

@@ -5,21 +5,13 @@ local save_load = require('utils.save-load')
 local data_file = vim.fn.stdpath("data") .. "/pinned_files.json"
 
 local M = {
-    win = -1,
-    buf = -1,
     pinned_files = { "", "", "", "", "" }
 }
 
-local function close_floating_window()
-    if vim.api.nvim_win_is_valid(M.win) then
-        vim.api.nvim_win_hide(M.win)
-    end
-end
-
-local function populate_buf()
-    vim.bo[M.buf].modifiable = true
-    first_name_first(M.buf, M.pinned_files)
-    vim.bo[M.buf].modifiable = false
+local function populate_buf(buf)
+    vim.bo[buf].modifiable = true
+    first_name_first(buf, M.pinned_files)
+    vim.bo[buf].modifiable = false
 end
 
 local function valdidate_file(index)
@@ -35,11 +27,10 @@ local function valdidate_file(index)
         M.pinned_files[index] = ''
         isValid =  false
     end
-    populate_buf()
     return isValid
 end
 
-local function load_pinned_file(index)
+local function open_pinned_file(index)
     local fileToLoad = M.pinned_files[index]
     if fileToLoad == nil or fileToLoad == '' then
         print("No pinned file at -> " .. index)
@@ -50,7 +41,6 @@ local function load_pinned_file(index)
         print("No pinned file at -> " .. index)
         return
     end
-    close_floating_window()
     local currentFile = vim.api.nvim_buf_get_name(0)
     if currentFile == fileToLoad then
         return
@@ -64,7 +54,6 @@ local function delete_pinned_file()
         return
     end
     M.pinned_files[lineNumber] = ''
-    populate_buf()
 end
 
 local function swap_pinned_files_positions(from, to)
@@ -73,47 +62,6 @@ local function swap_pinned_files_positions(from, to)
     local original = M.pinned_files[to]
     M.pinned_files[to] = M.pinned_files[from]
     M.pinned_files[from] = original
-end
-
-local function set_buffer_keymaps()
-    vim.keymap.set('n', '<esc>', close_floating_window, { buffer = M.buf, nowait = true })
-    vim.keymap.set('n', 'q', close_floating_window, { buffer = M.buf, nowait = true })
-    vim.keymap.set('n', '<M-e>', function()
-        local lineNumber, _ = unpack(vim.api.nvim_win_get_cursor(0))
-        load_pinned_file(lineNumber)
-    end, { buffer = M.buf, nowait = true })
-    vim.keymap.set('n', 'd', ':DeletePinnedFile<CR>', { desc = 'Delete pinned file', silent = true, buffer = M.buf })
-    for i = 1, 5, 1 do
-        vim.keymap.set('n', "<M-" .. i .. ">", function ()
-            local lineNumber, _ = unpack(vim.api.nvim_win_get_cursor(0))
-            swap_pinned_files_positions(lineNumber, i)
-            populate_buf()
-        end, { desc = 'Open tagged buf at ' .. i, silent = true, buffer = M.buf })
-        vim.keymap.set('n', tostring(i), ':OpenPinnedFile' .. i .. '<CR>', { desc = 'Open tagged buf at ' .. i, silent = true, buffer = M.buf })
-    end
-end
-
-local function toggle_window()
-    if not vim.api.nvim_win_is_valid(M.win) then
-        for index, filepath in ipairs(M.pinned_files) do
-            if filepath ~= '' then
-                valdidate_file(index)
-            end
-        end
-
-        local longest_name = get_longest_name(M.pinned_files) + 15
-        set_buffer_keymaps()
-        populate_buf()
-        M.win = create_floating_window {
-            buf = M.buf,
-            width = longest_name,
-            height = 5,
-            title = 'Pinned Files',
-            style = ''
-        }
-    else
-        vim.api.nvim_win_hide(M.win)
-    end
 end
 
 local function pin_file(index)
@@ -137,16 +85,72 @@ local function set_auto_commands()
     })
 end
 
+local function toggle_window()
+    local hasPinnedFiles = false
+    for index, filepath in ipairs(M.pinned_files) do
+        if filepath ~= '' then
+            valdidate_file(index)
+        end
+        if M.pinned_files[index] ~= '' then
+            hasPinnedFiles = true
+        end
+    end
+    if hasPinnedFiles == false then
+        vim.notify("No pinned files", vim.log.levels.WARN)
+        return
+    end
+    local buf = vim.api.nvim_create_buf(false, true)
+    local longest_name = get_longest_name(M.pinned_files) + 15
+    populate_buf(buf)
+    local win = create_floating_window {
+        buf = buf,
+        width = longest_name,
+        height = 5,
+        title = 'Pinned Files',
+        style = ''
+    }
+    vim.keymap.set('n', '<esc>', function ()
+        vim.api.nvim_win_close(win, true)
+        vim.api.nvim_buf_delete(buf, { force = true })
+    end, { buffer = buf })
+    vim.keymap.set('n', 'q', function ()
+        vim.api.nvim_win_close(win, true)
+        vim.api.nvim_buf_delete(buf, { force = true })
+    end, { buffer = buf })
+    vim.keymap.set('n', '<M-e>', function()
+        local lineNumber, _ = unpack(vim.api.nvim_win_get_cursor(0))
+        vim.api.nvim_win_close(win, true)
+        vim.api.nvim_buf_delete(buf, { force = true })
+        open_pinned_file(lineNumber)
+    end, { buffer = buf })
+    vim.keymap.set('n', 'd', function ()
+        delete_pinned_file()
+        populate_buf(buf)
+    end, { desc = 'Delete pinned file', silent = true, buffer = buf })
+    for i = 1, 5, 1 do
+        vim.keymap.set('n', "<M-" .. i .. ">", function ()
+            local lineNumber, _ = unpack(vim.api.nvim_win_get_cursor(0))
+            swap_pinned_files_positions(lineNumber, i)
+            populate_buf(buf)
+        end, { desc = 'Open tagged buf at ' .. i, silent = true, buffer = buf })
+        vim.keymap.set('n', tostring(i), function ()
+            vim.api.nvim_win_close(win, true)
+            vim.api.nvim_buf_delete(buf, { force = true })
+            open_pinned_file(i)
+        end, { desc = 'Open tagged buf at ' .. i, silent = true, buffer = buf })
+    end
+end
+
 local function set_commands()
     vim.api.nvim_create_user_command('TogglePinnedFilesBrowser', toggle_window, {})
     vim.api.nvim_create_user_command('DeletePinnedFile', delete_pinned_file, {})
     vim.api.nvim_create_user_command('SetPinnedFile', function(opts)
-        local buf_index = tonumber(opts.args)
-        pin_file(buf_index)
+        local pos = tonumber(opts.args)
+        pin_file(pos)
     end, { nargs = 1 })
     vim.api.nvim_create_user_command('OpenPinnedFile', function(opts)
-        local buf_index = tonumber(opts.args)
-        load_pinned_file(buf_index)
+        local pos = tonumber(opts.args)
+        open_pinned_file(pos)
     end, { nargs = 1 })
 end
 
@@ -154,18 +158,16 @@ local function set_keymaps()
     vim.keymap.set('n', '<leader>b', ':TogglePinnedFilesBrowser<CR>',
         { desc = 'Toggle taged files browser', silent = true })
     for i = 1, 5, 1 do
-        vim.keymap.set('n', '<leader>' .. i, ':OpenPinnedFile '.. i ..'<CR>', { desc = 'Open tagged buf at ' .. i, silent = true })
-        vim.keymap.set('n', '<M-' .. i .. '>', ':SetPinnedFile' .. i .. '<CR>', { desc = 'Set tagged buf at '.. i, silent = true })
+        vim.keymap.set('n', '<M-' .. i .. '>', ':OpenPinnedFile '.. i ..'<CR>', { desc = 'Open tagged buf at ' .. i, silent = true })
+        vim.keymap.set('n', '<leader>' .. i, ':SetPinnedFile' .. i .. '<CR>', { desc = 'Set tagged buf at '.. i, silent = true })
     end
 end
 
 M.setup = function()
-    M.buf = vim.api.nvim_create_buf(false, true)
     local saved_pinned_files = save_load.load(data_file)
     if #saved_pinned_files > 0 then
         M.pinned_files = saved_pinned_files
     end
-    populate_buf()
     set_auto_commands()
     set_commands()
     set_keymaps()

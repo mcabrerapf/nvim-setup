@@ -15,15 +15,14 @@ end
 local toggle_terminal = function()
     if not vim.api.nvim_win_is_valid(M.win) then
         setup_buffer()
-        M.win = create_floating_window { buf = M.buf }
+        M.win = create_floating_window { buf = M.buf, winfixbuf = false }
         if vim.bo[M.buf].buftype ~= 'terminal' then
             vim.cmd.terminal()
         end
         vim.cmd 'startinsert'
-        --
         vim.keymap.set({ 'n', 'i', 't' }, '<M-q>', function()
             vim.api.nvim_win_hide(M.win)
-        end, { buffer = true, nowait = true })
+        end, { buffer = true })
     else
         vim.api.nvim_win_hide(M.win)
     end

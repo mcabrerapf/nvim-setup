@@ -12,10 +12,11 @@ local function create_floating_window(opts)
     local anchor = opts.anchor or 'NW'
     local fixed = opts.fixed or false
     local should_enter = opts.should_enter ~= false
+    local winfixbuf = opts.winfixbuf ~= false
 
     local win_config = {
         relative = 'editor',
-        style = style, -- No borders or extra UI elements
+        style = style,
         border = border,
         fixed = fixed,
         width = width,
@@ -26,7 +27,9 @@ local function create_floating_window(opts)
         title_pos = title_pos,
         anchor = anchor,
     }
-    return vim.api.nvim_open_win(buf, should_enter, win_config)
+    local win = vim.api.nvim_open_win(buf, should_enter, win_config)
+    vim.wo[win].winfixbuf = winfixbuf
+    return win
 end
 
 return create_floating_window

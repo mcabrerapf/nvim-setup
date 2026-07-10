@@ -7,8 +7,8 @@ mini_files.setup({
         close = 'q',
         go_in = 'l',
         go_in_plus = '<M-l>',
-        go_out = 'h',
-        go_out_plus = 'H',
+        -- go_out = 'h',
+        go_out_plus = 'h',
         mark_goto = "'",
         mark_set = 'm',
         reset = '<BS>',
@@ -41,7 +41,7 @@ local function base_filter(fs_entry)
 end
 
 local function open_mini_files()
-    mini_files.open(nil, true, { content = { filter = base_filter } })
+    mini_files.open(nil, false, { content = { filter = base_filter } })
 end
 
 local function open_in_file()
@@ -100,6 +100,6 @@ vim.api.nvim_create_autocmd('User', {
     end,
 })
 -- Key Mappings
-vim.keymap.set('n', '<leader>ff', open_mini_files, { desc = 'File explorer' })
-vim.keymap.set('n', '<leader>fF', open_in_file, { desc = 'File explorer (current file)' })
+vim.keymap.set('n', '<leader>ff', open_in_file, { desc = 'File explorer' })
+vim.keymap.set('n', '<leader>fF', open_mini_files, { desc = 'File explorer (in pwd)' })
 vim.keymap.set('n', '<leader>fv', open_nvim_config, { desc = 'Open Neovim config directory' })

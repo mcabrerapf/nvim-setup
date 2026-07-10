@@ -1,11 +1,8 @@
 local create_floating_window = require 'utils.create-floating-window'
 local get_directories = require 'utils.get-directories'
 local get_longest_name = require 'utils.get-longest-string'
-local populate_buffer = require 'utils.populate-buffer'
 
 local M = {
-    buf = -1,
-    win = -1,
     current_session = ''
 }
 
@@ -47,17 +44,6 @@ local function open_godot(project_path)
             "--path",
             project_path,
         })
-        -- vim.system({
-        --   vim.env.GODOT_EXE_PATH,
-        --   "--editor",
-        --   "--path",
-        --   project_path,
-        -- }, {
-        --   stdout = false,
-        --   stderr = false,
-        --   text = false,
-        --   detach = true,
-        -- })
     end
 end
 
@@ -70,9 +56,6 @@ local function get_selected_project_path()
 end
 
 local function open_project(project_path)
-    if vim.api.nvim_win_is_valid(M.win) then
-        vim.api.nvim_win_close(M.win, true)
-    end
     if project_path == '' then
         return
     end
@@ -80,44 +63,48 @@ local function open_project(project_path)
 end
 
 local toggle_project_picker = function()
-    if not vim.api.nvim_win_is_valid(M.win) then
-        local dirs = get_directories(vim.env.GODOT_PROJECTS_PATH)
-        local longest_dir_name = get_longest_name(dirs)
-        if longest_dir_name < 25 then
-            longest_dir_name = 25
-        end
-        local height = #dirs
-        if height > 15 then
-            height = 15
-        end
-        M.win = create_floating_window { buf = M.buf, width = longest_dir_name, height = height, title = 'Godot Projects' }
-        populate_buffer(M.buf, dirs, { filetype = 'godot_project_picker' })
-        --
-        vim.keymap.set('n', '<esc>', function()
-            vim.api.nvim_win_hide(M.win)
-        end, { buffer = M.buf, nowait = true })
-        --
-        vim.keymap.set('n', 'q', function()
-            vim.api.nvim_win_hide(M.win)
-        end, { buffer = M.buf, nowait = true })
-        --
-        vim.keymap.set('n', '<M-e>', function()
-            local project_path = get_selected_project_path()
-            open_godot(project_path)
-            -- start_godot_server()
-            -- open_project(project_path)
-            -- load_godot_session(project_path)
-        end, { buffer = M.buf, nowait = true })
-        --
-        vim.keymap.set('n', 'l', function()
-            local project_path = get_selected_project_path()
-            start_godot_server()
-            open_project(project_path)
-            load_godot_session(project_path)
-        end, { buffer = M.buf, nowait = true })
-    else
-        vim.api.nvim_win_hide(M.win)
+    local buf = vim.api.nvim_create_buf(false, true)
+    local dirs = get_directories(vim.env.GODOT_PROJECTS_PATH)
+    if #dirs < 1 then
+        vim.notify("No godot projects", vim.log.levels.WARN)
+        return
     end
+    local longest_dir_name = get_longest_name(dirs)
+    if longest_dir_name < 25 then
+        longest_dir_name = 25
+    end
+    local height = #dirs
+    if height > 15 then
+        height = 15
+    end
+    vim.bo[buf].modifiable = true
+    vim.api.nvim_buf_set_lines(buf, 0, -1, false, dirs)
+    vim.bo[buf].modifiable = false
+    local win = create_floating_window { buf = buf, width = longest_dir_name, height = height, title = 'Godot Projects' }
+    --
+    vim.keymap.set('n', '<esc>', function()
+        vim.api.nvim_win_close(win, true)
+        vim.api.nvim_buf_delete(buf, { force = true })
+    end, { buffer = buf })
+    --
+    vim.keymap.set('n', 'q', function()
+        vim.api.nvim_win_close(win, true)
+        vim.api.nvim_buf_delete(buf, { force = true })
+    end, { buffer = buf })
+    --
+    vim.keymap.set('n', '<M-e>', function()
+        local project_path = get_selected_project_path()
+        open_godot(project_path)
+    end, { buffer = buf })
+    --
+    vim.keymap.set('n', '<M-l>', function()
+        local project_path = get_selected_project_path()
+        vim.api.nvim_win_close(win, true)
+        vim.api.nvim_buf_delete(buf, { force = true })
+        start_godot_server()
+        open_project(project_path)
+        load_godot_session(project_path)
+    end, { buffer = buf })
 end
 
 local function godot_script_search()
@@ -138,11 +125,7 @@ local function set_auto_commands()
 end
 
 local function set_commands()
-    vim.api.nvim_create_user_command('GodotPickerCurrent', function()
-        print('Current Godot session -> ' .. M.current_session)
-    end, {})
-    --
-    vim.api.nvim_create_user_command('GodotPickerToggle', toggle_project_picker, {})
+    vim.api.nvim_create_user_command('GodotProjectPickerToggle', toggle_project_picker, {})
     vim.api.nvim_create_user_command('GodotScriptSearch', godot_script_search, {})
     vim.api.nvim_create_user_command('GodotStartServer', start_godot_server, {})
     vim.api.nvim_create_user_command('GodotRestartLsp', function()
@@ -159,10 +142,7 @@ local function set_commands()
 end
 
 local function set_keymaps()
-    vim.keymap.set('n', '<leader>fg', ':GodotPickerToggle<CR>', {
-        desc = 'Godot projects',
-        silent = true,
-    })
+    vim.keymap.set('n', '<leader>fg', ':GodotProjectPickerToggle<CR>', { desc = 'Godot projects', silent = true, })
     vim.keymap.set('n', '<leader>sg', ':GodotScriptSearch<CR>', { desc = 'Search godot scripts', silent = true })
 end
 
@@ -170,12 +150,10 @@ M.setup = function()
     -- NOTE: Make sure both godot.exe AND the projects folder are in the same drive
     if not vim.env.GODOT_SERVER_PORT or not vim.env.GODOT_PROJECTS_PATH or not vim.env.GODOT_EXE_PATH then
         return
-    else
-        M.buf = vim.api.nvim_create_buf(false, true)
-        set_auto_commands()
-        set_commands()
-        set_keymaps()
     end
+    set_auto_commands()
+    set_commands()
+    set_keymaps()
 end
 
 return M

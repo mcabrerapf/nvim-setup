@@ -1,6 +1,7 @@
+local create_floating_window = require 'utils.create-floating-window'
+local get_longest_filename = require 'utils.get-longest-string'
+
 local M = {
-    buf = -1,
-    win = -1,
     current_session = ''
 }
 
@@ -24,36 +25,29 @@ local function get_selected_session_path()
 end
 
 local toggle_session_picker = function()
-    local create_floating_window = require 'utils.create-floating-window'
-    local get_longest_filename = require 'utils.get-longest-string'
-    local populate_buffer = require 'utils.populate-buffer'
-
-    if not vim.api.nvim_win_is_valid(M.win) then
-        local sessions = get_sessions(vim.env.SESSIONS_DIR_PATH)
-        local longest_session_name = get_longest_filename(sessions)
-        if longest_session_name < 25 then
-            longest_session_name = 25
-        end
-        M.win = create_floating_window { buf = M.buf, width = longest_session_name, height = 10, title = 'Sessions' }
-        populate_buffer(M.buf, sessions, { filetype = 'session_picker' })
-        --
-        vim.keymap.set('n', 'q', function()
-            vim.api.nvim_win_hide(M.win)
-        end, { buffer = M.buf, nowait = true })
-        vim.keymap.set('n', '<esc>', function()
-            vim.api.nvim_win_hide(M.win)
-        end, { buffer = M.buf, nowait = true })
-        --
-        vim.keymap.set('n', 'l', function()
-            M.current_session = get_selected_session_path()
-            vim.api.nvim_win_hide(M.win)
-            vim.cmd '%bd'
-            vim.cmd('source ' .. M.current_session)
-        end, { buffer = M.buf, nowait = true })
-        --
-    else
-        vim.api.nvim_win_hide(M.win)
+    local buf = vim.api.nvim_create_buf(false, true)
+    local sessions = get_sessions(vim.env.SESSIONS_DIR_PATH)
+    if #sessions < 1 then
+        vim.notify("No saved sessions", vim.log.levels.WARN)
+        return
     end
+    local longest_session_name = get_longest_filename(sessions)
+    if longest_session_name < 25 then
+        longest_session_name = 25
+    end
+    local win = create_floating_window { buf = buf, width = longest_session_name, height = 10, title = 'Sessions' }
+    vim.keymap.set('n', 'q', function()
+        vim.api.nvim_win_close(win, true)
+    end, { buffer = buf })
+    vim.keymap.set('n', '<esc>', function()
+        vim.api.nvim_win_close(win, true)
+    end, { buffer = buf })
+    vim.keymap.set('n', 'l', function()
+        M.current_session = get_selected_session_path()
+        vim.api.nvim_win_close(win, true)
+        vim.cmd '%bd'
+        vim.cmd('source ' .. M.current_session)
+    end, { buffer = buf })
 end
 
 local function create_session()
@@ -115,7 +109,6 @@ local function set_keymaps()
 end
 
 M.setup = function()
-    M.buf = vim.api.nvim_create_buf(false, true)
     set_commands()
     set_keymaps()
 end
