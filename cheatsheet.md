@@ -12,7 +12,7 @@
 - `*`                     ===> show all matches at current cursor position (with a word selected after * do `:%s//{new_word}/g` the `//` is the searched value)
 - `+`                     ===> next line first character (`-` previous)
 - `;`                     ===> repeats last find command (`,` for backwards)
-- `.`                     ===> repeats las command
+- `.`                     ===> repeats las change
 - `/`                     ===> start search (`n` and `N` to scroll forwards and back)
 - `@`                     ===> play macro (`@@` redo last macro)
 - `i`                     ===> insert before (`I` line)
@@ -45,7 +45,7 @@
 - `x`                     ===> delete at cursor
 - `y`                     ===> yanking (`yy` entire line, `Y` to the end of line)
 - `g*`                    ===> show partial matches
-- `gd`                    ===> go to local(`gD` global) definition 
+- `gd`                    ===> go to local(`gD` global) definition
 - `ge`                    ===> move back to end of word (`gE` includes punctuation)
 - `gf`                    ===> go to file at cursor
 - `gg=G`                  ===> fix indents (`==` in current line only)
@@ -112,6 +112,7 @@
 - `:g/{pattern}/d`        ===> delete all lines containing pattern
 - `:g!/{pattern}/d`       ===> delete all lines not containing pattern
 - `:find {file_name}`     ===> go to file
+- `:verbose map {key}`  ===> check if a key has a custom mapping
 
 ## GLOBAL COMMAND
 - `:g/{pattern}`          ===> prints all lines with the pattern

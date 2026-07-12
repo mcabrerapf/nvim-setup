@@ -1,15 +1,9 @@
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>', { desc = 'Clear search highlight' })
-vim.keymap.set('t', '<esc><esc>', '<c-\\><c-n>', { desc = 'Close terminal' }) -- NOTE: Easy way to close terminal
-vim.keymap.set('n', '<C-s>', ':w<CR>', { desc = "Save" })
--- NOTE: line navigation
+vim.keymap.set('t', '<Esc><Esc>', '<c-\\><c-n>', { desc = 'Close terminal' }) -- NOTE: Easy way to close terminal
+vim.keymap.set('n', '<M-s>', ':w<CR>', { desc = "Save" })
+vim.keymap.set('n', '<C-s>', 's', { desc = "S mode" })
 vim.keymap.set('n', '<M-h>', '^', { desc = 'Move to first character in line' })
 vim.keymap.set('n', '<M-l>', 'g_', { desc = 'Move to last character in line' })
--- NOTE: move around windows
-vim.keymap.set('n', '<C-j>', '<C-w>j', { desc = 'move to bottom window' })
-vim.keymap.set('n', '<C-k>', '<C-w>k', { desc = 'move to top window' })
-vim.keymap.set('n', '<C-h>', '<C-w>h', { desc = 'move to left window' })
-vim.keymap.set('n', '<C-l>', '<C-w>l', { desc = 'move to right window' })
---
 vim.keymap.set('n', '<leader>h', function()
     local cword = vim.fn.expand('<cword>')
     if cword == '' then return end
@@ -53,7 +47,7 @@ vim.keymap.set("n", "<M-q>", function()
     end
     vim.api.nvim_set_current_buf(targetbuf)
 
-    -- #NOTE: Search windows and replace buf if its being deleted
+    -- NOTE: Search windows and replace buf if its being deleted
     for _, value in pairs(wins) do
         if vim.api.nvim_win_get_buf(value) == current then
             vim.api.nvim_win_set_buf(value, targetbuf)
@@ -61,34 +55,3 @@ vim.keymap.set("n", "<M-q>", function()
     end
     vim.api.nvim_buf_delete(current, { force = false })
 end, { desc = "Delete current buffer without closing window" })
-
-vim.keymap.set("x", "m", function()
-    local start_pos = vim.fn.getpos("v")
-    local end_pos = vim.fn.getpos(".")
-
-    local start_line = start_pos[2]
-    local end_line = end_pos[2]
-
-    -- Ensure start_line is before end_line
-    if start_line > end_line then
-        start_line, end_line = end_line, start_line
-    end
-
-    -- Exit visual mode
-    vim.cmd("normal! \\<Esc>")
-
-    local dest = vim.fn.input("Move after line: ")
-
-    if dest == "" then
-        return
-    end
-
-    dest = tonumber(dest)
-    if not dest then
-        vim.notify("Invalid line number", vim.log.levels.ERROR)
-        return
-    end
-
-    -- print(start_line, end_line, dest)
-    vim.cmd(string.format("%d,%dm%d", start_line, end_line, dest))
-end, { desc = "Move selected lines" })

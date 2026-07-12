@@ -33,7 +33,7 @@ local function create_commands()
 end
 
 local function create_keymaps()
-    vim.keymap.set('n', '<leader>tt', ':FloTermToggle<CR>', { desc = 'Toggle floating terminal', silent = true, })
+    vim.keymap.set('n', '<M-t>', ':FloTermToggle<CR>', { desc = 'Toggle floating terminal', silent = true, })
 end
 
 M.setup = function()
