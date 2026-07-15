@@ -1,0 +1,42 @@
+[window]
+opacity = 0.90
+blur = true
+decorations = "None"
+startup_mode = "Maximized"
+
+[font]
+size = 10
+normal = {
+    # family = "BlexMono Nerd Font"
+    # family = "GeistMono Nerd Font"
+    # family = "Iosevka Nerd Font Mono"
+    # family = "Lilex Nerd Font Mono"
+    # family = "FiraCode Nerd Font Mono"
+    # family = "DepartureMono Nerd Font"
+    # family = "JetBrainsMono Nerd Font"
+    family = "FiraCode Nerd Font Mono",
+    style = "Regular"
+
+}
+
+[colors]
+cursor = {
+    # text = "#ffffff",
+    # cursor = "#ff69b4"
+}
+
+[cursor]
+style = {
+    shape = "Beam",
+    blinking = "Always"
+}
+blink_interval = 450
+# thickness = 1.0
+
+[mouse]
+hide_when_typing = true
+
+[[keyboard.bindings]]
+key = "N"
+mods = "Control|Shift"
+action = "CreateNewWindow"

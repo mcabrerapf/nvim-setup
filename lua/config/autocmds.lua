@@ -1,4 +1,4 @@
--- Add highlight to todo, note and bug
+-- Add highlight to comments
 vim.api.nvim_create_autocmd({
     "BufRead",
     "BufNewFile",
@@ -6,11 +6,12 @@ vim.api.nvim_create_autocmd({
     "WinEnter"
 }, {
     pattern = "*",
-    desc = 'todo comment highlights',
+    desc = 'comment highlights',
     callback = function()
         vim.fn.matchadd('TodoComment', 'TODO:')
         vim.fn.matchadd('NoteComment', 'NOTE:')
         vim.fn.matchadd('BugComment', 'BUG:')
+        vim.fn.matchadd('HackComment', 'HACK:')
     end
 })
 -- highlight text on yank

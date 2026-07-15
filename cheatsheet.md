@@ -81,7 +81,7 @@
 - `<C-a>`                 ===> insert last insert
 - `<C-w>`                 ===> delete word before the cursor during insert mode
 - `<C-u>`                 ===> delete line until cursor
-- `<C-m>`                 ===> new line
+- `<C-m>`                 ===> new line (like `<CR>`?)
 - `<C-j>`                 ===> same as `<CR>`
 - `<C-t>`                 ===> indent(`<C-d>` deindent) line one shiftwidth during insert mode
 - `<C-n>`                 ===> insert (auto-complete) next(`<C-p>` previous) match before the cursor during insert mode
@@ -93,6 +93,7 @@
 - `o`                     ===> move to start/end of marked area
 - `>`                     ===> shift text right
 - `<`                     ===> shift text left
+- `g<C-a>`                ===> increment numbers in list
 
 ## COMMANDS
 - `:!`                    ===> to run shell commands
@@ -112,7 +113,7 @@
 - `:g/{pattern}/d`        ===> delete all lines containing pattern
 - `:g!/{pattern}/d`       ===> delete all lines not containing pattern
 - `:find {file_name}`     ===> go to file
-- `:verbose map {key}`  ===> check if a key has a custom mapping
+- `:verbose map {key}`    ===> check if a key has a custom mapping
 
 ## GLOBAL COMMAND
 - `:g/{pattern}`          ===> prints all lines with the pattern

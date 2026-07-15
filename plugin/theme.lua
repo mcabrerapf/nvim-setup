@@ -22,6 +22,7 @@ vim.api.nvim_set_hl(0, 'FirstNameHighlight', { fg = '#04f49c', bg = 'NONE', bold
 vim.api.nvim_set_hl(0, 'TodoComment', { fg = 'black', bg = '#fc16b3', bold = true }) -- TODO:
 vim.api.nvim_set_hl(0, 'NoteComment', { fg = 'black', bg = '#16e9fc', bold = true }) -- NOTE:
 vim.api.nvim_set_hl(0, 'BugComment', { fg = 'black', bg = '#fc1e16', bold = true })  -- BUG:
+vim.api.nvim_set_hl(0, 'HackComment', { fg = 'black', bg = '#ffa500', bold = true })  -- HACK:
 --
 -- vim.api.nvim_set_hl(0, 'Visual', { link = 'CustomHighlight' })
 -- vim.api.nvim_set_hl(0, 'IncSearch', { link = 'CustomHighlight' })
