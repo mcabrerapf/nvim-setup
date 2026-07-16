@@ -1,31 +1,36 @@
 local create_floating_window = require 'utils.create-floating-window'
-local M = {
-    buf = -1,
-    win = -1,
-}
+local M = {}
 
 local function setup_buffer()
-    if vim.api.nvim_buf_is_valid(M.buf) then return end
     local buf = vim.api.nvim_create_buf(false, true)
-    vim.bo[buf].bufhidden = "hide"
+    vim.bo[buf].bufhidden = "wipe"
     vim.bo[buf].buflisted = false
-    M.buf = buf
+    return buf
 end
 
 local toggle_terminal = function()
-    if not vim.api.nvim_win_is_valid(M.win) then
-        setup_buffer()
-        M.win = create_floating_window { buf = M.buf, winfixbuf = false }
-        if vim.bo[M.buf].buftype ~= 'terminal' then
+        local buf = setup_buffer()
+        local win = create_floating_window { buf = buf, winfixbuf = false }
+        if vim.bo[buf].buftype ~= 'terminal' then
             vim.cmd.terminal()
         end
         vim.cmd 'startinsert'
+        vim.api.nvim_create_autocmd(
+            'WinClosed',
+            {
+                desc = "delete current terminal buff",
+                buf = buf,
+                callback = function ()
+                    vim.api.nvim_buf_delete(buf, { force = true })
+                end
+            }
+        )
+        vim.keymap.set({ 'n', 'i', 't' }, 'q', function()
+            vim.api.nvim_win_hide(win)
+        end, { buffer = buf })
         vim.keymap.set({ 'n', 'i', 't' }, '<M-q>', function()
-            vim.api.nvim_win_hide(M.win)
-        end, { buffer = true })
-    else
-        vim.api.nvim_win_hide(M.win)
-    end
+            vim.api.nvim_win_hide(win)
+        end, { buffer = buf })
 end
 
 local function create_commands()

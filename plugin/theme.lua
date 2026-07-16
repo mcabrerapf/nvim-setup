@@ -3,11 +3,11 @@ vim.pack.add({ gh("navarasu/onedark.nvim") })
 require('onedark').setup {
     style = 'darker', -- **Options:**  dark, darker, cool, deep, warm, warmer, light
     code_style = {
-        comments = 'none',
-        keywords = 'bold,italic',
-        functions = 'bold',
-        strings = 'none',
-        variables = 'bold',
+        comments = 'italic',
+        -- keywords = 'bold,italic',
+        -- functions = 'bold',
+        -- strings = 'none',
+        -- variables = 'bold',
     },
     transparent = true,
     term_colors = true,

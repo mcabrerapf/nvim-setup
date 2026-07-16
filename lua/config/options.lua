@@ -1,13 +1,12 @@
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
--- vim.g.loaded_netrw = 1      -- Disable netrw if any other explorer is loaded
+-- vim.g.loaded_netrw = 1          -- Disable netrw if any other explorer is loaded
 -- vim.g.loaded_netrwPlugin = 1
-vim.g.have_nerd_font = true --Set to true if you have a Nerd Font installed and selected in the terminal
+vim.g.have_nerd_font = true     --Set to true if you have a Nerd Font installed and selected in the terminal
 -- vim.o.title = true
 -- vim.o.titlelen = 10
 -- vim.o.tabline = true
-vim.o.showmode = false
-vim.o.showtabline = 2 -- 0: never 1: when at least 2 tabs 2: always
+vim.o.showtabline = 2           -- 0: never 1: when at least 2 tabs 2: always
 vim.o.autoread = true
 vim.o.termguicolors = true
 vim.o.winborder = 'rounded'
@@ -26,29 +25,29 @@ vim.o.updatetime = 250          -- Decrease update time
 vim.o.timeoutlen = 300          -- Decrease mapped sequence wait time
 vim.o.splitright = true
 vim.o.splitbelow = true
-vim.o.eadirection = 'both' -- Tells when the 'equalalways' option applies
-vim.o.list = true          -- Sets how neovim will display certain whitespace characters in the editor.
-vim.o.inccommand = 'split' -- Preview substitutions live, as you type
-vim.o.cursorline = true    -- Show which line your cursor is on
-vim.o.confirm = true       -- Raise a dialog asking if you wish to save the current file(s)
+vim.o.eadirection = 'both'      -- Tells when the 'equalalways' option applies
+vim.o.list = true               -- Sets how neovim will display certain whitespace characters in the editor.
+vim.o.inccommand = 'split'      -- Preview substitutions live, as you type
+vim.o.cursorline = true         -- Show which line your cursor is on
+vim.o.confirm = true            -- Raise a dialog asking if you wish to save the current file(s)
 vim.opt.virtualedit = 'block'
--- vim.opt.scrolloff = 50     -- Minimal number of screen lines to keep above and below the cursor.
+-- vim.opt.scrolloff = 50       -- Minimal number of screen lines to keep above and below the cursor.
 vim.opt.expandtab = true
 vim.opt.tabstop = 4
 vim.opt.shiftwidth = 4
-vim.opt.foldenable = false -- set folds to open when opening file
+vim.opt.foldenable = false      -- set folds to open when opening file
 vim.opt.listchars = {
     tab = '» ',
     trail = '·',
     nbsp = '␣'
 }
-vim.opt.guicursor = { -- cursor blink if using wezterm need to set its default blink rate as well
-    'n-v-c:block',
-    'i-ci-ve:ver25',
-    'r-cr:hor20',
-    'o:hor50',
-    'a:blinkon400-blinkoff400-blinkwait400',
-}
+-- vim.opt.guicursor = { -- cursor blink, if using wezterm need to set its default blink rate as well
+--     'n-v-c:block',
+--     'i-ci-ve:ver25',
+--     'r-cr:hor20',
+--     'o:hor50',
+--     'a:blinkon400-blinkoff400-blinkwait400',
+-- }
 vim.diagnostic.config {
     update_in_insert = false,
     severity_sort = true,
@@ -63,6 +62,7 @@ vim.opt.sessionoptions = { -- specify what is saved in a session
     "tabpages",
     "curdir",
     "folds",
+    "help",
     -- "localoptions",
     -- "options",
     "tabpages",

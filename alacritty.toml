@@ -1,11 +1,18 @@
+[general]
+working_directory = "C:\\"
+
 [window]
-opacity = 0.90
-blur = true
+padding = {
+    x = 1,
+    # y = 10
+}
+opacity = 0.95
+# blur = true
 decorations = "None"
 startup_mode = "Maximized"
 
 [font]
-size = 10
+size = 9
 normal = {
     # family = "BlexMono Nerd Font"
     # family = "GeistMono Nerd Font"
@@ -26,11 +33,11 @@ cursor = {
 }
 
 [cursor]
-style = {
-    shape = "Beam",
-    blinking = "Always"
-}
-blink_interval = 450
+# style = {
+#     shape = "Beam",
+#     blinking = "Always"
+# }
+blink_interval = 400
 # thickness = 1.0
 
 [mouse]

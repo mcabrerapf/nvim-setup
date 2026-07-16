@@ -4,19 +4,23 @@ vim.keymap.set('n', '<M-s>', ':w<CR>', { desc = "Save" })
 vim.keymap.set('n', '<C-s>', 's', { desc = "S mode" })
 vim.keymap.set('n', '<M-h>', '^', { desc = 'Move to first character in line' })
 vim.keymap.set('n', '<M-l>', 'g_', { desc = 'Move to last character in line' })
+vim.keymap.set('n', '<M-.>', '<C-^>', { desc = 'Switch to last buffer' })
+vim.keymap.set('n', '<leader><M-d>', vim.diagnostic.setloclist, { desc = 'Send diagnostics to qflist' })
+
 vim.keymap.set('n', '<leader>h', function()
     local cword = vim.fn.expand('<cword>')
     if cword == '' then return end
     vim.cmd('h ' .. cword)
 end, { desc = 'Find help for cword' })
+
 vim.keymap.set('n', '<leader>H', function()
     local cword = vim.fn.expand('<cword>')
     if cword == '' then return end
     vim.cmd('lh ' .. cword)
     vim.cmd 'lwindow'
 end, { desc = 'Grep search help for cword' })
-vim.keymap.set('n', '<M-.>', '<C-^>', { desc = 'Switch to last buffer' })
-vim.keymap.set('n', '<leader><M-d>', vim.diagnostic.setloclist, { desc = 'Send diagnostics to qflist' })
+
+
 vim.keymap.set("n", "<M-q>", function()
     local current = vim.api.nvim_get_current_buf()
     local wins = vim.fn.win_findbuf(current)
@@ -55,3 +59,9 @@ vim.keymap.set("n", "<M-q>", function()
     end
     vim.api.nvim_buf_delete(current, { force = false })
 end, { desc = "Delete current buffer without closing window" })
+
+vim.keymap.set('n', '<leader><M-r>', function ()
+    local sessionPath = vim.env.SESSIONS_DIR_PATH .. '/' or ''
+    sessionPath = sessionPath .. 'restart_sesh.vim'
+    vim.cmd(':mksession! ' .. sessionPath .. ' | restart source ' .. sessionPath)
+end, { desc = 'Restart neovim and restore current session' })

@@ -2,13 +2,14 @@
 ---
 ## NORMAL MODE
 - `"`                     ===> access a register
+- `"0p`                   ===> paste the last explicit yank
 - `"%`                    ===> get the current relative path
-- `0`                     ===> start of line (`$ `end)
-- `^`                     ===> move to first (`g_ `last) non empty character in line
-- `%`                     ===> go to matching pair
-- `{n}%`                  ===> go to percentage of file, ie `50%` half of the file
 - `'`                     ===> go to mark
 - `''`                    ===> go to previous jump location
+- `0`                     ===> start of line (`$ `end)
+- `^`                     ===> move to first (`g_ `last) non empty character in line
+- `%`                     ===> go to matching pair for {, [
+- `{n}%`                  ===> go to percentage of file, ie `50%` half of the file
 - `*`                     ===> show all matches at current cursor position (with a word selected after * do `:%s//{new_word}/g` the `//` is the searched value)
 - `+`                     ===> next line first character (`-` previous)
 - `;`                     ===> repeats last find command (`,` for backwards)
@@ -20,17 +21,12 @@
 - `m`                     ===> add mark (use upper case to set global marks)
 - `o`                     ===> new line (`O` before)
 - `p`                     ===> paste (`P` paste before, also preserves unamed registered)
-- `<C-a>`                 ===> increment (`<C-x>` decrease) number at cursor
 - `u`                     ===> undo (`U` line)
-- `<C-r>`                 ===> redo
-- `<C-v>`                 ===> start block select
 - `G`                     ===> move to last line
 - `H`                     ===> move to top of the screen
 - `J`                     ===> join lines with space (`gJ` no space)
 - `L`                     ===> move to bottom of the screen
 - `M`                     ===> move to middle of the screen
-- `ZQ`                    ===> quit no save
-- `ZZ`                    ===> save and quit
 - `b`                     ===> move to prev word (`B` includes punctuation)
 - `c`                     ===> replace (cc entire line, `C` end of line)
 - `d`                     ===> delete (`dd` entire line, `D` end of line)
@@ -45,6 +41,7 @@
 - `x`                     ===> delete at cursor
 - `y`                     ===> yanking (`yy` entire line, `Y` to the end of line)
 - `g*`                    ===> show partial matches
+- `g,`                    ===> go to last place where a change occured (`g;` to go back)
 - `gd`                    ===> go to local(`gD` global) definition
 - `ge`                    ===> move back to end of word (`gE` includes punctuation)
 - `gf`                    ===> go to file at cursor
@@ -62,10 +59,17 @@
 - `gx`                    ===> open url in browser
 - `{n}G`                  ===> move to line
 - `g&`                    ===> repeat last `:s` on all lines
-- `za`                    ===> toggle fold under the cursor
-- `zz`                    ===> centers on cursor
+- `zM`                    ===> close ALL folds in file (`zR` to open)
+- `zC`                    ===> close ALL folds under cursor (`zO` to open)
+- `zz`                    ===> centers cursor on the middle of the screen (`zt` for top line `zb` for bottom line)
+- `ZQ`                    ===> quit no save
+- `ZZ`                    ===> save and quit
 - `~`                     ===> toggle cappitalization
 - `}`                     ===> jump to next (`{` prev) paragraph
+- `<C-a>`                 ===> increment (`<C-x>` decrease) number at cursor
+- `<C-r>`                 ===> redo
+- `<C-v>`                 ===> start block select
+- `<C-f>`                 ===> move forward one screen (`<C-b> backwards`)
 - `<C-g>`                 ===> show your location in a file and the file status
 - `<C-i>`                 ===> jump to previous jump point (`<C-j>` for next)
 - `<C-w>s`                ===> split window
@@ -73,7 +77,7 @@
 - `<C-w>w`                ===> switch windows
 - `<C-w>q`                ===> quit a window
 - `<C-w>x`                ===> exchange current window with next one
-- `<C-w> =`               ===> make all windows equal height & width
+- `<C-w>=`               ===> make all windows equal height & width
 - `[spacebar`             ===> adds empty line before (`]spacebar` after) line
 - `[b`                    ===> prev buffer (`]b` next)
 
@@ -114,6 +118,7 @@
 - `:g!/{pattern}/d`       ===> delete all lines not containing pattern
 - `:find {file_name}`     ===> go to file
 - `:verbose map {key}`    ===> check if a key has a custom mapping
+- `:ea {N}{s,m,h,d}`      ===> goes to an earlier point of the buffer (`lat` for opossite) or `g-` and `g+`
 
 ## GLOBAL COMMAND
 - `:g/{pattern}`          ===> prints all lines with the pattern

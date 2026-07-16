@@ -15,6 +15,8 @@ end
 
 local function load_godot_session(project_path)
     M.current_session = project_path .. '/session.vim'
+    vim.fn.writefile({ M.current_session }, vim.fn.stdpath("state") .. "/last_session")
+    vim.api.nvim_command("silent %bd")
     if vim.fn.filereadable(M.current_session) == 1 then
         vim.cmd('source ' .. M.current_session)
     else

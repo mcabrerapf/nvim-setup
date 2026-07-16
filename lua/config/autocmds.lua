@@ -37,9 +37,9 @@ vim.api.nvim_create_autocmd('BufReadPost', {
         if mark[1] > 0 and mark[1] <= line_count then
             vim.api.nvim_win_set_cursor(0, mark)
             -- defer centering slightly so it's applied after render
-            vim.schedule(function()
-                vim.cmd 'normal! zz'
-            end)
+            -- vim.schedule(function()
+            --     vim.cmd 'normal! zz'
+            -- end)
         end
     end,
 })
