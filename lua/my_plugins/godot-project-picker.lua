@@ -94,6 +94,11 @@ local toggle_project_picker = function()
         vim.api.nvim_buf_delete(buf, { force = true })
     end, { buffer = buf })
     --
+    vim.keymap.set('n', '<M-q>', function()
+        vim.api.nvim_win_close(win, true)
+        vim.api.nvim_buf_delete(buf, { force = true })
+    end, { buffer = buf })
+    --
     vim.keymap.set('n', '<M-e>', function()
         local project_path = get_selected_project_path()
         open_godot(project_path)

@@ -99,6 +99,12 @@ vim.keymap.set("n", "<leader>gf", function ()
             vim.cmd.edit(vim.fn.fnameescape(file.file))
         end
     end, { buf = buf })
+
+    vim.keymap.set("n", "<M-q>", function ()
+        vim.api.nvim_win_close(win, true)
+        vim.api.nvim_buf_delete(buf, { force = true })
+    end, { buf = buf })
+
     vim.keymap.set("n", "q", function ()
         vim.api.nvim_win_close(win, true)
         vim.api.nvim_buf_delete(buf, { force = true })

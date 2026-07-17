@@ -42,6 +42,7 @@
 - `y`                     ===> yanking (`yy` entire line, `Y` to the end of line)
 - `g*`                    ===> show partial matches
 - `g,`                    ===> go to last place where a change occured (`g;` to go back)
+- `g<`                    ===> show recent messages (ui2 required)
 - `gd`                    ===> go to local(`gD` global) definition
 - `ge`                    ===> move back to end of word (`gE` includes punctuation)
 - `gf`                    ===> go to file at cursor
@@ -103,10 +104,13 @@
 - `:!`                    ===> to run shell commands
 - `:help!`                ===> help for word on cursor
 - `:messages`             ===> view all system messages
+- `:map`                  ===> view custom keymaps
+- `:uniq`                 ===> delete duplicate lines
 - `:{start},{end}d`       ===> delete lines from `{start}` to `{end}`
 - `:{start},{end}t.`      ===> copy lines `{start}` to `{end}` to cursor (use `'{mark}` instead of `.` to send to mark)
 - `:{start},{end}m.`      ===> move lines `{start}` to `{end}` to cursor
 - `:s`                    ===> search and replace in current line (start with `%` to apply to entire document) followed by regular expression, (ie :%s/word/new_word/g changes all word to new_word, add c to confirm on each) (ie `:#,#s/old/new/g` changes old to new from line `#` to `#`
+- `:ol`                   ===> show recent files
 - `:noh`                  ===> clear search results
 - `:w`                    ===> write (save) the file, but don't exit
 - `:wq`                   ===> write (save) and quit(or `:x` or `ZZ`)
