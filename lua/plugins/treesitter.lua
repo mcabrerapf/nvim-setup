@@ -9,10 +9,10 @@ local ensureInstalled = {
     'html',
     'javascript',
     'json',
-    'latex',
     'markdown',
     'typescript',
     'yaml',
+    'toml',
 }
 vim.api.nvim_create_autocmd(
     'PackChanged',
@@ -26,6 +26,16 @@ vim.api.nvim_create_autocmd(
         end
     }
 )
+
+vim.api.nvim_create_autocmd('FileType', {
+    pattern = ensureInstalled,
+    callback = function()
+        vim.treesitter.start()
+        vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
+        vim.wo.foldmethod = 'expr'
+        -- vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+    end,
+})
 
 treesitter.setup {
     install_dir = vim.fn.stdpath 'data' .. '/site',
@@ -43,13 +53,3 @@ treesitter.setup {
 }
 
 treesitter.install(ensureInstalled)
-
-vim.api.nvim_create_autocmd('FileType', {
-    pattern = ensureInstalled,
-    callback = function()
-        vim.treesitter.start()
-        vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
-        vim.wo.foldmethod = 'expr'
-        -- vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
-    end,
-})

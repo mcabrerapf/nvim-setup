@@ -61,4 +61,5 @@ vim.cmd('packadd nvim.undotree')
 require 'config.options'
 require 'config.keymaps'
 require 'config.autocmds'
+require 'plugins'
 require 'my_plugins'

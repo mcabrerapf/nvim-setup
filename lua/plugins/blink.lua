@@ -5,6 +5,7 @@ vim.pack.add({
         version = vim.version.range("1.x")
     }
 })
+
 require("blink.cmp").setup({
     signature = { enabled = true },
     cmdline = {

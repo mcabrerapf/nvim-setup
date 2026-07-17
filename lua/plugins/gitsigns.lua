@@ -1,6 +1,6 @@
 local gh = require("utils.gh")
-local ns = vim.api.nvim_create_namespace("modified_files")
 local create_floating_window = require("utils.create-floating-window")
+local ns = vim.api.nvim_create_namespace("modified_files")
 vim.pack.add({ gh("lewis6991/gitsigns.nvim") })
 local gitsigns = require("gitsigns")
 
