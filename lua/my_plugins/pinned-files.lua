@@ -33,12 +33,12 @@ end
 local function open_pinned_file(index)
     local fileToLoad = M.pinned_files[index]
     if fileToLoad == nil or fileToLoad == '' then
-        print("No pinned file at -> " .. index)
+        vim.notify("No pinned file at -> " .. index, vim.log.levels.WARN)
         return
     end
     local isValid = valdidate_file(index)
     if isValid == false then
-        print("No pinned file at -> " .. index)
+        vim.notify("No pinned file at -> " .. index, vim.log.levels.WARN)
         return
     end
     local currentFile = vim.api.nvim_buf_get_name(0)

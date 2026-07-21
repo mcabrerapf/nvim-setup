@@ -121,7 +121,7 @@ local function godot_script_search()
         local items = vim.fn.glob('**/*.gd', false, true)
         pick.start({ source = { items = items, show = filename_first, name = "Godot script search" } })
     else
-        print("Cant a do gdscript search in non godot project")
+        vim.notify("Cant a do gdscript search in non godot project", vim.log.levels.WARN)
     end
 end
 

@@ -3,9 +3,10 @@
 --- https://github.com/godofavacyn/gdshader-lsp
 ---
 --- A language server for the Godot Shading language.
+
 ---@type vim.lsp.Config
 return {
-    cmd = { 'gdshader-lsp', '--stdio' },
-    filetypes = { 'gdshader', 'gdshaderinc' },
-    root_markers = { 'project.godot' },
+  cmd = { 'gdshader-lsp', '--stdio' },
+  filetypes = { 'gdshader', 'gdshaderinc' },
+  root_markers = { 'project.godot' },
 }

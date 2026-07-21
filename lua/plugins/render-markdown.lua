@@ -7,6 +7,9 @@ require('render-markdown').setup({
         blink = { enabled = false },
         lsp = { enabled = true }
     },
+    latex = {
+        enabled = false
+    },
     callout = {
         note      = { raw = '[!NOTE]', rendered = '󰋽 Note', highlight = 'RenderMarkdownInfo', category = 'github' },
         tip       = { raw = '[!TIP]', rendered = '󰌶 Tip', highlight = 'RenderMarkdownSuccess', category = 'github' },

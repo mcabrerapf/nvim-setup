@@ -50,12 +50,22 @@ vim.opt.listchars = {
 -- }
 vim.diagnostic.config {
     update_in_insert = false,
+    underline = true,
     severity_sort = true,
     float = { border = 'rounded', source = 'if_many' },
-    underline = { severity = vim.diagnostic.severity.ERROR },
+    -- underline = { severity = vim.diagnostic.severity.ERROR },
     virtual_text = false,    -- Text shows up at the end of the line
     virtual_lines = true,    -- Teest shows up underneath the line, with virtual lines
-    jump = { float = true }, -- Auto open the float, so you can easily read the errors when jumping with `[d` and `]d`
+    jump = {
+        on_jump = function (diagnostic)
+            if not diagnostic then return end
+            vim.diagnostic.open_float({
+                scope = "c",
+                source = "if_many",
+                focus = false
+            })
+        end
+    }
 }
 vim.opt.sessionoptions = { -- specify what is saved in a session
     "buffers",

@@ -7,21 +7,21 @@ mini_files.setup({
         close = 'q',
         go_in = 'l',
         go_in_plus = '<M-l>',
-        -- go_out = 'h',
+        go_out = 'H',
         go_out_plus = 'h',
-        mark_goto = "'",
-        mark_set = 'm',
-        reset = '<BS>',
-        reveal_cwd = '.',
-        show_help = 'g?',
-        synchronize = '=',
-        trim_left = '<',
-        trim_right = '>',
+        -- mark_goto = "'",
+        -- mark_set = 'm',
+        -- reset = '<BS>',
+        -- reveal_cwd = '.',
+        -- show_help = 'g?',
+        synchronize = 's',
+        -- trim_left = '<',
+        -- trim_right = '>',
     },
     windows = {
         preview = true,
-        width_focus = 30,
-        width_nofocus = 15,
+        -- width_focus = 30,
+        -- width_nofocus = 15,
         width_preview = 45,
     },
     icons = {
@@ -53,32 +53,29 @@ local function open_nvim_config()
 end
 
 local function set_as_cwd()
-    local fs = require 'mini.files'
-    local entry = fs.get_fs_entry()
+    local entry = mini_files.get_fs_entry()
     if not entry then return end
     local path = entry.path
     if entry.fs_type == 'file' then
         path = vim.fs.dirname(path)
     end
     vim.cmd('tcd ' .. path)
-    print('cwd set to -> ' .. path)
+    vim.notify("cwd set to -> " .. path, vim.log.levels.INFO)
 end
 
 local function open_mini_pick()
-    local fs = require 'mini.files'
-    local entry = fs.get_fs_entry()
+    local entry = mini_files.get_fs_entry()
     if not entry or entry.fs_type == 'file' then return end
-    fs.close()
+    mini_files().close()
     local pick = require 'mini.pick'
     local path = entry.path
     pick.builtin.files(nil, { source = { cwd = path, name = 'Search files in ' .. path } })
 end
 
 local function open_mini_pick_grep()
-    local fs = require 'mini.files'
-    local entry = fs.get_fs_entry()
+    local entry = mini_files().get_fs_entry()
     if not entry or entry.fs_type == 'file' then return end
-    fs.close()
+    mini_files.close()
     local pick = require 'mini.pick'
     local path = entry.path
     pick.builtin.grep_live(nil, { source = { cwd = path, name = 'Grep search in ' .. path } })

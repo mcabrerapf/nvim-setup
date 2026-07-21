@@ -25,7 +25,7 @@ local toggle_terminal = function()
                 end
             }
         )
-        vim.keymap.set({ 'n', 'i', 't' }, 'q', function()
+        vim.keymap.set('n', 'q', function()
             vim.api.nvim_win_hide(win)
         end, { buffer = buf })
         vim.keymap.set({ 'n', 'i', 't' }, '<M-q>', function()

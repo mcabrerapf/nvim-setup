@@ -13,7 +13,7 @@ local function get_branch_name()
     if not head then
         return ""
     end
-    return " " .. head
+    return " " .. head .. " "
 end
 
 local function get_git_diff()
@@ -78,7 +78,8 @@ local function get_mode()
     return table.concat({
         -- "%#StatuslineMode" .. mode.hl .. "Inverted" .. "#",
         "%#StatuslineMode" .. mode.hl .. "#" .. " " .. modeText,
-        "%#StatuslineMode" .. mode.hl .. "Inverted" .. "#",
+        "%#StatuslineMode" .. mode.hl .. "Inverted#"
+        -- "%#StatuslineMode" .. mode.hl .. "Inverted" .. "#",
     })
 end
 

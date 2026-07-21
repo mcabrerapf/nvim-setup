@@ -5,7 +5,12 @@ vim.keymap.set('n', '<C-s>', 's', { desc = "S mode" })
 vim.keymap.set('n', '<M-h>', '^', { desc = 'Move to first character in line' })
 vim.keymap.set('n', '<M-l>', 'g_', { desc = 'Move to last character in line' })
 vim.keymap.set('n', '<M-.>', '<C-^>', { desc = 'Switch to last buffer' })
-vim.keymap.set('n', '<leader><M-d>', vim.diagnostic.setloclist, { desc = 'Send diagnostics to qflist' })
+
+vim.keymap.set('n', '<leader><M-d>', vim.diagnostic.setloclist, { desc = 'Send diagnostics to location list' })
+
+vim.keymap.set("n", "<leader>d", function ()
+    vim.diagnostic.enable(not vim.diagnostic.is_enabled())
+end, { desc = "Toggle diagnostics" })
 
 vim.keymap.set('n', '<leader>h', function()
     local cword = vim.fn.expand('<cword>')

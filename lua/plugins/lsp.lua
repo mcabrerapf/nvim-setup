@@ -56,5 +56,5 @@ vim.api.nvim_create_autocmd('LspAttach', {
 
 vim.lsp.enable('lua_ls')
 vim.lsp.enable('gdscript')
-vim.lsp.enable('gdshader')
-vim.lsp.enable('org')
+-- vim.lsp.enable('gdshader_lsp')
+-- vim.lsp.enable('org')
