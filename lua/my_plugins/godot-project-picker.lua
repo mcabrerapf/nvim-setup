@@ -36,16 +36,25 @@ end
 
 local function open_godot(project_path)
     if vim.fn.filereadable(vim.env.GODOT_EXE_PATH) == 1 then
-        vim.system({
-            "cmd.exe",
-            "/c",
-            "start",
-            "",
-            vim.env.GODOT_EXE_PATH,
-            "--editor",
-            "--path",
-            project_path,
-        })
+        if vim.fn.has("win32") == 1 then
+            vim.system({
+                "cmd.exe",
+                "/c",
+                "start",
+                "",
+                vim.env.GODOT_EXE_PATH,
+                "--editor",
+                "--path",
+                project_path,
+            })
+        else
+            vim.system({
+                vim.env.GODOT_EXE_PATH,
+                "--editor",
+                "--path",
+                project_path,
+            })
+        end
     end
 end
 
