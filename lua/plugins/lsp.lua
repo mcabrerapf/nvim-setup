@@ -53,8 +53,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
         -- lspkeymap('textDocument/codeLens', 'grx', vim.lsp.codelens.run, "Run codelens")
     end,
 })
-
 vim.lsp.enable('lua_ls')
 vim.lsp.enable('gdscript')
--- vim.lsp.enable('gdshader_lsp')
+vim.lsp.enable('gdshader_lsp')
 -- vim.lsp.enable('org')
